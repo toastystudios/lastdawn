@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-SonarAnalysis</actionName>
+            <displayName>SonarAnalysis</displayName>
+            <goals>
+                <goal>sonar:sonar</goal>
+                <goal>-Dsonar.organization="toasty"</goal>
+                <goal>-Dsonar.host.url="https://sonarcloud.io"</goal>
+                <goal>-Dsonar.login="efcd1758342cf95fca489b551840109e29d6f38f"</goal>
+                
+                
+            </goals>
+        </action>
+        <action>
+            <actionName>run</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>-classpath %classpath view.Run</exec.args>
+                <exec.executable>java</exec.executable>
+            </properties>
+        </action>
+    </actions>
