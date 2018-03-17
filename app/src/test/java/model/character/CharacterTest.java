@@ -32,10 +32,6 @@ public class CharacterTest {
         this.item = new Weapon("Sword of only one pointy edge", "It's your usual sword..you stab them with the pointy end.", 5000, "Rare", true, 10, 10);
     }
 
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test of getMaxHealth method, of class Character.
      */
@@ -154,21 +150,33 @@ public class CharacterTest {
         
         }
 
-//    /**
-//     * Test of decreaseHealth()
-//     */
-//    @Test
-//    public void decreaseHealth(int amount) {
-//        fail();
-//    }
-//
-//    /**
-//     * Test of increaseHealth()
-//     */
-//    @Test
-//    public void increaseHealth(int amount) {
-//        fail();
-//    }
+    /**
+     * Test of decreaseHealth()
+     */
+    @Test
+    public void testDecreaseHealth() {
+        int result = character.decreaseHealth(5);
+        int expResult = character.getMaxHealth()-5; 
+        assertEquals("Should be 5 if HP max is 10", expResult, result);
+        
+        result = character.decreaseHealth(character.getMaxHealth());
+        expResult = 0;
+        assertEquals("Should be 0 if HP goes below 0",expResult, result);
+    }
+    
 
-
+    /**
+     * Test of increaseHealth()
+     */
+    @Test
+    public void testIncreaseHealth() {
+        character.decreaseHealth(5);
+        int result = character.increaseHealth(5);
+        int expResult = character.getMaxHealth();
+        assertEquals("Should be 10 if HP was 5", expResult,result);
+        
+        result = character.increaseHealth(1);
+        expResult = character.getMaxHealth();
+        assertEquals("Should be 10 if max HP is 10", expResult, result);
+    }
 }
