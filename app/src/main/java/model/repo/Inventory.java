@@ -31,6 +31,7 @@ public class Inventory {
      */
     public Inventory() {
         this.items = new HashMap();
+        this.equipped = new HashMap();
     }
 
     /**
@@ -53,6 +54,9 @@ public class Inventory {
      * @return
      */
     public boolean addItem(Item item) {
+        String itemName = item.name();
+        int i = 1;
+
         if (filledSlots() >= MAX_SLOTS) {
             return false;
         }
@@ -61,7 +65,14 @@ public class Inventory {
             return false;
         }
 
-        return items.put(item.name(), item) != null;
+        while (items.containsKey(itemName)) {
+            itemName = item.name() + "-" + i;
+            i++;
+        }
+
+        items.put(itemName, item);
+
+        return items.containsKey(itemName);
     }
 
     /**
@@ -121,21 +132,17 @@ public class Inventory {
      * @return
      */
     public boolean equipArmour(Armour armour) {
-        if (armour instanceof Head) 
+        if (armour instanceof Head) {
             return equipItem(Head.class.getSimpleName(), armour);
-        
-        else if (armour instanceof Chest) 
+        } else if (armour instanceof Chest) {
             return equipItem(Chest.class.getSimpleName(), armour);
-        
-         else if (armour instanceof Legs) 
+        } else if (armour instanceof Legs) {
             return equipItem(Legs.class.getSimpleName(), armour);
-         
-         else if (armour instanceof Jewelry) 
+        } else if (armour instanceof Jewelry) {
             return equipItem(Jewelry.class.getSimpleName(), armour);
-            
-         else 
+        } else {
             return false;
-        
+        }
 
     }
 
@@ -154,12 +161,13 @@ public class Inventory {
     private boolean equipItem(String slot, Item item) {
         Item current = equipped.get(slot);
 
-        if (current != null) {
+        if (current != null) {          
             items.put(current.name(), current);
         }
 
         items.remove(item.name());
-        return equipped.put(slot, item) != null;
+        equipped.put(slot, item);
+        return equipped.containsKey(slot);
     }
 
     /**
@@ -174,8 +182,14 @@ public class Inventory {
             return false;
         } else {
             Item item = equipped.get(slot);
+            
+            if (item == null)
+                return false;
+            
             equipped.remove(slot);
-            return items.put(item.name(), item) != null;
+            items.put(item.name(), item);
+            
+            return items.containsKey(item.name());
         }
     }
 
@@ -195,14 +209,14 @@ public class Inventory {
 
         for (Item item : equipped.values()) {
 
-            if (item instanceof Armour) {
+            if (item instanceof Armour && item != null) {
 
                 constitution += ((Armour) item).stats().constitution();
                 strength += ((Armour) item).stats().strength();
                 intelligence += ((Armour) item).stats().intelligence();
                 dexterity += ((Armour) item).stats().dexterity();
 
-            } else if (item instanceof Weapon) {
+            } else if (item instanceof Weapon && item != null) {
 
                 constitution += ((Weapon) item).stats().constitution();
                 strength += ((Weapon) item).stats().strength();

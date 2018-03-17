@@ -11,8 +11,8 @@
  */
 public class GeneralNPC extends NPC implements QuestNPC {
 
-    public GeneralNPC(String name, String description, int constitution, int strength, int intelligence, int dexterity) {
-        super(name, description, constitution, strength, intelligence, dexterity);
+    public GeneralNPC(String name, String description, int constitution, int strength, int intelligence, int dexterity, int level) {
+        super(name, description, constitution, strength, intelligence, dexterity, level);
     }
 
 }

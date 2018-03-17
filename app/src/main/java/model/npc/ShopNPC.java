@@ -11,8 +11,8 @@
  */
 public class ShopNPC extends NPC implements QuestNPC {
 
-    public ShopNPC(String name, String description, int constitution, int strength, int intelligence, int dexterity) {
-        super(name, description, constitution, strength, intelligence, dexterity);
+    public ShopNPC(String name, String description, int constitution, int strength, int intelligence, int dexterity, int level) {
+        super(name, description, constitution, strength, intelligence, dexterity, level);
     }
 
 }

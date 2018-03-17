@@ -10,7 +10,7 @@ import model.character.Stats;
  *
  * @author Toasty Studios
  */
-public class Paladin implements model.player.Class {
+public class Paladin implements model.character.Class {
 
     private static final int BASE_CONSTITUTION = 10;
     private static final int BASE_STRENGTH = 10;

@@ -2,19 +2,21 @@
  * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
  * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
  */
-package model.player;
+ 
+ package model.character;
+
+import model.character.Stats;
 
 /**
  *
  * @author Toasty Studios
  */
-public class PlayerChar extends model.character.Character {
-
-    private static final int STARTING_LEVEL = 1;
-
-    public PlayerChar(String playerClass) {
-        super(STARTING_LEVEL, playerClass);
-    }
-
+public interface Class {
+    
+    /**
+     * Returns the class base stats
+     * @return 
+     */
+    public Stats baseStats();
 
 }

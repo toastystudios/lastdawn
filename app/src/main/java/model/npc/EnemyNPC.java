@@ -11,8 +11,8 @@
  */
 public class EnemyNPC extends NPC {
 
-    public EnemyNPC(String name, String description, int constitution, int strength, int intelligence, int dexterity) {
-        super(name, description, constitution, strength, intelligence, dexterity);
+    public EnemyNPC(String name, String description, int constitution, int strength, int intelligence, int dexterity, int level) {
+        super(name, description, constitution, strength, intelligence, dexterity, level);
     }
 
 }
