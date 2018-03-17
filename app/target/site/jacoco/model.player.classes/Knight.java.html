@@ -6,7 +6,6 @@
  package model.player.classes;
 
 import model.character.Stats;
-import model.player.PlayerChar;
 
 /**
  *
@@ -21,9 +20,9 @@ public class Knight implements model.character.Class {
     
     private Stats stats;
     
-<span class="nc" id="L24">    public Knight() {</span>
-<span class="nc" id="L25">        this.stats = new Stats(BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);</span>
-<span class="nc" id="L26">    }</span>
+<span class="nc" id="L23">    public Knight() {</span>
+<span class="nc" id="L24">        this.stats = new Stats(BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);</span>
+<span class="nc" id="L25">    }</span>
 
     /**
      * Returns the class base stats
@@ -31,7 +30,7 @@ public class Knight implements model.character.Class {
      */
     @Override
     public Stats baseStats() {
-<span class="nc" id="L34">        return stats;</span>
+<span class="nc" id="L33">        return stats;</span>
     }
 
 }
