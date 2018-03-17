@@ -11,7 +11,7 @@ import model.character.Stats;
  *
  * @author Toasty Studios
  */
-public class Knight implements model.character.Class {
+public class Knight extends model.player.PlayerChar implements model.character.Class {
     
     private static final int BASE_CONSTITUTION = 10;
     private static final int BASE_STRENGTH = 10;

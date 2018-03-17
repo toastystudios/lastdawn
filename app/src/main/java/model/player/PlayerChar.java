@@ -8,7 +8,7 @@ package model.player;
  *
  * @author Toasty Studios
  */
-public class PlayerChar extends model.character.Character {
+public abstract class PlayerChar extends model.character.Character {
 
     private static final int STARTING_LEVEL = 1;
 
@@ -16,5 +16,14 @@ public class PlayerChar extends model.character.Character {
         super(STARTING_LEVEL, playerClass);
     }
 
+     /**
+     * Increases the character level by 1, only usable by other method that
+     * checks if xp is > than required
+     *
+     * @return
+     */
+    private int increaseLevel() {
+        return level++;
+    }
 
 }

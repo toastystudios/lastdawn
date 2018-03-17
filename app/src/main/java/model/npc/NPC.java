@@ -26,5 +26,5 @@ public abstract class NPC extends model.character.Character {
         this.name = name;
         this.description = description;
     }
-
+    
 }

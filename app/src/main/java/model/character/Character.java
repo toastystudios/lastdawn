@@ -20,7 +20,7 @@ import model.repo.Inventory;
 public abstract class Character {
 
     private final Inventory inventory;
-    private int level;
+    protected int level;
     private int currentHealth;
     private model.character.Class characterClass;
 
@@ -87,7 +87,16 @@ public abstract class Character {
             this.characterClass = new Scientist();
         }
     }
-
+    
+    /**
+     * Returns the current level of a character
+     * 
+     * @return  
+     */
+    public int getLevel(){
+        return level;
+    }
+    
     /**
      * Calculates the character max health (Base Stats + Weapon and Armour)
      *
@@ -137,16 +146,6 @@ public abstract class Character {
     }
 
     /**
-     * Increases the character level by 1, only usable by other method that
-     * checks if xp is > than required
-     *
-     * @return
-     */
-    private int increaseLevel() {
-        return level++;
-    }
-
-    /**
      * Returns the player inventory
      *
      * @return
@@ -155,7 +154,7 @@ public abstract class Character {
         return inventory;
     }
 
-    ;
+    
 
     /**
      * Adds an item to the inventory
