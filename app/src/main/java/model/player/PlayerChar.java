@@ -8,7 +8,7 @@ package model.player;
  *
  * @author Toasty Studios
  */
-public abstract class PlayerChar extends model.character.Character {
+public class PlayerChar extends model.character.Character {
 
     private static final int STARTING_LEVEL = 1;
 
