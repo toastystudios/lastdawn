@@ -13,11 +13,6 @@
     <name>Last Dawn</name>
     <description>A text-based RPG.</description>
     
-    <scm>
-        <developerConnection>scm:git:git@github.com:ORG/PROJECT.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
-    
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -59,14 +54,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
-                <configuration>
-                    <tagNameFormat>v@{project.version}</tagNameFormat>
-                </configuration>
             </plugin>
         </plugins>
     </build>
