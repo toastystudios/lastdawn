@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>toastystudios</groupId>
     <artifactId>LastDawn</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,7 +15,7 @@
     
     <scm>
         <developerConnection>scm:git:git@github.com:ORG/PROJECT.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v1.0</tag>
     </scm>
     
     <dependencies>
