@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Character.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Last Dawn</a> &gt; <a href="index.source.html" class="el_package">model.character</a> &gt; <span class="el_source">Character.java</span></div><h1>Character.java</h1><pre class="source lang-java linenums">/* Last Dawn (c) by Toasty Studios is licensed under
+ * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
+ * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+ */
+package model.character;
+
+import model.character.classes.Classless;
+import model.enums.StatTypes;
+import model.item.Item;
+import model.player.classes.Knight;
+import model.player.classes.Paladin;
+import model.player.classes.Ranger;
+import model.player.classes.Scientist;
+import model.repo.Inventory;
+
+/**
+ *
+ * @author Toasty Studios
+ */
+public abstract class Character {
+
+    private final Inventory inventory;
+    private int level;
+    private int currentHealth;
+    private model.character.Class characterClass;
+
+    /**
+     * init player character
+     *
+     * @param startingLevel
+     * @param className
+     */
+<span class="nc" id="L33">    public Character(int startingLevel, String className) {</span>
+<span class="nc" id="L34">        this.inventory = new Inventory();</span>
+<span class="nc" id="L35">        this.level = startingLevel;</span>
+<span class="nc" id="L36">        initClass(className);</span>
+<span class="nc" id="L37">        this.currentHealth = getMaxHealth();</span>
+<span class="nc" id="L38">    }</span>
+
+    /**
+     * init NPC
+     *
+     * @param startingLevel
+     * @param constitution
+     * @param strength
+     * @param intelligence
+     * @param dexterity
+     */
+<span class="fc" id="L49">    public Character(int startingLevel, int constitution, int strength, int intelligence, int dexterity) {</span>
+<span class="fc" id="L50">        this.inventory = new Inventory();</span>
+<span class="fc" id="L51">        this.level = startingLevel;</span>
+<span class="fc" id="L52">        initClassless(constitution, strength, intelligence, dexterity);</span>
+<span class="fc" id="L53">        this.currentHealth = getMaxHealth();</span>
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * Initializes a classless, programmer-defined class for NPCS
+     *
+     * @param constitution
+     * @param strength
+     * @param intelligence
+     * @param dexterity
+     */
+    private void initClassless(int constitution, int strength, int intelligence, int dexterity) {
+<span class="fc" id="L65">        this.characterClass = new Classless(constitution, strength, intelligence, dexterity);</span>
+<span class="fc" id="L66">    }</span>
+
+    /**
+     * Initializes the character class
+     *
+     * @param playerClass
+     */
+    private void initClass(String className) {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (className.equals(Knight.class.getSimpleName())) {</span>
+<span class="nc" id="L75">            this.characterClass = new Knight();</span>
+        }
+
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (className.equals(Paladin.class.getSimpleName())) {</span>
+<span class="nc" id="L79">            this.characterClass = new Paladin();</span>
+        }
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (className.equals(Ranger.class.getSimpleName())) {</span>
+<span class="nc" id="L83">            this.characterClass = new Ranger();</span>
+        }
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (className.equals(Scientist.class.getSimpleName())) {</span>
+<span class="nc" id="L87">            this.characterClass = new Scientist();</span>
+        }
+<span class="nc" id="L89">    }</span>
+
+    /**
+     * Calculates the character max health (Base Stats + Weapon and Armour)
+     *
+     * @return
+     */
+    public int getMaxHealth() {
+<span class="fc" id="L97">        return (characterClass.baseStats().constitution() + inventory().equipmentStats().get(StatTypes.CONSTITUTION.toString()));</span>
+    }
+
+    /**
+     * Returns the current health of the character
+     *
+     * @return
+     */
+    public int getCurrentHealth() {
+<span class="fc" id="L106">        return this.currentHealth;</span>
+    }
+
+    /**
+     * Decreases the character health points
+     *
+     * @return
+     */
+    public int decreaseHealth(int amount) {
+<span class="fc" id="L115">        this.currentHealth -= amount;</span>
+
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (currentHealth &lt; 0) {</span>
+<span class="nc" id="L118">            this.currentHealth = 0;</span>
+        }
+
+<span class="fc" id="L121">        return currentHealth;</span>
+    }
+
+    /**
+     * Increases the character health points
+     *
+     * @return
+     */
+    public int increaseHealth(int amount) {
+<span class="nc" id="L130">        this.currentHealth += amount;</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        if (currentHealth &gt; getMaxHealth()) {</span>
+<span class="nc" id="L133">            this.currentHealth = getMaxHealth();</span>
+        }
+
+<span class="nc" id="L136">        return currentHealth;</span>
+    }
+
+    /**
+     * Returns the player inventory
+     *
+     * @return
+     */
+    public Inventory inventory() {
+<span class="fc" id="L145">        return inventory;</span>
+    }
+
+    ;
+
+    /**
+     * Adds an item to the inventory
+     *
+     * @return
+     */
+    public boolean addItem(Item item) {
+<span class="fc" id="L156">        return inventory.addItem(item);</span>
+    }
+
+    /**
+     * Removes an item from the inventory
+     *
+     * @return
+     */
+    public boolean removeItem(Item item) {
+<span class="fc" id="L165">        return inventory.removeItem(item);</span>
+    }
+
+    /**
+     * Searches for an item in the inventory
+     *
+     * @return
+     */
+    public Item searchItem(String name) {
+<span class="fc" id="L174">        return inventory.searchItem(name);</span>
+    }
+
+    /**
+     * Equips an item in the equipped slots
+     *
+     */
+    public boolean equipItem(Item item) {
+<span class="fc" id="L182">        return inventory.equipItem(item, this.level);</span>
+    }
+
+    /**
+     * Unequips an item and puts it in the inventory
+     *
+     */
+    public boolean unequipItem(String slot) {
+<span class="fc" id="L190">        return inventory.unequipItem(slot);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

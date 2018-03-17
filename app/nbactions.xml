@@ -26,4 +26,14 @@
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-CodacyAnalysis</actionName>
+            <displayName>CodacyAnalysis</displayName>
+            <goals>
+                <goal>com.gavinmogan:codacy-maven-plugin:coverage</goal>
+                <goal>-DcoverageReportFile=target/site/jacoco/jacoco.xml</goal>
+                <goal>-DprojectToken="853ddc727c0a438fb0a547d85123bd13"</goal>
+                <goal>-DapiToken="ISnCXjxUAQjeXtfEQtx1"</goal>
+            </goals>
+        </action>
     </actions>

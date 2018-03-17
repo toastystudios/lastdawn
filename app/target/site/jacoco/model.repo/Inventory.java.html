@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Inventory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Last Dawn</a> &gt; <a href="index.source.html" class="el_package">model.repo</a> &gt; <span class="el_source">Inventory.java</span></div><h1>Inventory.java</h1><pre class="source lang-java linenums">/* Last Dawn (c) by Toasty Studios is licensed under
+ * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
+ * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+ */
+package model.repo;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import model.enums.StatTypes;
+import model.item.Armour;
+import model.item.Item;
+import model.item.Weapon;
+import model.item.armour.Chest;
+import model.item.armour.Head;
+import model.item.armour.Jewelry;
+import model.item.armour.Legs;
+
+/**
+ *
+ * @author Toasty Studios
+ */
+public class Inventory {
+
+    private HashMap&lt;String, Item&gt; items;
+    private HashMap&lt;String, Item&gt; equipped;
+    private static final int MAX_SLOTS = 20;
+
+    /**
+     * init
+     */
+<span class="fc" id="L32">    public Inventory() {</span>
+<span class="fc" id="L33">        this.items = new HashMap();</span>
+<span class="fc" id="L34">        this.equipped = new HashMap();</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Calculates the number of items the character has
+     *
+     * @return
+     */
+    public int filledSlots() {
+<span class="fc" id="L43">        int sum = 0;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        for (Iterator&lt;Item&gt; it = items.values().iterator(); it.hasNext(); it.next()) {</span>
+<span class="fc" id="L45">            sum++;</span>
+        }
+<span class="fc" id="L47">        return sum;</span>
+    }
+
+    /**
+     * Adds an item to the inventory
+     *
+     * @param item
+     * @return
+     */
+    public boolean addItem(Item item) {
+<span class="fc" id="L57">        String itemName = item.name();</span>
+<span class="fc" id="L58">        int i = 1;</span>
+
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (filledSlots() &gt;= MAX_SLOTS) {</span>
+<span class="fc" id="L61">            return false;</span>
+        }
+
+<span class="pc bpc" id="L64" title="1 of 4 branches missed.">        if (items.containsValue(item) &amp;&amp; item.isUnique()) {</span>
+<span class="fc" id="L65">            return false;</span>
+        }
+
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        while (items.containsKey(itemName)) {</span>
+<span class="fc" id="L69">            itemName = item.name() + &quot;-&quot; + i;</span>
+<span class="fc" id="L70">            i++;</span>
+        }
+
+<span class="fc" id="L73">        items.put(itemName, item);</span>
+
+<span class="fc" id="L75">        return items.containsKey(itemName);</span>
+    }
+
+    /**
+     * Removes an item from the inventory
+     *
+     * @param item
+     * @return
+     */
+    public boolean removeItem(Item item) {
+<span class="fc" id="L85">        return items.remove(item.name(), item);</span>
+    }
+
+    /**
+     * Given a name, returns the item if exists
+     *
+     * @param name
+     * @return
+     */
+    public Item searchItem(String name) {
+<span class="fc" id="L95">        return items.get(name);</span>
+    }
+
+    /**
+     * Equips a head in the player head slot
+     *
+     * if the player already has an i tem equipped, switches the equipped with
+     * the one with the inventory if the player has not an item equipped, simply
+     * equips it and removes it from the inventory
+     *
+     * @param item
+     * @param level
+     * @return
+     */
+    public boolean equipItem(Item item, int level) {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (level &gt;= item.level()) {</span>
+
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">            if (item instanceof Armour) {</span>
+<span class="nc" id="L113">                return equipArmour((Armour) item);</span>
+            }
+
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">            if (item instanceof Weapon) {</span>
+<span class="fc" id="L117">                return equipItem(Weapon.class.getSimpleName(), (Weapon) item);</span>
+            }
+
+<span class="nc" id="L120">            return false;</span>
+
+        } else {
+<span class="fc" id="L123">            return false;</span>
+        }
+    }
+
+    /**
+     * Verifies if the item is a piece of armour and tries to equip it, if not,
+     * returns false
+     *
+     * @param armour
+     * @return
+     */
+    public boolean equipArmour(Armour armour) {
+<span class="nc bnc" id="L135" title="All 2 branches missed.">        if (armour instanceof Head) {</span>
+<span class="nc" id="L136">            return equipItem(Head.class.getSimpleName(), armour);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        } else if (armour instanceof Chest) {</span>
+<span class="nc" id="L138">            return equipItem(Chest.class.getSimpleName(), armour);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        } else if (armour instanceof Legs) {</span>
+<span class="nc" id="L140">            return equipItem(Legs.class.getSimpleName(), armour);</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        } else if (armour instanceof Jewelry) {</span>
+<span class="nc" id="L142">            return equipItem(Jewelry.class.getSimpleName(), armour);</span>
+        } else {
+<span class="nc" id="L144">            return false;</span>
+        }
+
+    }
+
+    /**
+     * Equips an item in the player equipped slot.
+     *
+     * If the player already has an equipped item, puts the item in the
+     * inventory and equips the new and removes the new one from the inventory.
+     * If the player does not have an equipped item, simply equips the new one
+     * and removes the new from the inventory.
+     *
+     * @param slot
+     * @param item
+     * @return
+     */
+    private boolean equipItem(String slot, Item item) {
+<span class="fc" id="L162">        Item current = equipped.get(slot);</span>
+
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        if (current != null) {          </span>
+<span class="nc" id="L165">            items.put(current.name(), current);</span>
+        }
+
+<span class="fc" id="L168">        items.remove(item.name());</span>
+<span class="fc" id="L169">        equipped.put(slot, item);</span>
+<span class="fc" id="L170">        return equipped.containsKey(slot);</span>
+    }
+
+    /**
+     * Unequips an item from a slot and puts it in the inventory. If the
+     * inventory does not have enough space, returns false
+     *
+     * @param slot
+     * @return
+     */
+    public boolean unequipItem(String slot) {
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        if (filledSlots() &gt;= MAX_SLOTS) {</span>
+<span class="nc" id="L182">            return false;</span>
+        } else {
+<span class="fc" id="L184">            Item item = equipped.get(slot);</span>
+            
+<span class="fc bfc" id="L186" title="All 2 branches covered.">            if (item == null)</span>
+<span class="fc" id="L187">                return false;</span>
+            
+<span class="fc" id="L189">            equipped.remove(slot);</span>
+<span class="fc" id="L190">            items.put(item.name(), item);</span>
+            
+<span class="fc" id="L192">            return items.containsKey(item.name());</span>
+        }
+    }
+
+    /**
+     * Creates a hashmap with all the stat bonus of all theh equipment of the
+     * player Key = stat name Value = Bonus value
+     *
+     * @return
+     */
+    public Map&lt;String, Integer&gt; equipmentStats() {
+<span class="fc" id="L203">        Map&lt;String, Integer&gt; equipmentStats = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L205">        int constitution = 0;</span>
+<span class="fc" id="L206">        int strength = 0;</span>
+<span class="fc" id="L207">        int intelligence = 0;</span>
+<span class="fc" id="L208">        int dexterity = 0;</span>
+
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        for (Item item : equipped.values()) {</span>
+
+<span class="nc bnc" id="L212" title="All 4 branches missed.">            if (item instanceof Armour &amp;&amp; item != null) {</span>
+
+<span class="nc" id="L214">                constitution += ((Armour) item).stats().constitution();</span>
+<span class="nc" id="L215">                strength += ((Armour) item).stats().strength();</span>
+<span class="nc" id="L216">                intelligence += ((Armour) item).stats().intelligence();</span>
+<span class="nc" id="L217">                dexterity += ((Armour) item).stats().dexterity();</span>
+
+<span class="nc bnc" id="L219" title="All 4 branches missed.">            } else if (item instanceof Weapon &amp;&amp; item != null) {</span>
+
+<span class="nc" id="L221">                constitution += ((Weapon) item).stats().constitution();</span>
+<span class="nc" id="L222">                strength += ((Weapon) item).stats().strength();</span>
+<span class="nc" id="L223">                intelligence += ((Weapon) item).stats().intelligence();</span>
+<span class="nc" id="L224">                dexterity += ((Weapon) item).stats().dexterity();</span>
+
+            }
+<span class="nc" id="L227">        }</span>
+
+<span class="fc" id="L229">        equipmentStats.put(StatTypes.STRENGTH.toString(), strength);</span>
+<span class="fc" id="L230">        equipmentStats.put(StatTypes.CONSTITUTION.toString(), constitution);</span>
+<span class="fc" id="L231">        equipmentStats.put(StatTypes.INTELLIGENCE.toString(), intelligence);</span>
+<span class="fc" id="L232">        equipmentStats.put(StatTypes.DEXTERITY.toString(), dexterity);</span>
+
+<span class="fc" id="L234">        return equipmentStats;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -137,16 +137,6 @@ public abstract class Character {
     }
 
     /**
-     * Increases the character level by 1, only usable by other method that
-     * checks if xp is > than required
-     *
-     * @return
-     */
-    private int increaseLevel() {
-        return level++;
-    }
-
-    /**
      * Returns the player inventory
      *
      * @return

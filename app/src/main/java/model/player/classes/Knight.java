@@ -6,6 +6,7 @@
  package model.player.classes;
 
 import model.character.Stats;
+import model.player.PlayerChar;
 
 /**
  *
