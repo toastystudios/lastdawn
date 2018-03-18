@@ -39,4 +39,12 @@ public class Weapon extends Item {
         return this.stats;
     }
 
+    /**
+     * Returns the weapon damage
+     * @return 
+     */
+    public int damage() {
+        return damage;
+    }
+    
 }

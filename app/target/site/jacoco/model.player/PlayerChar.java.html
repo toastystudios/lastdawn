@@ -5,26 +5,96 @@
  */
 package model.player;
 
+import model.character.ResourceManager;
+import model.npc.NPC;
+
 /**
  *
  * @author Toasty Studios
  */
-public class PlayerChar extends model.character.Character {
+public abstract class PlayerChar extends model.character.Character {
+
+    protected ResourceManager resourceManager;
 
     private static final int STARTING_LEVEL = 1;
+    private static final int EXP_PER_HP = 4;
+
+    private int xp;
 
     public PlayerChar(String playerClass) {
-<span class="nc" id="L17">        super(STARTING_LEVEL, playerClass);</span>
-<span class="nc" id="L18">    }</span>
+<span class="nc" id="L25">        super(STARTING_LEVEL, playerClass);</span>
+<span class="nc" id="L26">        this.resourceManager = new ResourceManager();</span>
+<span class="nc" id="L27">    }</span>
 
-     /**
+    /**
+     * Uses the player basic attack
+     *
+     * @return
+     */
+    public abstract int basicAttack();
+
+    /**
+     * Uses the player ability
+     *
+     * @return
+     */
+    public abstract int ability();
+
+    /**
+     * Uses the player ultimate
+     *
+     * @return
+     */
+    public abstract int ultimate();
+
+    /**
      * Increases the character level by 1, only usable by other method that
      * checks if xp is &gt; than required
      *
      * @return
      */
     private int increaseLevel() {
-<span class="nc" id="L27">        return level++;</span>
+<span class="nc" id="L57">        return level++;</span>
+    }
+
+    /**
+     * Calculates the required xp to level
+     *
+     * @return
+     */
+    private double xpToLevel() {
+<span class="nc" id="L66">        double total = 0;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        for (int i = 1; i &lt; level; i++) {</span>
+<span class="nc" id="L68">            total += Math.floor(i + 300 * Math.pow(2, i / 7.0));</span>
+        }
+
+<span class="nc" id="L71">        return Math.floor(total / 4);</span>
+    }
+
+    /**
+     * Calculates the xp the player will receive based on the monster health
+     *
+     * @return
+     */
+    private int experienceGained(NPC enemy) {
+<span class="nc" id="L80">        return enemy.getMaxHealth() * EXP_PER_HP;</span>
+    }
+
+    /**
+     * Increases the player xp. If the player reaches the threshold to level up,
+     * increases player level.
+     *
+     * @param amount
+     * @return
+     */
+    public int increaseXP(NPC enemy) {
+<span class="nc" id="L91">        this.xp += experienceGained(enemy);</span>
+
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (xp &gt;= (xpToLevel())) {</span>
+<span class="nc" id="L94">            increaseLevel();</span>
+        }
+
+<span class="nc" id="L97">        return xp;</span>
     }
 
 }

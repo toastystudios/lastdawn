@@ -10,21 +10,37 @@ import model.character.Stats;
  *
  * @author Toasty Studios
  */
-public class Classless implements model.character.Class{
+public class Classless implements model.character.Class {
 
-    
+    private static final double MODIFIDER = 0.15;
+
     private Stats stats;
-    
-    public Classless (int constitution, int strength, int intelligence, int dexterity) {
+
+    public Classless(int constitution, int strength, int intelligence, int dexterity) {
         this.stats = new Stats(constitution, strength, intelligence, dexterity);
     }
 
     /**
      * Returns the class base stats
-     * @return 
+     *
+     * @return
      */
     @Override
     public Stats baseStats() {
         return stats;
+    }
+
+    // =======================================
+    // ----------- COMBAT METHODS ------------
+    // =======================================
+    
+    /**
+     * Uses the character basic attack
+     *
+     * @return
+     */
+    @Override
+    public int basicAttack() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -233,5 +233,14 @@ public class Inventory {
 
         return equipmentStats;
     }
+    
+    /**
+     * Returns the current equipped weapon damage
+     * @return 
+     */
+    public int weaponDamage() {
+        Weapon weapon = (Weapon) equipped.get(Weapon.class.getSimpleName());
+        return weapon.damage();
+    }
 
 }

@@ -7,10 +7,10 @@ package model.character;
 import model.character.classes.Classless;
 import model.enums.StatTypes;
 import model.item.Item;
-import model.player.classes.Knight;
-import model.player.classes.Paladin;
-import model.player.classes.Ranger;
-import model.player.classes.Scientist;
+import model.player.Knight;
+import model.player.Paladin;
+import model.player.Ranger;
+import model.player.Scientist;
 import model.repo.Inventory;
 
 /**
@@ -19,10 +19,11 @@ import model.repo.Inventory;
  */
 public abstract class Character {
 
-    private final Inventory inventory;
+    protected final Inventory inventory;
     protected int level;
     private int currentHealth;
     private model.character.Class characterClass;
+
 
     /**
      * init player character
@@ -30,12 +31,12 @@ public abstract class Character {
      * @param startingLevel
      * @param className
      */
-<span class="nc" id="L33">    public Character(int startingLevel, String className) {</span>
-<span class="nc" id="L34">        this.inventory = new Inventory();</span>
-<span class="nc" id="L35">        this.level = startingLevel;</span>
-<span class="nc" id="L36">        initClass(className);</span>
-<span class="nc" id="L37">        this.currentHealth = getMaxHealth();</span>
-<span class="nc" id="L38">    }</span>
+<span class="nc" id="L34">    public Character(int startingLevel, String className) {</span>
+<span class="nc" id="L35">        this.inventory = new Inventory();</span>
+<span class="nc" id="L36">        this.level = startingLevel;</span>
+<span class="nc" id="L37">        initClass(className);</span>
+<span class="nc" id="L38">        this.currentHealth = getMaxHealth();</span>
+<span class="nc" id="L39">    }</span>
 
     /**
      * init NPC
@@ -46,12 +47,12 @@ public abstract class Character {
      * @param intelligence
      * @param dexterity
      */
-<span class="fc" id="L49">    public Character(int startingLevel, int constitution, int strength, int intelligence, int dexterity) {</span>
-<span class="fc" id="L50">        this.inventory = new Inventory();</span>
-<span class="fc" id="L51">        this.level = startingLevel;</span>
-<span class="fc" id="L52">        initClassless(constitution, strength, intelligence, dexterity);</span>
-<span class="fc" id="L53">        this.currentHealth = getMaxHealth();</span>
-<span class="fc" id="L54">    }</span>
+<span class="fc" id="L50">    public Character(int startingLevel, int constitution, int strength, int intelligence, int dexterity) {</span>
+<span class="fc" id="L51">        this.inventory = new Inventory();</span>
+<span class="fc" id="L52">        this.level = startingLevel;</span>
+<span class="fc" id="L53">        initClassless(constitution, strength, intelligence, dexterity);</span>
+<span class="fc" id="L54">        this.currentHealth = getMaxHealth();</span>
+<span class="fc" id="L55">    }</span>
 
     /**
      * Initializes a classless, programmer-defined class for NPCS
@@ -62,8 +63,8 @@ public abstract class Character {
      * @param dexterity
      */
     private void initClassless(int constitution, int strength, int intelligence, int dexterity) {
-<span class="fc" id="L65">        this.characterClass = new Classless(constitution, strength, intelligence, dexterity);</span>
-<span class="fc" id="L66">    }</span>
+<span class="fc" id="L66">        this.characterClass = new Classless(constitution, strength, intelligence, dexterity);</span>
+<span class="fc" id="L67">    }</span>
 
     /**
      * Initializes the character class
@@ -71,22 +72,28 @@ public abstract class Character {
      * @param playerClass
      */
     private void initClass(String className) {
-<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (className.equals(Knight.class.getSimpleName())) {</span>
-<span class="nc" id="L75">            this.characterClass = new Knight();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (className.equals(Knight.class.getSimpleName())) {</span>
+<span class="nc" id="L76">            this.characterClass = new Knight();</span>
         }
 
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (className.equals(Paladin.class.getSimpleName())) {</span>
-<span class="nc" id="L79">            this.characterClass = new Paladin();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (className.equals(Paladin.class.getSimpleName())) {</span>
+<span class="nc" id="L80">            this.characterClass = new Paladin();</span>
         }
 
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (className.equals(Ranger.class.getSimpleName())) {</span>
-<span class="nc" id="L83">            this.characterClass = new Ranger();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (className.equals(Ranger.class.getSimpleName())) {</span>
+<span class="nc" id="L84">            this.characterClass = new Ranger();</span>
         }
 
-<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (className.equals(Scientist.class.getSimpleName())) {</span>
-<span class="nc" id="L87">            this.characterClass = new Scientist();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if (className.equals(Scientist.class.getSimpleName())) {</span>
+<span class="nc" id="L88">            this.characterClass = new Scientist();</span>
         }
-<span class="nc" id="L89">    }</span>
+<span class="nc" id="L90">    }</span>
+    
+     
+     //=======================================
+     //---------- CHAR. LVL METHODS ----------
+     //=======================================
+     
     
     /**
      * Returns the current level of a character
@@ -94,8 +101,12 @@ public abstract class Character {
      * @return  
      */
     public int getLevel(){
-<span class="nc" id="L97">        return level;</span>
+<span class="nc" id="L104">        return level;</span>
     }
+    
+     // =======================================
+     // ---------- HEALTH MANAGEMENT ----------
+     // =======================================
     
     /**
      * Calculates the character max health (Base Stats + Weapon and Armour)
@@ -103,7 +114,7 @@ public abstract class Character {
      * @return
      */
     public int getMaxHealth() {
-<span class="fc" id="L106">        return (characterClass.baseStats().constitution() + inventory().equipmentStats().get(StatTypes.CONSTITUTION.toString()));</span>
+<span class="fc" id="L117">        return (characterClass.baseStats().constitution() + inventory().equipmentStats().get(StatTypes.CONSTITUTION.toString()));</span>
     }
 
     /**
@@ -112,7 +123,7 @@ public abstract class Character {
      * @return
      */
     public int getCurrentHealth() {
-<span class="fc" id="L115">        return this.currentHealth;</span>
+<span class="fc" id="L126">        return this.currentHealth;</span>
     }
 
     /**
@@ -121,13 +132,13 @@ public abstract class Character {
      * @return
      */
     public int decreaseHealth(int amount) {
-<span class="fc" id="L124">        this.currentHealth -= amount;</span>
+<span class="fc" id="L135">        this.currentHealth -= amount;</span>
 
-<span class="fc bfc" id="L126" title="All 2 branches covered.">        if (currentHealth &lt; 0) {</span>
-<span class="fc" id="L127">            this.currentHealth = 0;</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (currentHealth &lt; 0) {</span>
+<span class="fc" id="L138">            this.currentHealth = 0;</span>
         }
 
-<span class="fc" id="L130">        return currentHealth;</span>
+<span class="fc" id="L141">        return currentHealth;</span>
     }
 
     /**
@@ -136,14 +147,18 @@ public abstract class Character {
      * @return
      */
     public int increaseHealth(int amount) {
-<span class="fc" id="L139">        this.currentHealth += amount;</span>
+<span class="fc" id="L150">        this.currentHealth += amount;</span>
 
-<span class="fc bfc" id="L141" title="All 2 branches covered.">        if (currentHealth &gt; getMaxHealth()) {</span>
-<span class="fc" id="L142">            this.currentHealth = getMaxHealth();</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (currentHealth &gt; getMaxHealth()) {</span>
+<span class="fc" id="L153">            this.currentHealth = getMaxHealth();</span>
         }
 
-<span class="fc" id="L145">        return currentHealth;</span>
+<span class="fc" id="L156">        return currentHealth;</span>
     }
+    
+     // =======================================
+     // ---------- INVENTORY METHODS ----------
+     // =======================================
 
     /**
      * Returns the player inventory
@@ -151,7 +166,7 @@ public abstract class Character {
      * @return
      */
     public Inventory inventory() {
-<span class="fc" id="L154">        return inventory;</span>
+<span class="fc" id="L169">        return inventory;</span>
     }
 
     
@@ -162,7 +177,7 @@ public abstract class Character {
      * @return
      */
     public boolean addItem(Item item) {
-<span class="fc" id="L165">        return inventory.addItem(item);</span>
+<span class="fc" id="L180">        return inventory.addItem(item);</span>
     }
 
     /**
@@ -171,7 +186,7 @@ public abstract class Character {
      * @return
      */
     public boolean removeItem(Item item) {
-<span class="fc" id="L174">        return inventory.removeItem(item);</span>
+<span class="fc" id="L189">        return inventory.removeItem(item);</span>
     }
 
     /**
@@ -180,7 +195,7 @@ public abstract class Character {
      * @return
      */
     public Item searchItem(String name) {
-<span class="fc" id="L183">        return inventory.searchItem(name);</span>
+<span class="fc" id="L198">        return inventory.searchItem(name);</span>
     }
 
     /**
@@ -188,7 +203,7 @@ public abstract class Character {
      *
      */
     public boolean equipItem(Item item) {
-<span class="fc" id="L191">        return inventory.equipItem(item, this.level);</span>
+<span class="fc" id="L206">        return inventory.equipItem(item, this.level);</span>
     }
 
     /**
@@ -196,7 +211,7 @@ public abstract class Character {
      *
      */
     public boolean unequipItem(String slot) {
-<span class="fc" id="L199">        return inventory.unequipItem(slot);</span>
+<span class="fc" id="L214">        return inventory.unequipItem(slot);</span>
     }
 
 }

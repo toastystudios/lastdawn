@@ -4,9 +4,6 @@
  */
 package model.npc;
 
-import model.character.Stats;
-import model.enums.StatTypes;
-
 /**
  *
  * @author Toasty Studios

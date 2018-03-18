@@ -5,19 +5,49 @@
  */
 package model.player;
 
+import model.character.ResourceManager;
+import model.npc.NPC;
+
 /**
  *
  * @author Toasty Studios
  */
-public class PlayerChar extends model.character.Character {
+public abstract class PlayerChar extends model.character.Character {
+
+    protected ResourceManager resourceManager;
 
     private static final int STARTING_LEVEL = 1;
+    private static final int EXP_PER_HP = 4;
+
+    private int xp;
 
     public PlayerChar(String playerClass) {
         super(STARTING_LEVEL, playerClass);
+        this.resourceManager = new ResourceManager();
     }
 
-     /**
+    /**
+     * Uses the player basic attack
+     *
+     * @return
+     */
+    public abstract int basicAttack();
+
+    /**
+     * Uses the player ability
+     *
+     * @return
+     */
+    public abstract int ability();
+
+    /**
+     * Uses the player ultimate
+     *
+     * @return
+     */
+    public abstract int ultimate();
+
+    /**
      * Increases the character level by 1, only usable by other method that
      * checks if xp is > than required
      *
@@ -25,6 +55,46 @@ public class PlayerChar extends model.character.Character {
      */
     private int increaseLevel() {
         return level++;
+    }
+
+    /**
+     * Calculates the required xp to level
+     *
+     * @return
+     */
+    private double xpToLevel() {
+        double total = 0;
+        for (int i = 1; i < level; i++) {
+            total += Math.floor(i + 300 * Math.pow(2, i / 7.0));
+        }
+
+        return Math.floor(total / 4);
+    }
+
+    /**
+     * Calculates the xp the player will receive based on the monster health
+     *
+     * @return
+     */
+    private int experienceGained(NPC enemy) {
+        return enemy.getMaxHealth() * EXP_PER_HP;
+    }
+
+    /**
+     * Increases the player xp. If the player reaches the threshold to level up,
+     * increases player level.
+     *
+     * @param amount
+     * @return
+     */
+    public int increaseXP(NPC enemy) {
+        this.xp += experienceGained(enemy);
+
+        if (xp >= (xpToLevel())) {
+            increaseLevel();
+        }
+
+        return xp;
     }
 
 }

@@ -10,22 +10,38 @@ import model.character.Stats;
  *
  * @author Toasty Studios
  */
-public class Classless implements model.character.Class{
+public class Classless implements model.character.Class {
 
-    
+    private static final double MODIFIDER = 0.15;
+
     private Stats stats;
-    
-<span class="fc" id="L18">    public Classless (int constitution, int strength, int intelligence, int dexterity) {</span>
-<span class="fc" id="L19">        this.stats = new Stats(constitution, strength, intelligence, dexterity);</span>
-<span class="fc" id="L20">    }</span>
+
+<span class="fc" id="L19">    public Classless(int constitution, int strength, int intelligence, int dexterity) {</span>
+<span class="fc" id="L20">        this.stats = new Stats(constitution, strength, intelligence, dexterity);</span>
+<span class="fc" id="L21">    }</span>
 
     /**
      * Returns the class base stats
-     * @return 
+     *
+     * @return
      */
     @Override
     public Stats baseStats() {
-<span class="fc" id="L28">        return stats;</span>
+<span class="fc" id="L30">        return stats;</span>
+    }
+
+    // =======================================
+    // ----------- COMBAT METHODS ------------
+    // =======================================
+    
+    /**
+     * Uses the character basic attack
+     *
+     * @return
+     */
+    @Override
+    public int basicAttack() {
+<span class="nc" id="L44">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

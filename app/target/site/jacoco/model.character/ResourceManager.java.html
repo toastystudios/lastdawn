@@ -9,7 +9,61 @@
  *
  * @author Toasty Studios
  */
-<span class="nc" id="L12">public class ResourceManager {</span>
+public class ResourceManager {
+    
+    private static final int MAX_RESOURCE = 100;
+    private static final int GENERATED_PER_ATTACK = 15;
+    private static final int ABILITY = 50;
+    private static final int ULTIMATE = 100;
+    private int current;
+ 
+    /**
+     * init resource
+     */
+<span class="nc" id="L23">    public ResourceManager() {</span>
+<span class="nc" id="L24">        this.current = 0;</span>
+<span class="nc" id="L25">    }</span>
+    
+    /**
+     * Generates character resources
+     * @return 
+     */
+    public int generateResource() {
+<span class="nc" id="L32">        current += GENERATED_PER_ATTACK;</span>
+
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (current &gt; MAX_RESOURCE) {</span>
+<span class="nc" id="L35">            this.current = MAX_RESOURCE;</span>
+        }
+
+<span class="nc" id="L38">        return current;</span>
+    }
+    
+    /**
+     * Spends ability resources
+     * @return 
+     */
+    public int spendAbilityResource() {
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (this.current &lt; ABILITY) {</span>
+<span class="nc" id="L47">            return -1;</span>
+        }
+        
+<span class="nc" id="L50">        return this.current -= ABILITY;</span>
+    }
+    
+    /**
+     * Spends ultimate ability resources
+     * @return 
+     */
+    public int spendUltimateResources() {
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (this.current &lt; ULTIMATE) {</span>
+<span class="nc" id="L59">            return -1;</span>
+        }
+
+<span class="nc" id="L62">        return this.current -= ULTIMATE;</span>
+    }
+    
+    
+    
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

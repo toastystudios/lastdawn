@@ -233,6 +233,15 @@ public class Inventory {
 
 <span class="fc" id="L234">        return equipmentStats;</span>
     }
+    
+    /**
+     * Returns the current equipped weapon damage
+     * @return 
+     */
+    public int weaponDamage() {
+<span class="nc" id="L242">        Weapon weapon = (Weapon) equipped.get(Weapon.class.getSimpleName());</span>
+<span class="nc" id="L243">        return weapon.damage();</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

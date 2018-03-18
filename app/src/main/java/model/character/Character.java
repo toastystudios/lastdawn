@@ -7,10 +7,10 @@ package model.character;
 import model.character.classes.Classless;
 import model.enums.StatTypes;
 import model.item.Item;
-import model.player.classes.Knight;
-import model.player.classes.Paladin;
-import model.player.classes.Ranger;
-import model.player.classes.Scientist;
+import model.player.Knight;
+import model.player.Paladin;
+import model.player.Ranger;
+import model.player.Scientist;
 import model.repo.Inventory;
 
 /**
@@ -19,10 +19,11 @@ import model.repo.Inventory;
  */
 public abstract class Character {
 
-    private final Inventory inventory;
+    protected final Inventory inventory;
     protected int level;
     private int currentHealth;
     private model.character.Class characterClass;
+
 
     /**
      * init player character
@@ -88,6 +89,12 @@ public abstract class Character {
         }
     }
     
+     
+     //=======================================
+     //---------- CHAR. LVL METHODS ----------
+     //=======================================
+     
+    
     /**
      * Returns the current level of a character
      * 
@@ -96,6 +103,10 @@ public abstract class Character {
     public int getLevel(){
         return level;
     }
+    
+     // =======================================
+     // ---------- HEALTH MANAGEMENT ----------
+     // =======================================
     
     /**
      * Calculates the character max health (Base Stats + Weapon and Armour)
@@ -144,6 +155,10 @@ public abstract class Character {
 
         return currentHealth;
     }
+    
+     // =======================================
+     // ---------- INVENTORY METHODS ----------
+     // =======================================
 
     /**
      * Returns the player inventory

@@ -18,5 +18,11 @@ public interface Class {
      * @return 
      */
     public Stats baseStats();
+    
+    /**
+     * Uses the character basic attack
+     * @return 
+     */
+    public int basicAttack();
 
 }
