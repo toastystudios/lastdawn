@@ -2,14 +2,68 @@
  * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
  * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
  */
- 
- package model.game;
+package model.game;
+
+import model.enums.Abilities;
+import model.npc.NPC;
+import model.player.PlayerChar;
+import utils.NumberUtils;
+import model.character.Character;
+import scala.Console;
 
 /**
  *
  * @author Toasty Studios
  */
-<span class="nc" id="L12">public class BattleHandler {</span>
+<span class="nc" id="L18">public class BattleHandler {</span>
+
+    private static final int CRITICAL_MISS = 2;
+    private static final int CRITICAL_HIT = 19;
+    private static final int MISS = 0;
+    private static final double CRITICAL_HIT_MODIFIER = 1.3;
+    private static final int ROLL_BONUS_HIT = 4;
+    private static final int ROLL_INITIATIVE = 10;
+
+    private int attack(Character defender, Character attacker, Abilities ability) {
+
+        //Roll a dice from 1 to 20
+<span class="nc" id="L30">        int diceRoll = Dice.rollDie();</span>
+
+        //Calculate attacker damage if hits
+<span class="nc" id="L33">        int damage = 0;</span>
+
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        if (ability.equals(Abilities.BASIC)) {</span>
+<span class="nc" id="L36">            damage = attacker.basicAttack() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        } else if (ability.equals(Abilities.ABILITY)) {</span>
+<span class="nc" id="L38">            damage = attacker.ability() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        } else if (ability.equals(Abilities.ULTIMATE)) {</span>
+<span class="nc" id="L40">            damage = attacker.ultimate() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();</span>
+        }
+
+        //Try critical hit
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (diceRoll &gt;= CRITICAL_HIT) {</span>
+<span class="nc" id="L45">            return (int) NumberUtils.roundDown(damage * CRITICAL_HIT_MODIFIER);</span>
+        }
+
+        //Try critical miss
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (diceRoll &lt;= CRITICAL_MISS) {</span>
+<span class="nc" id="L50">            attacker.decreaseHealth(1);</span>
+<span class="nc" id="L51">            return MISS;</span>
+        }
+
+        //Compare the roll against enemy's dexterity
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (diceRoll &gt;= defender.dexterity()) {</span>
+
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            if (damage &gt;= 1) {</span>
+<span class="nc" id="L58">                return damage;</span>
+            } else {
+<span class="nc" id="L60">                return MISS;</span>
+            }
+
+        } else {
+<span class="nc" id="L64">            return MISS;</span>
+        }
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -4,14 +4,20 @@
  */
 package model.npc;
 
+import model.enums.StatTypes;
+import utils.NumberUtils;
+
 /**
  *
  * @author Toasty Studios
  */
-public abstract class NPC extends model.character.Character {
+public class NPC extends model.character.Character implements model.character.Class {
+
+    private static final double MODIFIER = 0.15;
 
     private final String name;
     private final String description;
+
     /**
      * init
      *
@@ -19,10 +25,33 @@ public abstract class NPC extends model.character.Character {
      * @param description
      */
     public NPC(String name, String description, int constitution, int strength, int intelligence, int dexterity, int level) {
-<span class="fc" id="L22">        super(level, constitution, strength, intelligence, dexterity);</span>
-<span class="fc" id="L23">        this.name = name;</span>
-<span class="fc" id="L24">        this.description = description;</span>
-<span class="fc" id="L25">    }</span>
-    
+<span class="fc" id="L28">        super(name, level, NPC.class.getSimpleName(), constitution, strength, intelligence, dexterity);</span>
+<span class="fc" id="L29">        this.name = name;</span>
+<span class="fc" id="L30">        this.description = description;</span>
+<span class="fc" id="L31">    }</span>
+
+    // =======================================
+    // ----------- COMBAT METHODS ------------
+    // =======================================
+    /**
+     * Uses the character basic attack
+     *
+     * @return
+     */
+    @Override
+    public int basicAttack() {
+<span class="nc" id="L43">        return (int) NumberUtils.roundDown(((stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) * MODIFIER) + inventory.weaponDamage());</span>
+    }
+
+    @Override
+    public int ability() {
+<span class="nc" id="L48">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+    }
+
+    @Override
+    public int ultimate() {
+<span class="nc" id="L53">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+    }
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -206,6 +206,7 @@ public class Inventory {
         int strength = 0;
         int intelligence = 0;
         int dexterity = 0;
+        int defense = 0;
 
         for (Item item : equipped.values()) {
 
@@ -215,6 +216,7 @@ public class Inventory {
                 strength += ((Armour) item).stats().strength();
                 intelligence += ((Armour) item).stats().intelligence();
                 dexterity += ((Armour) item).stats().dexterity();
+                defense += ((Armour) item).defense();
 
             } else if (item instanceof Weapon && item != null) {
 
@@ -222,6 +224,7 @@ public class Inventory {
                 strength += ((Weapon) item).stats().strength();
                 intelligence += ((Weapon) item).stats().intelligence();
                 dexterity += ((Weapon) item).stats().dexterity();
+                defense += ((Weapon) item).damage();
 
             }
         }
@@ -230,6 +233,7 @@ public class Inventory {
         equipmentStats.put(StatTypes.CONSTITUTION.toString(), constitution);
         equipmentStats.put(StatTypes.INTELLIGENCE.toString(), intelligence);
         equipmentStats.put(StatTypes.DEXTERITY.toString(), dexterity);
+        equipmentStats.put(StatTypes.DEFENSE.toString(), defense);
 
         return equipmentStats;
     }
@@ -241,6 +245,14 @@ public class Inventory {
     public int weaponDamage() {
         Weapon weapon = (Weapon) equipped.get(Weapon.class.getSimpleName());
         return weapon.damage();
+    }
+    
+    /**
+     * Returns the total defense value of the armour
+     * @return 
+     */
+    public int getTotalDefense() {
+        return equipmentStats().get(StatTypes.DEFENSE.toString());
     }
 
 }

@@ -4,13 +4,8 @@
  */
 package model.character;
 
-import model.character.classes.Classless;
 import model.enums.StatTypes;
 import model.item.Item;
-import model.player.Knight;
-import model.player.Paladin;
-import model.player.Ranger;
-import model.player.Scientist;
 import model.repo.Inventory;
 
 /**
@@ -21,8 +16,9 @@ public abstract class Character {
 
     protected final Inventory inventory;
     protected int level;
+    protected Stats stats;
     private int currentHealth;
-    private model.character.Class characterClass;
+    private String name;
 
 
     /**
@@ -31,64 +27,35 @@ public abstract class Character {
      * @param startingLevel
      * @param className
      */
-    public Character(int startingLevel, String className) {
+    public Character(String name, int startingLevel, String className, int constitution, int strength, int intelligence, int dexterity) {
         this.inventory = new Inventory();
         this.level = startingLevel;
-        initClass(className);
+        this.stats = new Stats(constitution, strength, intelligence, dexterity);
         this.currentHealth = getMaxHealth();
     }
+     
 
-    /**
-     * init NPC
-     *
-     * @param startingLevel
-     * @param constitution
-     * @param strength
-     * @param intelligence
-     * @param dexterity
-     */
-    public Character(int startingLevel, int constitution, int strength, int intelligence, int dexterity) {
-        this.inventory = new Inventory();
-        this.level = startingLevel;
-        initClassless(constitution, strength, intelligence, dexterity);
-        this.currentHealth = getMaxHealth();
-    }
-
-    /**
-     * Initializes a classless, programmer-defined class for NPCS
-     *
-     * @param constitution
-     * @param strength
-     * @param intelligence
-     * @param dexterity
-     */
-    private void initClassless(int constitution, int strength, int intelligence, int dexterity) {
-        this.characterClass = new Classless(constitution, strength, intelligence, dexterity);
-    }
-
-    /**
-     * Initializes the character class
-     *
-     * @param playerClass
-     */
-    private void initClass(String className) {
-        if (className.equals(Knight.class.getSimpleName())) {
-            this.characterClass = new Knight();
-        }
-
-        if (className.equals(Paladin.class.getSimpleName())) {
-            this.characterClass = new Paladin();
-        }
-
-        if (className.equals(Ranger.class.getSimpleName())) {
-            this.characterClass = new Ranger();
-        }
-
-        if (className.equals(Scientist.class.getSimpleName())) {
-            this.characterClass = new Scientist();
-        }
-    }
+     //=======================================
+     //------------ CLASS METHODS ------------
+     //=======================================
     
+    /**
+     * Uses the character basic attack
+     * @return 
+     */
+    public abstract int basicAttack();
+    
+    /**
+     * Uses the character ability
+     * @return 
+     */
+    public abstract int ability();
+    
+    /**
+     * Uses the character ultimate
+     * @return 
+     */
+    public abstract int ultimate();
      
      //=======================================
      //---------- CHAR. LVL METHODS ----------
@@ -114,7 +81,7 @@ public abstract class Character {
      * @return
      */
     public int getMaxHealth() {
-        return (characterClass.baseStats().constitution() + inventory().equipmentStats().get(StatTypes.CONSTITUTION.toString()));
+        return (stats.constitution() + inventory().equipmentStats().get(StatTypes.CONSTITUTION.toString()));
     }
 
     /**
@@ -212,6 +179,27 @@ public abstract class Character {
      */
     public boolean unequipItem(String slot) {
         return inventory.unequipItem(slot);
+    }
+    
+    
+     // =======================================
+     // ------------ STATS METHODS ------------
+     // =======================================
+    
+    /**
+     * Returns the character total dexterity
+     * @return 
+     */
+    public int dexterity() {
+        return this.stats.dexterity() + inventory.equipmentStats().get(StatTypes.DEXTERITY);
+    }
+    
+    /**
+     * Returns the character defense
+     * @return 
+     */
+    public int defense() {
+        return inventory.getTotalDefense();
     }
 
 }

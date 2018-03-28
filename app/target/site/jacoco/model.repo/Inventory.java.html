@@ -206,32 +206,36 @@ public class Inventory {
 <span class="fc" id="L206">        int strength = 0;</span>
 <span class="fc" id="L207">        int intelligence = 0;</span>
 <span class="fc" id="L208">        int dexterity = 0;</span>
+<span class="fc" id="L209">        int defense = 0;</span>
 
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        for (Item item : equipped.values()) {</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">        for (Item item : equipped.values()) {</span>
 
-<span class="nc bnc" id="L212" title="All 4 branches missed.">            if (item instanceof Armour &amp;&amp; item != null) {</span>
+<span class="nc bnc" id="L213" title="All 4 branches missed.">            if (item instanceof Armour &amp;&amp; item != null) {</span>
 
-<span class="nc" id="L214">                constitution += ((Armour) item).stats().constitution();</span>
-<span class="nc" id="L215">                strength += ((Armour) item).stats().strength();</span>
-<span class="nc" id="L216">                intelligence += ((Armour) item).stats().intelligence();</span>
-<span class="nc" id="L217">                dexterity += ((Armour) item).stats().dexterity();</span>
+<span class="nc" id="L215">                constitution += ((Armour) item).stats().constitution();</span>
+<span class="nc" id="L216">                strength += ((Armour) item).stats().strength();</span>
+<span class="nc" id="L217">                intelligence += ((Armour) item).stats().intelligence();</span>
+<span class="nc" id="L218">                dexterity += ((Armour) item).stats().dexterity();</span>
+<span class="nc" id="L219">                defense += ((Armour) item).defense();</span>
 
-<span class="nc bnc" id="L219" title="All 4 branches missed.">            } else if (item instanceof Weapon &amp;&amp; item != null) {</span>
+<span class="nc bnc" id="L221" title="All 4 branches missed.">            } else if (item instanceof Weapon &amp;&amp; item != null) {</span>
 
-<span class="nc" id="L221">                constitution += ((Weapon) item).stats().constitution();</span>
-<span class="nc" id="L222">                strength += ((Weapon) item).stats().strength();</span>
-<span class="nc" id="L223">                intelligence += ((Weapon) item).stats().intelligence();</span>
-<span class="nc" id="L224">                dexterity += ((Weapon) item).stats().dexterity();</span>
+<span class="nc" id="L223">                constitution += ((Weapon) item).stats().constitution();</span>
+<span class="nc" id="L224">                strength += ((Weapon) item).stats().strength();</span>
+<span class="nc" id="L225">                intelligence += ((Weapon) item).stats().intelligence();</span>
+<span class="nc" id="L226">                dexterity += ((Weapon) item).stats().dexterity();</span>
+<span class="nc" id="L227">                defense += ((Weapon) item).damage();</span>
 
             }
-<span class="nc" id="L227">        }</span>
+<span class="nc" id="L230">        }</span>
 
-<span class="fc" id="L229">        equipmentStats.put(StatTypes.STRENGTH.toString(), strength);</span>
-<span class="fc" id="L230">        equipmentStats.put(StatTypes.CONSTITUTION.toString(), constitution);</span>
-<span class="fc" id="L231">        equipmentStats.put(StatTypes.INTELLIGENCE.toString(), intelligence);</span>
-<span class="fc" id="L232">        equipmentStats.put(StatTypes.DEXTERITY.toString(), dexterity);</span>
+<span class="fc" id="L232">        equipmentStats.put(StatTypes.STRENGTH.toString(), strength);</span>
+<span class="fc" id="L233">        equipmentStats.put(StatTypes.CONSTITUTION.toString(), constitution);</span>
+<span class="fc" id="L234">        equipmentStats.put(StatTypes.INTELLIGENCE.toString(), intelligence);</span>
+<span class="fc" id="L235">        equipmentStats.put(StatTypes.DEXTERITY.toString(), dexterity);</span>
+<span class="fc" id="L236">        equipmentStats.put(StatTypes.DEFENSE.toString(), defense);</span>
 
-<span class="fc" id="L234">        return equipmentStats;</span>
+<span class="fc" id="L238">        return equipmentStats;</span>
     }
     
     /**
@@ -239,8 +243,16 @@ public class Inventory {
      * @return 
      */
     public int weaponDamage() {
-<span class="nc" id="L242">        Weapon weapon = (Weapon) equipped.get(Weapon.class.getSimpleName());</span>
-<span class="nc" id="L243">        return weapon.damage();</span>
+<span class="nc" id="L246">        Weapon weapon = (Weapon) equipped.get(Weapon.class.getSimpleName());</span>
+<span class="nc" id="L247">        return weapon.damage();</span>
+    }
+    
+    /**
+     * Returns the total defense value of the armour
+     * @return 
+     */
+    public int getTotalDefense() {
+<span class="nc" id="L255">        return equipmentStats().get(StatTypes.DEFENSE.toString());</span>
     }
 
 }

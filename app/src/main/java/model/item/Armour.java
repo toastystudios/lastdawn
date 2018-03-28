@@ -37,5 +37,13 @@ public abstract class Armour extends Item {
     public Stats stats() {
         return this.stats;
     }
+    
+    /**
+     * Returns the items defense level
+     * @return 
+     */
+    public int defense() {
+        return this.defense;
+    }
 
 }

@@ -2,43 +2,29 @@
  * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
  * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
  */
-
 package model.enums;
 
 /**
  *
- * @author Toasty Studios
+ * @author ruial
  */
-public enum StatTypes {
-    STRENGTH {
+public enum Abilities {
+    BASIC {
         @Override
         public String toString() {
-            return "Strength";
+            return "Basic";
         }
     },
-    CONSTITUTION {
+    ABILITY {
         @Override
         public String toString() {
-            return "Constitution";
+            return "Ability";
         }
     },
-    INTELLIGENCE {
+    ULTIMATE {
         @Override
         public String toString() {
-            return "Intelligence";
-        }
-    },
-    DEXTERITY {
-        @Override
-        public String toString() {
-            return "Dexterity";
-        }
-    },
-    DEFENSE {
-        @Override
-        public String toString() {
-            return "Defense";
+            return "Ultimate";
         }
     }
-    
 }

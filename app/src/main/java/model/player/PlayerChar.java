@@ -6,7 +6,6 @@
 package model.player;
 
 import model.character.ResourceManager;
-import model.npc.NPC;
 
 /**
  *
@@ -15,14 +14,14 @@ import model.npc.NPC;
 public abstract class PlayerChar extends model.character.Character {
 
     protected ResourceManager resourceManager;
-
+    protected model.character.Class playerClass;
     private static final int STARTING_LEVEL = 1;
     private static final int EXP_PER_HP = 4;
 
     private int xp;
 
-    public PlayerChar(String playerClass) {
-        super(STARTING_LEVEL, playerClass);
+    public PlayerChar(String name, String playerClass, int constitution, int strength, int intelligence, int dexterity) {
+        super(name, STARTING_LEVEL, playerClass, constitution, strength, intelligence, dexterity);
         this.resourceManager = new ResourceManager();
     }
 
@@ -31,6 +30,7 @@ public abstract class PlayerChar extends model.character.Character {
      *
      * @return
      */
+    @Override
     public abstract int basicAttack();
 
     /**
@@ -38,6 +38,7 @@ public abstract class PlayerChar extends model.character.Character {
      *
      * @return
      */
+    @Override
     public abstract int ability();
 
     /**
@@ -45,6 +46,7 @@ public abstract class PlayerChar extends model.character.Character {
      *
      * @return
      */
+    @Override
     public abstract int ultimate();
 
     /**
@@ -76,7 +78,7 @@ public abstract class PlayerChar extends model.character.Character {
      *
      * @return
      */
-    private int experienceGained(NPC enemy) {
+    private int experienceGained(model.character.Character enemy) {
         return enemy.getMaxHealth() * EXP_PER_HP;
     }
 
@@ -87,7 +89,7 @@ public abstract class PlayerChar extends model.character.Character {
      * @param amount
      * @return
      */
-    public int increaseXP(NPC enemy) {
+    public int increaseXP(model.character.Character enemy) {
         this.xp += experienceGained(enemy);
 
         if (xp >= (xpToLevel())) {

@@ -4,7 +4,6 @@
  */
 package model.player;
 
-import model.character.Stats;
 import model.enums.StatTypes;
 import model.player.PlayerChar;
 import utils.NumberUtils;
@@ -21,27 +20,13 @@ public class Paladin extends PlayerChar implements model.character.Class {
     private static final int BASE_DEXTERITY = 10;
     private static final double MODIFIER = 0.15;
 
-    private Stats stats;
-
-    public Paladin() {
-<span class="nc" id="L27">        super(Paladin.class.getSimpleName());</span>
-<span class="nc" id="L28">        this.stats = new Stats(BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);</span>
-<span class="nc" id="L29">    }</span>
-
-    /**
-     * Returns the class base stats
-     *
-     * @return
-     */
-    @Override
-    public Stats baseStats() {
-<span class="nc" id="L38">        return stats;</span>
-    }
+    public Paladin(String name) {
+<span class="nc" id="L24">        super(name, Paladin.class.getSimpleName(), BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);</span>
+<span class="nc" id="L25">    }</span>
 
     // =======================================
     // ----------- COMBAT METHODS ------------
     // =======================================
-    
     /**
      * Uses the character basic attack
      *
@@ -49,9 +34,9 @@ public class Paladin extends PlayerChar implements model.character.Class {
      */
     @Override
     public int basicAttack() {
-<span class="nc" id="L52">        return (int) NumberUtils.roundDown(((stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) * MODIFIER) + inventory.weaponDamage());</span>
+<span class="nc" id="L37">        resourceManager.generateResource();</span>
+<span class="nc" id="L38">        return (int) NumberUtils.roundDown(((stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) * MODIFIER) + inventory.weaponDamage());</span>
     }
-
 
     /**
      * Uses the character ability
@@ -60,7 +45,11 @@ public class Paladin extends PlayerChar implements model.character.Class {
      */
     @Override
     public int ability() {
-<span class="nc" id="L63">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (resourceManager.spendAbilityResource() != -1) {</span>
+<span class="nc" id="L49">            throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+        } else {
+<span class="nc" id="L51">            return -1;</span>
+        }
     }
 
     /**
@@ -70,7 +59,11 @@ public class Paladin extends PlayerChar implements model.character.Class {
      */
     @Override
     public int ultimate() {
-<span class="nc" id="L73">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (resourceManager.spendUltimateResources() != -1) {</span>
+<span class="nc" id="L63">            throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+        } else {
+<span class="nc" id="L65">            return -1;</span>
+        }
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

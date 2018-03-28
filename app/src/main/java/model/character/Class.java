@@ -14,15 +14,21 @@ import model.character.Stats;
 public interface Class {
     
     /**
-     * Returns the class base stats
-     * @return 
-     */
-    public Stats baseStats();
-    
-    /**
      * Uses the character basic attack
      * @return 
      */
     public int basicAttack();
+    
+    /**
+     * Uses the character ability
+     * @return 
+     */
+    public int ability();
+    
+    /**
+     * Uses the character ultimate
+     * @return 
+     */
+    public int ultimate();
 
 }

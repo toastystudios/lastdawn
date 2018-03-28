@@ -4,7 +4,6 @@
  */
 package model.player;
 
-import model.character.Stats;
 import model.enums.StatTypes;
 import model.player.PlayerChar;
 import utils.NumberUtils;
@@ -21,27 +20,13 @@ public class Paladin extends PlayerChar implements model.character.Class {
     private static final int BASE_DEXTERITY = 10;
     private static final double MODIFIER = 0.15;
 
-    private Stats stats;
-
-    public Paladin() {
-        super(Paladin.class.getSimpleName());
-        this.stats = new Stats(BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);
-    }
-
-    /**
-     * Returns the class base stats
-     *
-     * @return
-     */
-    @Override
-    public Stats baseStats() {
-        return stats;
+    public Paladin(String name) {
+        super(name, Paladin.class.getSimpleName(), BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);
     }
 
     // =======================================
     // ----------- COMBAT METHODS ------------
     // =======================================
-    
     /**
      * Uses the character basic attack
      *
@@ -49,9 +34,9 @@ public class Paladin extends PlayerChar implements model.character.Class {
      */
     @Override
     public int basicAttack() {
+        resourceManager.generateResource();
         return (int) NumberUtils.roundDown(((stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) * MODIFIER) + inventory.weaponDamage());
     }
-
 
     /**
      * Uses the character ability
@@ -60,7 +45,11 @@ public class Paladin extends PlayerChar implements model.character.Class {
      */
     @Override
     public int ability() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (resourceManager.spendAbilityResource() != -1) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } else {
+            return -1;
+        }
     }
 
     /**
@@ -70,6 +59,10 @@ public class Paladin extends PlayerChar implements model.character.Class {
      */
     @Override
     public int ultimate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (resourceManager.spendUltimateResources() != -1) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } else {
+            return -1;
+        }
     }
 }
