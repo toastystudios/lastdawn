@@ -25,9 +25,10 @@ public abstract class Armour extends Item {
      * @param unique
      * @param level 
      */
-    public Armour(String name, String description, int value, String rarity, boolean unique, int level, int defense) {
+    public Armour(String name, String description, int value, String rarity, boolean unique, int level, int defense, int constitution, int intelligence, int strength, int dexterity) {
         super(name, description, value, rarity, unique, level);
         this.defense = defense;
+        this.stats = new Stats(constitution, strength, intelligence, dexterity);
     }
     
     /**

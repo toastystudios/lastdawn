@@ -26,9 +26,10 @@ public class Weapon extends Item {
      * @param level
      * @param damage 
      */
-    public Weapon(String name, String description, int value, String rarity, boolean unique, int level, int damage) {
+    public Weapon(String name, String description, int value, String rarity, boolean unique, int level, int damage, int constitution, int strength, int intelligence, int dexterity) {
         super(name, description, value, rarity, unique, level);
         this.damage = damage;
+        this.stats = new Stats(constitution, strength, intelligence, dexterity);
     }
     
     /**

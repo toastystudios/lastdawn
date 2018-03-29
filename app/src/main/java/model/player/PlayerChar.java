@@ -48,6 +48,15 @@ public abstract class PlayerChar extends model.character.Character {
      */
     @Override
     public abstract int ultimate();
+    
+    
+    /**
+     * Returns how many resources the player has
+     * @return 
+     */
+    public int getResources() {
+        return this.resourceManager.getResources();
+    }
 
     /**
      * Increases the character level by 1, only usable by other method that

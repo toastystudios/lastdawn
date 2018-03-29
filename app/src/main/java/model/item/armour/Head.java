@@ -12,8 +12,8 @@ import model.item.Armour;
  */
 public class Head extends Armour {
 
-    public Head(String name, String description, int value, String rarity, boolean unique, int level, int defense) {
-        super(name, description, value, rarity, unique, level, defense);
+    public Head(String name, String description, int value, String rarity, boolean unique, int level, int defense, int constitution, int strength, int intelligence, int dexterity) {
+        super(name, description, value, rarity, unique, level, defense, constitution, intelligence, strength, dexterity);
     }
 
 }

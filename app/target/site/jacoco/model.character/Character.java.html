@@ -191,7 +191,7 @@ public abstract class Character {
      * @return 
      */
     public int dexterity() {
-<span class="nc" id="L194">        return this.stats.dexterity() + inventory.equipmentStats().get(StatTypes.DEXTERITY);</span>
+<span class="nc" id="L194">        return this.stats.dexterity() + inventory.equipmentStats().get(StatTypes.DEXTERITY.toString());</span>
     }
     
     /**

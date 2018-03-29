@@ -25,17 +25,18 @@ public abstract class Armour extends Item {
      * @param unique
      * @param level 
      */
-    public Armour(String name, String description, int value, String rarity, boolean unique, int level, int defense) {
+    public Armour(String name, String description, int value, String rarity, boolean unique, int level, int defense, int constitution, int intelligence, int strength, int dexterity) {
 <span class="fc" id="L29">        super(name, description, value, rarity, unique, level);</span>
 <span class="fc" id="L30">        this.defense = defense;</span>
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L31">        this.stats = new Stats(constitution, strength, intelligence, dexterity);</span>
+<span class="fc" id="L32">    }</span>
     
     /**
      * Returns the armour stat bonus
      * @return 
      */
     public Stats stats() {
-<span class="nc" id="L38">        return this.stats;</span>
+<span class="nc" id="L39">        return this.stats;</span>
     }
     
     /**
@@ -43,7 +44,7 @@ public abstract class Armour extends Item {
      * @return 
      */
     public int defense() {
-<span class="nc" id="L46">        return this.defense;</span>
+<span class="nc" id="L47">        return this.defense;</span>
     }
 
 }

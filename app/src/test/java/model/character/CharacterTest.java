@@ -29,7 +29,7 @@ public class CharacterTest {
     @Before
     public void setUp() {
         this.character = new GeneralNPC("Joseph Manners", "The usual Manners, pacient and wise, he runs the tests.", 10, 10, 10, 10, 10);
-        this.item = new Weapon("Sword of only one pointy edge", "It's your usual sword..you stab them with the pointy end.", 5000, "Rare", true, 10, 10);
+        this.item = new Weapon("Sword of only one pointy edge", "It's your usual sword..you stab them with the pointy end.", 5000, "Rare", true, 10, 10, 1, 1, 1, 1);
     }
 
     /**
@@ -129,7 +129,7 @@ public class CharacterTest {
         assertEquals("Should be able to equip a sword below or equal char level", expResult, result);
 
         expResult = false;
-        result = this.character.equipItem(new Head("Head made of heads!", "Brutal..!!! RAAAAAAAGRG", 10, "Rare", true, 21, 10));
+        result = this.character.equipItem(new Head("Head made of heads!", "Brutal..!!! RAAAAAAAGRG", 10, "Rare", true, 21, 10, 1, 1, 1, 1));
         assertEquals("Should not be able to equip as head is > than char level", expResult, result);
 
     }

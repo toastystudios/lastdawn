@@ -133,13 +133,13 @@ public class Inventory {
      */
     public boolean equipArmour(Armour armour) {
         if (armour instanceof Head) {
-            return equipItem(Head.class.getSimpleName(), armour);
+            return equipItem(Head.class.getSimpleName(), (Head) armour);
         } else if (armour instanceof Chest) {
-            return equipItem(Chest.class.getSimpleName(), armour);
+            return equipItem(Chest.class.getSimpleName(), (Chest) armour);
         } else if (armour instanceof Legs) {
-            return equipItem(Legs.class.getSimpleName(), armour);
+            return equipItem(Legs.class.getSimpleName(), (Legs) armour);
         } else if (armour instanceof Jewelry) {
-            return equipItem(Jewelry.class.getSimpleName(), armour);
+            return equipItem(Jewelry.class.getSimpleName(), (Jewelry) armour);
         } else {
             return false;
         }
@@ -160,12 +160,11 @@ public class Inventory {
      */
     private boolean equipItem(String slot, Item item) {
         Item current = equipped.get(slot);
-
-        if (current != null) {          
+        if (current != null) {
             items.put(current.name(), current);
+            items.remove(item.name());
         }
 
-        items.remove(item.name());
         equipped.put(slot, item);
         return equipped.containsKey(slot);
     }
@@ -182,13 +181,14 @@ public class Inventory {
             return false;
         } else {
             Item item = equipped.get(slot);
-            
-            if (item == null)
+
+            if (item == null) {
                 return false;
-            
+            }
+
             equipped.remove(slot);
             items.put(item.name(), item);
-            
+
             return items.containsKey(item.name());
         }
     }
@@ -211,13 +211,11 @@ public class Inventory {
         for (Item item : equipped.values()) {
 
             if (item instanceof Armour && item != null) {
-
                 constitution += ((Armour) item).stats().constitution();
                 strength += ((Armour) item).stats().strength();
                 intelligence += ((Armour) item).stats().intelligence();
                 dexterity += ((Armour) item).stats().dexterity();
                 defense += ((Armour) item).defense();
-
             } else if (item instanceof Weapon && item != null) {
 
                 constitution += ((Weapon) item).stats().constitution();
@@ -237,22 +235,33 @@ public class Inventory {
 
         return equipmentStats;
     }
-    
+
     /**
      * Returns the current equipped weapon damage
-     * @return 
+     *
+     * @return
      */
     public int weaponDamage() {
         Weapon weapon = (Weapon) equipped.get(Weapon.class.getSimpleName());
         return weapon.damage();
     }
-    
+
     /**
      * Returns the total defense value of the armour
-     * @return 
+     *
+     * @return
      */
     public int getTotalDefense() {
         return equipmentStats().get(StatTypes.DEFENSE.toString());
+    }
+    
+    /**
+     * Returns the equipped item on a determined slot
+     * @param slot
+     * @return 
+     */
+    public Item searchSlot(String slot) {
+        return equipped.get(slot);
     }
 
 }

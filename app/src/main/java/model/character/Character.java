@@ -5,7 +5,13 @@
 package model.character;
 
 import model.enums.StatTypes;
+import model.item.Armour;
 import model.item.Item;
+import model.item.Weapon;
+import model.item.armour.Chest;
+import model.item.armour.Head;
+import model.item.armour.Jewelry;
+import model.item.armour.Legs;
 import model.repo.Inventory;
 
 /**
@@ -20,7 +26,6 @@ public abstract class Character {
     private int currentHealth;
     private String name;
 
-
     /**
      * init player character
      *
@@ -33,48 +38,46 @@ public abstract class Character {
         this.stats = new Stats(constitution, strength, intelligence, dexterity);
         this.currentHealth = getMaxHealth();
     }
-     
 
-     //=======================================
-     //------------ CLASS METHODS ------------
-     //=======================================
-    
+    //=======================================
+    //------------ CLASS METHODS ------------
+    //=======================================
     /**
      * Uses the character basic attack
-     * @return 
+     *
+     * @return
      */
     public abstract int basicAttack();
-    
+
     /**
      * Uses the character ability
-     * @return 
+     *
+     * @return
      */
     public abstract int ability();
-    
+
     /**
      * Uses the character ultimate
-     * @return 
+     *
+     * @return
      */
     public abstract int ultimate();
-     
-     //=======================================
-     //---------- CHAR. LVL METHODS ----------
-     //=======================================
-     
-    
+
+    //=======================================
+    //---------- CHAR. LVL METHODS ----------
+    //=======================================
     /**
      * Returns the current level of a character
-     * 
-     * @return  
+     *
+     * @return
      */
-    public int getLevel(){
+    public int getLevel() {
         return level;
     }
-    
-     // =======================================
-     // ---------- HEALTH MANAGEMENT ----------
-     // =======================================
-    
+
+    // =======================================
+    // ---------- HEALTH MANAGEMENT ----------
+    // =======================================
     /**
      * Calculates the character max health (Base Stats + Weapon and Armour)
      *
@@ -122,11 +125,10 @@ public abstract class Character {
 
         return currentHealth;
     }
-    
-     // =======================================
-     // ---------- INVENTORY METHODS ----------
-     // =======================================
 
+    // =======================================
+    // ---------- INVENTORY METHODS ----------
+    // =======================================
     /**
      * Returns the player inventory
      *
@@ -135,8 +137,6 @@ public abstract class Character {
     public Inventory inventory() {
         return inventory;
     }
-
-    
 
     /**
      * Adds an item to the inventory
@@ -170,7 +170,68 @@ public abstract class Character {
      *
      */
     public boolean equipItem(Item item) {
-        return inventory.equipItem(item, this.level);
+        if (item instanceof Weapon) {
+            Weapon currentEquipped = (Weapon) inventory.searchSlot(Weapon.class.getSimpleName());
+
+            if (inventory.equipItem(item, level)) {
+
+                int healthDiff;
+
+                if (currentEquipped == null) {
+                    healthDiff = ((Weapon) item).stats().constitution();
+                } else {
+                    healthDiff = ((Weapon) item).stats().constitution() - currentEquipped.stats().constitution();
+                }
+
+                if (healthDiff > 0) {
+                    increaseHealth(healthDiff);
+                } else {
+                    decreaseHealth(healthDiff);
+                    if (currentHealth == 0) {
+                        currentHealth = 1;
+                    }
+                }
+
+                return true;
+            }
+        } else if (item instanceof Armour) {
+            Armour currentEquipped = null;
+
+            if (item instanceof Head) {
+                currentEquipped = (Armour) inventory.searchSlot(Head.class.getSimpleName());
+            }
+            if (item instanceof Chest) {
+                currentEquipped = (Armour) inventory.searchSlot(Chest.class.getSimpleName());
+            }
+            if (item instanceof Legs) {
+                currentEquipped = (Legs) inventory.searchSlot(Legs.class.getSimpleName());
+            }
+            if (item instanceof Jewelry) {
+                currentEquipped = (Jewelry) inventory.searchSlot(Jewelry.class.getSimpleName());
+            }
+
+            if (inventory.equipItem(item, level)) {
+                int healthDiff;
+
+                if (currentEquipped == null) {
+                    healthDiff = ((Armour) item).stats().constitution();
+                } else {
+                    healthDiff = ((Armour) item).stats().constitution() - currentEquipped.stats().constitution();
+                }
+
+                if (healthDiff > 0) {
+                    increaseHealth(healthDiff);
+                } else {
+                    decreaseHealth(healthDiff);
+                    if (currentHealth == 0) {
+                        currentHealth = 1;
+                    }
+                }
+
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -178,25 +239,57 @@ public abstract class Character {
      *
      */
     public boolean unequipItem(String slot) {
-        return inventory.unequipItem(slot);
+        
+        Item item = inventory.searchSlot(slot);
+
+        if (item instanceof Weapon) {
+
+            if (inventory.unequipItem(slot)) {
+
+                int healthDiff = ((Weapon) item).stats().constitution();
+
+                decreaseHealth(healthDiff);
+
+                if (currentHealth <= 0) {
+                    currentHealth = 1;
+                }
+
+                return true;
+
+            }
+        } else if (item instanceof Armour) {
+
+            if (inventory.unequipItem(slot)) {
+                int healthDiff = ((Armour) item).stats().constitution();
+
+                decreaseHealth(healthDiff);
+
+                if (currentHealth <= 0) {
+                    currentHealth = 1;
+                }
+
+                return true;
+            }
+        }
+        return false;
     }
-    
-    
-     // =======================================
-     // ------------ STATS METHODS ------------
-     // =======================================
-    
+
+    // =======================================
+    // ------------ STATS METHODS ------------
+    // =======================================
     /**
      * Returns the character total dexterity
-     * @return 
+     *
+     * @return
      */
     public int dexterity() {
-        return this.stats.dexterity() + inventory.equipmentStats().get(StatTypes.DEXTERITY);
+        return this.stats.dexterity() + inventory.equipmentStats().get(StatTypes.DEXTERITY.toString());
     }
-    
+
     /**
      * Returns the character defense
-     * @return 
+     *
+     * @return
      */
     public int defense() {
         return inventory.getTotalDefense();

@@ -13,8 +13,8 @@ import model.item.Armour;
  */
 public class Chest extends Armour {
 
-    public Chest(String name, String description, int value, String rarity, boolean unique, int level, int defense) {
-        super(name, description, value, rarity, unique, level, defense);
+    public Chest(String name, String description, int value, String rarity, boolean unique, int level, int defense, int constitution, int strength, int intelligence, int dexterity) {
+        super(name, description, value, rarity, unique, level, defense, constitution, intelligence, strength, dexterity);
     }
 
 }

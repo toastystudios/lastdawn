@@ -62,6 +62,14 @@ public class ResourceManager {
         return this.current -= ULTIMATE;
     }
     
+    /**
+     * Returns current amount of resources
+     * @return 
+     */
+    public int getResources() {
+        return this.current;
+    }
+    
     
     
 
