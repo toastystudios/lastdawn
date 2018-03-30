@@ -10,11 +10,19 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -38,10 +46,37 @@ public class MainMenuUI extends JFrame {
     private JButton optionsButton;
     private JButton exitButton;
     private JDialog optionsUI;
+    private AudioFormat af;
+    private Clip clip;
 
     public MainMenuUI() {
         super();
+        initSound();
         initUI();
+    }
+
+    private void initSound() {
+        try {
+            InputStream is = getClass().getResourceAsStream("/sound/menu.wav");
+            AudioInputStream as1 = AudioSystem.getAudioInputStream(new BufferedInputStream(is));
+            clip = AudioSystem.getClip();
+            DataLine.Info info = new DataLine.Info(Clip.class, af);
+            
+            Line line = AudioSystem.getLine(info);
+            
+            if (!line.isOpen()) {
+                clip.open(as1);
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+                clip.start();
+            }
+            
+        } catch (UnsupportedAudioFileException ex)  {
+            System.out.println("The audio file has imploded! Bad luck to whoever is going to fix this..");
+        } catch(IOException ex) {
+            System.out.println("IO Exception..not again!");
+        } catch(LineUnavailableException ex) {
+            System.out.println("Line is unavailable, please call on a later time!");
+        }
     }
 
     private void initUI() {
@@ -143,7 +178,7 @@ public class MainMenuUI extends JFrame {
         newGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO
+               clip.stop();
             }
         });
     }
@@ -152,7 +187,7 @@ public class MainMenuUI extends JFrame {
         loadGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO
+               clip.stop();
             }
         });
     }

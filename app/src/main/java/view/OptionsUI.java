@@ -108,7 +108,7 @@ public class OptionsUI extends JDialog {
         volumeOnRB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                volumeControl.manageSound(true);
+                volumeControl.manageSound(false);
             }
         });
         
@@ -120,7 +120,7 @@ public class OptionsUI extends JDialog {
         volumeOffRB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                volumeControl.manageSound(false);
+                volumeControl.manageSound(true);
             }
         });
         
