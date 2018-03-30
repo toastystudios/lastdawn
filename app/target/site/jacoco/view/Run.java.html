@@ -4,53 +4,24 @@
  */
 package view;
 
+import java.io.IOException;
 import java.util.logging.Logger;
-import model.game.BattleHandler;
-import model.item.Weapon;
-import model.item.armour.Chest;
-import model.item.armour.Head;
-import model.item.armour.Jewelry;
-import model.item.armour.Legs;
-import model.npc.NPC;
-import model.player.Knight;
-import model.player.PlayerChar;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  * @author Toasty Studios
  */
-<span class="nc" id="L22">public class Run {</span>
+<span class="nc" id="L15">public class Run {</span>
 
-<span class="nc" id="L24">    private static Logger logger = Logger.getLogger(&quot;InfoLogging&quot;);</span>
+<span class="nc" id="L17">    private static Logger logger = Logger.getLogger(&quot;InfoLogging&quot;);</span>
 
-    public static void main(String[] args) throws InterruptedException {
-<span class="nc" id="L27">        logger.info(&quot;Logging an INFO-level message&quot;);</span>
+    public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+<span class="nc" id="L20">        logger.info(&quot;Logging an INFO-level message&quot;);</span>
 
-<span class="nc" id="L29">        Knight player = new Knight(&quot;Rafastang&quot;);</span>
-<span class="nc" id="L30">        Head head = new Head(&quot;Capacete&quot;, &quot;asdf&quot;, 10, &quot;Rare&quot;, false, 1, 1, 5, 5, 5, 5);</span>
-<span class="nc" id="L31">        Chest chest = new Chest(&quot;Chest&quot;, &quot;asdf&quot;, 10, &quot;Rare&quot;, false, 1, 1, 5, 5, 5, 5);</span>
-<span class="nc" id="L32">        Legs legs = new Legs(&quot;Legs&quot;, &quot;asdf&quot;, 10, &quot;Rare&quot;, false, 1, 1, 5, 5, 5, 5);</span>
-<span class="nc" id="L33">        Jewelry jewelry = new Jewelry(&quot;Amulet&quot;, &quot;asdf&quot;, 10, &quot;Rare&quot;, false, 1, 1, 5, 5, 5, 5);</span>
-<span class="nc" id="L34">        Weapon weapon = new Weapon(&quot;Yes&quot;, &quot;no&quot;, 10, &quot;Rare&quot;, false, 1, 5, 5, 5, 5, 5);</span>
-<span class="nc" id="L35">        player.equipItem(head);</span>
-<span class="nc" id="L36">        player.equipItem(chest);</span>
-<span class="nc" id="L37">        player.equipItem(legs);</span>
-<span class="nc" id="L38">        player.equipItem(jewelry);</span>
-<span class="nc" id="L39">        player.equipItem(weapon);</span>
-<span class="nc" id="L40">        NPC npc = new NPC(&quot;MonstroFdd&quot;, &quot;asdf&quot;, 5, 5, 5, 5, 1);</span>
-<span class="nc" id="L41">        npc.equipItem(head);</span>
-<span class="nc" id="L42">        npc.equipItem(chest);</span>
-<span class="nc" id="L43">        npc.equipItem(legs);</span>
-<span class="nc" id="L44">        npc.equipItem(jewelry);</span>
-<span class="nc" id="L45">        npc.equipItem(weapon);</span>
-<span class="nc" id="L46">        BattleHandler battle = new BattleHandler();</span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (battle.battlePVE(player, npc) instanceof PlayerChar) {</span>
-<span class="nc" id="L48">            System.out.println(&quot;The player has won!&quot;);</span>
-        } else {
-<span class="nc" id="L50">            System.out.println(&quot;The npc has won!&quot;);</span>
-        }
+<span class="nc" id="L22">        new MainMenuUI();</span>
 
-<span class="nc" id="L53">    }</span>
+<span class="nc" id="L24">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -5,7 +5,13 @@
 package model.character;
 
 import model.enums.StatTypes;
+import model.item.Armour;
 import model.item.Item;
+import model.item.Weapon;
+import model.item.armour.Chest;
+import model.item.armour.Head;
+import model.item.armour.Jewelry;
+import model.item.armour.Legs;
 import model.repo.Inventory;
 
 /**
@@ -20,68 +26,65 @@ public abstract class Character {
     private int currentHealth;
     private String name;
 
-
     /**
      * init player character
      *
      * @param startingLevel
      * @param className
      */
-<span class="fc" id="L30">    public Character(String name, int startingLevel, String className, int constitution, int strength, int intelligence, int dexterity) {</span>
-<span class="fc" id="L31">        this.inventory = new Inventory();</span>
-<span class="fc" id="L32">        this.level = startingLevel;</span>
-<span class="fc" id="L33">        this.stats = new Stats(constitution, strength, intelligence, dexterity);</span>
-<span class="fc" id="L34">        this.currentHealth = getMaxHealth();</span>
-<span class="fc" id="L35">    }</span>
-     
+<span class="fc" id="L35">    public Character(String name, int startingLevel, String className, int constitution, int strength, int intelligence, int dexterity) {</span>
+<span class="fc" id="L36">        this.inventory = new Inventory();</span>
+<span class="fc" id="L37">        this.level = startingLevel;</span>
+<span class="fc" id="L38">        this.stats = new Stats(constitution, strength, intelligence, dexterity);</span>
+<span class="fc" id="L39">        this.currentHealth = getMaxHealth();</span>
+<span class="fc" id="L40">    }</span>
 
-     //=======================================
-     //------------ CLASS METHODS ------------
-     //=======================================
-    
+    //=======================================
+    //------------ CLASS METHODS ------------
+    //=======================================
     /**
      * Uses the character basic attack
-     * @return 
+     *
+     * @return
      */
     public abstract int basicAttack();
-    
+
     /**
      * Uses the character ability
-     * @return 
+     *
+     * @return
      */
     public abstract int ability();
-    
+
     /**
      * Uses the character ultimate
-     * @return 
+     *
+     * @return
      */
     public abstract int ultimate();
-     
-     //=======================================
-     //---------- CHAR. LVL METHODS ----------
-     //=======================================
-     
-    
+
+    //=======================================
+    //---------- CHAR. LVL METHODS ----------
+    //=======================================
     /**
      * Returns the current level of a character
-     * 
-     * @return  
+     *
+     * @return
      */
-    public int getLevel(){
-<span class="nc" id="L71">        return level;</span>
+    public int getLevel() {
+<span class="nc" id="L75">        return level;</span>
     }
-    
-     // =======================================
-     // ---------- HEALTH MANAGEMENT ----------
-     // =======================================
-    
+
+    // =======================================
+    // ---------- HEALTH MANAGEMENT ----------
+    // =======================================
     /**
      * Calculates the character max health (Base Stats + Weapon and Armour)
      *
      * @return
      */
     public int getMaxHealth() {
-<span class="fc" id="L84">        return (stats.constitution() + inventory().equipmentStats().get(StatTypes.CONSTITUTION.toString()));</span>
+<span class="fc" id="L87">        return (stats.constitution() + inventory().equipmentStats().get(StatTypes.CONSTITUTION.toString()));</span>
     }
 
     /**
@@ -90,7 +93,7 @@ public abstract class Character {
      * @return
      */
     public int getCurrentHealth() {
-<span class="fc" id="L93">        return this.currentHealth;</span>
+<span class="fc" id="L96">        return this.currentHealth;</span>
     }
 
     /**
@@ -99,13 +102,13 @@ public abstract class Character {
      * @return
      */
     public int decreaseHealth(int amount) {
-<span class="fc" id="L102">        this.currentHealth -= amount;</span>
+<span class="fc" id="L105">        this.currentHealth -= amount;</span>
 
-<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (currentHealth &lt; 0) {</span>
-<span class="fc" id="L105">            this.currentHealth = 0;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (currentHealth &lt; 0) {</span>
+<span class="fc" id="L108">            this.currentHealth = 0;</span>
         }
 
-<span class="fc" id="L108">        return currentHealth;</span>
+<span class="fc" id="L111">        return currentHealth;</span>
     }
 
     /**
@@ -114,29 +117,26 @@ public abstract class Character {
      * @return
      */
     public int increaseHealth(int amount) {
-<span class="fc" id="L117">        this.currentHealth += amount;</span>
+<span class="fc" id="L120">        this.currentHealth += amount;</span>
 
-<span class="fc bfc" id="L119" title="All 2 branches covered.">        if (currentHealth &gt; getMaxHealth()) {</span>
-<span class="fc" id="L120">            this.currentHealth = getMaxHealth();</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (currentHealth &gt; getMaxHealth()) {</span>
+<span class="fc" id="L123">            this.currentHealth = getMaxHealth();</span>
         }
 
-<span class="fc" id="L123">        return currentHealth;</span>
+<span class="fc" id="L126">        return currentHealth;</span>
     }
-    
-     // =======================================
-     // ---------- INVENTORY METHODS ----------
-     // =======================================
 
+    // =======================================
+    // ---------- INVENTORY METHODS ----------
+    // =======================================
     /**
      * Returns the player inventory
      *
      * @return
      */
     public Inventory inventory() {
-<span class="fc" id="L136">        return inventory;</span>
+<span class="fc" id="L138">        return inventory;</span>
     }
-
-    
 
     /**
      * Adds an item to the inventory
@@ -170,7 +170,68 @@ public abstract class Character {
      *
      */
     public boolean equipItem(Item item) {
-<span class="fc" id="L173">        return inventory.equipItem(item, this.level);</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        if (item instanceof Weapon) {</span>
+<span class="fc" id="L174">            Weapon currentEquipped = (Weapon) inventory.searchSlot(Weapon.class.getSimpleName());</span>
+
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">            if (inventory.equipItem(item, level)) {</span>
+
+                int healthDiff;
+
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">                if (currentEquipped == null) {</span>
+<span class="fc" id="L181">                    healthDiff = ((Weapon) item).stats().constitution();</span>
+                } else {
+<span class="nc" id="L183">                    healthDiff = ((Weapon) item).stats().constitution() - currentEquipped.stats().constitution();</span>
+                }
+
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">                if (healthDiff &gt; 0) {</span>
+<span class="fc" id="L187">                    increaseHealth(healthDiff);</span>
+                } else {
+<span class="nc" id="L189">                    decreaseHealth(healthDiff);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">                    if (currentHealth == 0) {</span>
+<span class="nc" id="L191">                        currentHealth = 1;</span>
+                    }
+                }
+
+<span class="fc" id="L195">                return true;</span>
+            }
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">        } else if (item instanceof Armour) {</span>
+<span class="fc" id="L198">            Armour currentEquipped = null;</span>
+
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">            if (item instanceof Head) {</span>
+<span class="fc" id="L201">                currentEquipped = (Armour) inventory.searchSlot(Head.class.getSimpleName());</span>
+            }
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">            if (item instanceof Chest) {</span>
+<span class="nc" id="L204">                currentEquipped = (Armour) inventory.searchSlot(Chest.class.getSimpleName());</span>
+            }
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">            if (item instanceof Legs) {</span>
+<span class="nc" id="L207">                currentEquipped = (Legs) inventory.searchSlot(Legs.class.getSimpleName());</span>
+            }
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">            if (item instanceof Jewelry) {</span>
+<span class="nc" id="L210">                currentEquipped = (Jewelry) inventory.searchSlot(Jewelry.class.getSimpleName());</span>
+            }
+
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">            if (inventory.equipItem(item, level)) {</span>
+                int healthDiff;
+
+<span class="nc bnc" id="L216" title="All 2 branches missed.">                if (currentEquipped == null) {</span>
+<span class="nc" id="L217">                    healthDiff = ((Armour) item).stats().constitution();</span>
+                } else {
+<span class="nc" id="L219">                    healthDiff = ((Armour) item).stats().constitution() - currentEquipped.stats().constitution();</span>
+                }
+
+<span class="nc bnc" id="L222" title="All 2 branches missed.">                if (healthDiff &gt; 0) {</span>
+<span class="nc" id="L223">                    increaseHealth(healthDiff);</span>
+                } else {
+<span class="nc" id="L225">                    decreaseHealth(healthDiff);</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">                    if (currentHealth == 0) {</span>
+<span class="nc" id="L227">                        currentHealth = 1;</span>
+                    }
+                }
+
+<span class="nc" id="L231">                return true;</span>
+            }
+        }
+<span class="fc" id="L234">        return false;</span>
     }
 
     /**
@@ -178,28 +239,60 @@ public abstract class Character {
      *
      */
     public boolean unequipItem(String slot) {
-<span class="fc" id="L181">        return inventory.unequipItem(slot);</span>
+        
+<span class="fc" id="L243">        Item item = inventory.searchSlot(slot);</span>
+
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        if (item instanceof Weapon) {</span>
+
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">            if (inventory.unequipItem(slot)) {</span>
+
+<span class="fc" id="L249">                int healthDiff = ((Weapon) item).stats().constitution();</span>
+
+<span class="fc" id="L251">                decreaseHealth(healthDiff);</span>
+
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">                if (currentHealth &lt;= 0) {</span>
+<span class="nc" id="L254">                    currentHealth = 1;</span>
+                }
+
+<span class="fc" id="L257">                return true;</span>
+
+            }
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">        } else if (item instanceof Armour) {</span>
+
+<span class="nc bnc" id="L262" title="All 2 branches missed.">            if (inventory.unequipItem(slot)) {</span>
+<span class="nc" id="L263">                int healthDiff = ((Armour) item).stats().constitution();</span>
+
+<span class="nc" id="L265">                decreaseHealth(healthDiff);</span>
+
+<span class="nc bnc" id="L267" title="All 2 branches missed.">                if (currentHealth &lt;= 0) {</span>
+<span class="nc" id="L268">                    currentHealth = 1;</span>
+                }
+
+<span class="nc" id="L271">                return true;</span>
+            }
+        }
+<span class="fc" id="L274">        return false;</span>
     }
-    
-    
-     // =======================================
-     // ------------ STATS METHODS ------------
-     // =======================================
-    
+
+    // =======================================
+    // ------------ STATS METHODS ------------
+    // =======================================
     /**
      * Returns the character total dexterity
-     * @return 
+     *
+     * @return
      */
     public int dexterity() {
-<span class="nc" id="L194">        return this.stats.dexterity() + inventory.equipmentStats().get(StatTypes.DEXTERITY.toString());</span>
+<span class="nc" id="L286">        return this.stats.dexterity() + inventory.equipmentStats().get(StatTypes.DEXTERITY.toString());</span>
     }
-    
+
     /**
      * Returns the character defense
-     * @return 
+     *
+     * @return
      */
     public int defense() {
-<span class="nc" id="L202">        return inventory.getTotalDefense();</span>
+<span class="nc" id="L295">        return inventory.getTotalDefense();</span>
     }
 
 }

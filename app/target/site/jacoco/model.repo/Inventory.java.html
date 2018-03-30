@@ -133,13 +133,13 @@ public class Inventory {
      */
     public boolean equipArmour(Armour armour) {
 <span class="nc bnc" id="L135" title="All 2 branches missed.">        if (armour instanceof Head) {</span>
-<span class="nc" id="L136">            return equipItem(Head.class.getSimpleName(), armour);</span>
+<span class="nc" id="L136">            return equipItem(Head.class.getSimpleName(), (Head) armour);</span>
 <span class="nc bnc" id="L137" title="All 2 branches missed.">        } else if (armour instanceof Chest) {</span>
-<span class="nc" id="L138">            return equipItem(Chest.class.getSimpleName(), armour);</span>
+<span class="nc" id="L138">            return equipItem(Chest.class.getSimpleName(), (Chest) armour);</span>
 <span class="nc bnc" id="L139" title="All 2 branches missed.">        } else if (armour instanceof Legs) {</span>
-<span class="nc" id="L140">            return equipItem(Legs.class.getSimpleName(), armour);</span>
+<span class="nc" id="L140">            return equipItem(Legs.class.getSimpleName(), (Legs) armour);</span>
 <span class="nc bnc" id="L141" title="All 2 branches missed.">        } else if (armour instanceof Jewelry) {</span>
-<span class="nc" id="L142">            return equipItem(Jewelry.class.getSimpleName(), armour);</span>
+<span class="nc" id="L142">            return equipItem(Jewelry.class.getSimpleName(), (Jewelry) armour);</span>
         } else {
 <span class="nc" id="L144">            return false;</span>
         }
@@ -160,14 +160,13 @@ public class Inventory {
      */
     private boolean equipItem(String slot, Item item) {
 <span class="fc" id="L162">        Item current = equipped.get(slot);</span>
-
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        if (current != null) {          </span>
-<span class="nc" id="L165">            items.put(current.name(), current);</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">        if (current != null) {</span>
+<span class="nc" id="L164">            items.put(current.name(), current);</span>
+<span class="nc" id="L165">            items.remove(item.name());</span>
         }
 
-<span class="fc" id="L168">        items.remove(item.name());</span>
-<span class="fc" id="L169">        equipped.put(slot, item);</span>
-<span class="fc" id="L170">        return equipped.containsKey(slot);</span>
+<span class="fc" id="L168">        equipped.put(slot, item);</span>
+<span class="fc" id="L169">        return equipped.containsKey(slot);</span>
     }
 
     /**
@@ -178,17 +177,18 @@ public class Inventory {
      * @return
      */
     public boolean unequipItem(String slot) {
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        if (filledSlots() &gt;= MAX_SLOTS) {</span>
-<span class="nc" id="L182">            return false;</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (filledSlots() &gt;= MAX_SLOTS) {</span>
+<span class="nc" id="L181">            return false;</span>
         } else {
-<span class="fc" id="L184">            Item item = equipped.get(slot);</span>
-            
-<span class="fc bfc" id="L186" title="All 2 branches covered.">            if (item == null)</span>
-<span class="fc" id="L187">                return false;</span>
-            
+<span class="fc" id="L183">            Item item = equipped.get(slot);</span>
+
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">            if (item == null) {</span>
+<span class="nc" id="L186">                return false;</span>
+            }
+
 <span class="fc" id="L189">            equipped.remove(slot);</span>
 <span class="fc" id="L190">            items.put(item.name(), item);</span>
-            
+
 <span class="fc" id="L192">            return items.containsKey(item.name());</span>
         }
     }
@@ -208,51 +208,60 @@ public class Inventory {
 <span class="fc" id="L208">        int dexterity = 0;</span>
 <span class="fc" id="L209">        int defense = 0;</span>
 
-<span class="pc bpc" id="L211" title="1 of 2 branches missed.">        for (Item item : equipped.values()) {</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">        for (Item item : equipped.values()) {</span>
 
-<span class="nc bnc" id="L213" title="All 4 branches missed.">            if (item instanceof Armour &amp;&amp; item != null) {</span>
+<span class="pc bpc" id="L213" title="3 of 4 branches missed.">            if (item instanceof Armour &amp;&amp; item != null) {</span>
+<span class="nc" id="L214">                constitution += ((Armour) item).stats().constitution();</span>
+<span class="nc" id="L215">                strength += ((Armour) item).stats().strength();</span>
+<span class="nc" id="L216">                intelligence += ((Armour) item).stats().intelligence();</span>
+<span class="nc" id="L217">                dexterity += ((Armour) item).stats().dexterity();</span>
+<span class="nc" id="L218">                defense += ((Armour) item).defense();</span>
+<span class="pc bpc" id="L219" title="2 of 4 branches missed.">            } else if (item instanceof Weapon &amp;&amp; item != null) {</span>
 
-<span class="nc" id="L215">                constitution += ((Armour) item).stats().constitution();</span>
-<span class="nc" id="L216">                strength += ((Armour) item).stats().strength();</span>
-<span class="nc" id="L217">                intelligence += ((Armour) item).stats().intelligence();</span>
-<span class="nc" id="L218">                dexterity += ((Armour) item).stats().dexterity();</span>
-<span class="nc" id="L219">                defense += ((Armour) item).defense();</span>
-
-<span class="nc bnc" id="L221" title="All 4 branches missed.">            } else if (item instanceof Weapon &amp;&amp; item != null) {</span>
-
-<span class="nc" id="L223">                constitution += ((Weapon) item).stats().constitution();</span>
-<span class="nc" id="L224">                strength += ((Weapon) item).stats().strength();</span>
-<span class="nc" id="L225">                intelligence += ((Weapon) item).stats().intelligence();</span>
-<span class="nc" id="L226">                dexterity += ((Weapon) item).stats().dexterity();</span>
-<span class="nc" id="L227">                defense += ((Weapon) item).damage();</span>
+<span class="fc" id="L221">                constitution += ((Weapon) item).stats().constitution();</span>
+<span class="fc" id="L222">                strength += ((Weapon) item).stats().strength();</span>
+<span class="fc" id="L223">                intelligence += ((Weapon) item).stats().intelligence();</span>
+<span class="fc" id="L224">                dexterity += ((Weapon) item).stats().dexterity();</span>
+<span class="fc" id="L225">                defense += ((Weapon) item).damage();</span>
 
             }
-<span class="nc" id="L230">        }</span>
+<span class="fc" id="L228">        }</span>
 
-<span class="fc" id="L232">        equipmentStats.put(StatTypes.STRENGTH.toString(), strength);</span>
-<span class="fc" id="L233">        equipmentStats.put(StatTypes.CONSTITUTION.toString(), constitution);</span>
-<span class="fc" id="L234">        equipmentStats.put(StatTypes.INTELLIGENCE.toString(), intelligence);</span>
-<span class="fc" id="L235">        equipmentStats.put(StatTypes.DEXTERITY.toString(), dexterity);</span>
-<span class="fc" id="L236">        equipmentStats.put(StatTypes.DEFENSE.toString(), defense);</span>
+<span class="fc" id="L230">        equipmentStats.put(StatTypes.STRENGTH.toString(), strength);</span>
+<span class="fc" id="L231">        equipmentStats.put(StatTypes.CONSTITUTION.toString(), constitution);</span>
+<span class="fc" id="L232">        equipmentStats.put(StatTypes.INTELLIGENCE.toString(), intelligence);</span>
+<span class="fc" id="L233">        equipmentStats.put(StatTypes.DEXTERITY.toString(), dexterity);</span>
+<span class="fc" id="L234">        equipmentStats.put(StatTypes.DEFENSE.toString(), defense);</span>
 
-<span class="fc" id="L238">        return equipmentStats;</span>
+<span class="fc" id="L236">        return equipmentStats;</span>
     }
-    
+
     /**
      * Returns the current equipped weapon damage
-     * @return 
+     *
+     * @return
      */
     public int weaponDamage() {
-<span class="nc" id="L246">        Weapon weapon = (Weapon) equipped.get(Weapon.class.getSimpleName());</span>
-<span class="nc" id="L247">        return weapon.damage();</span>
+<span class="nc" id="L245">        Weapon weapon = (Weapon) equipped.get(Weapon.class.getSimpleName());</span>
+<span class="nc" id="L246">        return weapon.damage();</span>
     }
-    
+
     /**
      * Returns the total defense value of the armour
-     * @return 
+     *
+     * @return
      */
     public int getTotalDefense() {
 <span class="nc" id="L255">        return equipmentStats().get(StatTypes.DEFENSE.toString());</span>
+    }
+    
+    /**
+     * Returns the equipped item on a determined slot
+     * @param slot
+     * @return 
+     */
+    public Item searchSlot(String slot) {
+<span class="fc" id="L264">        return equipped.get(slot);</span>
     }
 
 }
