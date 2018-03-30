@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Weapon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Last Dawn</a> &gt; <a href="index.source.html" class="el_package">model.item</a> &gt; <span class="el_source">Weapon.java</span></div><h1>Weapon.java</h1><pre class="source lang-java linenums">/* Last Dawn (c) by Toasty Studios is licensed under
+ * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
+ * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+ */
+ 
+ package model.item;
+
+import model.character.Stats;
+
+/**
+ *
+ * @author Toasty Studios
+ */
+public class Weapon extends Item {
+
+    private Stats stats;
+    private int damage;
+
+    /**
+     * init
+     * @param name
+     * @param description
+     * @param value
+     * @param rarity
+     * @param unique
+     * @param level
+     * @param damage 
+     */
+    public Weapon(String name, String description, int value, String rarity, boolean unique, int level, int damage, int constitution, int strength, int intelligence, int dexterity) {
+<span class="fc" id="L30">        super(name, description, value, rarity, unique, level);</span>
+<span class="fc" id="L31">        this.damage = damage;</span>
+<span class="fc" id="L32">        this.stats = new Stats(constitution, strength, intelligence, dexterity);</span>
+<span class="fc" id="L33">    }</span>
+    
+    /**
+     * Returns the stat bonus of the weapon
+     * @return 
+     */
+    public Stats stats() {
+<span class="fc" id="L40">        return this.stats;</span>
+    }
+
+    /**
+     * Returns the weapon damage
+     * @return 
+     */
+    public int damage() {
+<span class="fc" id="L48">        return damage;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

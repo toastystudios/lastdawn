@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OptionsUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Last Dawn</a> &gt; <a href="index.source.html" class="el_package">view</a> &gt; <span class="el_source">OptionsUI.java</span></div><h1>OptionsUI.java</h1><pre class="source lang-java linenums">/* Last Dawn (c) by Toasty Studios is licensed under
+ * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
+ * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+ */
+package view;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import view.options.VolumeControl;
+
+/**
+ *
+ * @author Toasty Studios
+ */
+public class OptionsUI extends JDialog {
+    
+    private JLabel volume;
+    private JLabel autosave;
+    private JRadioButton volumeOnRB;
+    private JRadioButton volumeOffRB;
+    private JRadioButton autosaveOnRB;
+    private JRadioButton autosaveOffRB;
+    private JButton OK;
+
+    public OptionsUI(JFrame main) {
+<span class="nc" id="L37">        super(main);</span>
+<span class="nc" id="L38">        initUI();</span>
+<span class="nc" id="L39">    }</span>
+
+    private void initUI() {
+<span class="nc" id="L42">        setTitle(&quot;Last Dawn - Options&quot;);</span>
+<span class="nc" id="L43">        setSize(400, 250);</span>
+<span class="nc" id="L44">        setLocationRelativeTo(getParent());</span>
+<span class="nc" id="L45">        setResizable(false);</span>
+<span class="nc" id="L46">        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L47">        setModal(true);</span>
+<span class="nc" id="L48">        setBackgroundImage();</span>
+<span class="nc" id="L49">        initButtons();</span>
+<span class="nc" id="L50">        setVisible(true);</span>
+<span class="nc" id="L51">    }</span>
+    
+    private void setBackgroundImage() {
+<span class="nc" id="L54">        BufferedImage img = null;</span>
+        try {
+<span class="nc" id="L56">            img = ImageIO.read(OptionsUI.class.getResourceAsStream(&quot;/bg/options.jpg&quot;));</span>
+<span class="nc" id="L57">        } catch (IOException ex) {</span>
+<span class="nc" id="L58">            System.out.println(&quot;The background file for the main menu has imploded!&quot;);</span>
+<span class="nc" id="L59">        }</span>
+<span class="nc" id="L60">        setContentPane(new backImage(img));</span>
+<span class="nc" id="L61">    }</span>
+    
+    private void initButtons() {
+<span class="nc" id="L64">        OK = new JButton(&quot;Confirm&quot;);</span>
+<span class="nc" id="L65">        OK.setBounds(140, 150, 125, 30);</span>
+<span class="nc" id="L66">        OK.addActionListener(new ActionListener() {</span>
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L69">                dispose();</span>
+<span class="nc" id="L70">            }</span>
+        });
+<span class="nc" id="L72">        add(OK);</span>
+        
+        
+<span class="nc" id="L75">        initRadioButtons();</span>
+<span class="nc" id="L76">    }</span>
+    
+    private void initRadioButtons() {
+<span class="nc" id="L79">        Font font = new Font(&quot;Harrington&quot;, Font.PLAIN, 18);</span>
+<span class="nc" id="L80">        volume = new JLabel();</span>
+<span class="nc" id="L81">        volume.setText(&quot;Volume&quot;);</span>
+<span class="nc" id="L82">        volume.setFont(font);</span>
+<span class="nc" id="L83">        volume.setForeground(Color.WHITE);</span>
+<span class="nc" id="L84">        volume.setBounds(50,50,125,20);</span>
+        
+<span class="nc" id="L86">        autosave = new JLabel();</span>
+<span class="nc" id="L87">        autosave.setText(&quot;Auto Save&quot;);</span>
+<span class="nc" id="L88">        autosave.setFont(font);</span>
+<span class="nc" id="L89">        autosave.setForeground(Color.WHITE);</span>
+<span class="nc" id="L90">        autosave.setBounds(50,100,125,20);</span>
+        
+<span class="nc" id="L92">        add(volume);</span>
+<span class="nc" id="L93">        add(autosave);   </span>
+        
+<span class="nc" id="L95">        volumeOptions();</span>
+<span class="nc" id="L96">        autoSaveOptions();</span>
+<span class="nc" id="L97">    }</span>
+    
+    private void volumeOptions() {
+<span class="nc" id="L100">        volumeOnRB = new JRadioButton(&quot;On&quot;);</span>
+<span class="nc" id="L101">        volumeOnRB.setForeground(Color.WHITE);</span>
+<span class="nc" id="L102">        volumeOnRB.setBounds(175, 50, 50, 20);</span>
+<span class="nc" id="L103">        volumeOnRB.setOpaque(false);</span>
+<span class="nc" id="L104">        volumeOnRB.setFocusPainted(false);</span>
+<span class="nc" id="L105">        volumeOnRB.setSelected(true);</span>
+<span class="nc" id="L106">        volumeOnRB.setActionCommand(&quot;On&quot;);</span>
+<span class="nc" id="L107">        volumeOnRB.addActionListener(new ActionListener() {</span>
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L110">                VolumeControl.manageSound(true);</span>
+<span class="nc" id="L111">            }</span>
+        });
+        
+<span class="nc" id="L114">        volumeOffRB = new JRadioButton(&quot;Off&quot;);</span>
+<span class="nc" id="L115">        volumeOffRB.setBounds(300, 50, 50, 20);</span>
+<span class="nc" id="L116">        volumeOffRB.setForeground(Color.WHITE);</span>
+<span class="nc" id="L117">        volumeOffRB.setOpaque(false);</span>
+<span class="nc" id="L118">        volumeOffRB.setFocusPainted(false);</span>
+<span class="nc" id="L119">        volumeOffRB.addActionListener(new ActionListener() {</span>
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L122">                VolumeControl.manageSound(false);</span>
+<span class="nc" id="L123">            }</span>
+        });
+        
+        
+<span class="nc" id="L127">        ButtonGroup group = new ButtonGroup();</span>
+<span class="nc" id="L128">        group.add(volumeOnRB);</span>
+<span class="nc" id="L129">        group.add(volumeOffRB);</span>
+<span class="nc" id="L130">        add(volumeOnRB);</span>
+<span class="nc" id="L131">        add(volumeOffRB);</span>
+        
+<span class="nc" id="L133">    }    </span>
+    private void autoSaveOptions() {
+<span class="nc" id="L135">        autosaveOnRB = new JRadioButton(&quot;On&quot;);</span>
+<span class="nc" id="L136">        autosaveOnRB.setForeground(Color.WHITE);</span>
+<span class="nc" id="L137">        autosaveOnRB.setBounds(175, 100, 50, 20);</span>
+<span class="nc" id="L138">        autosaveOnRB.setOpaque(false);</span>
+<span class="nc" id="L139">        autosaveOnRB.setFocusPainted(false);</span>
+<span class="nc" id="L140">        autosaveOnRB.setSelected(true);</span>
+<span class="nc" id="L141">        autosaveOnRB.addActionListener(new ActionListener() {</span>
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L144">                throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+            }
+        });
+        
+<span class="nc" id="L148">        autosaveOffRB = new JRadioButton(&quot;Off&quot;);</span>
+<span class="nc" id="L149">        autosaveOffRB.setBounds(300, 100, 50, 20);</span>
+<span class="nc" id="L150">        autosaveOffRB.setForeground(Color.WHITE);</span>
+<span class="nc" id="L151">        autosaveOffRB.setOpaque(false);</span>
+<span class="nc" id="L152">        autosaveOffRB.setFocusPainted(false);</span>
+<span class="nc" id="L153">        autosaveOffRB.addActionListener(new ActionListener() {</span>
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L156">                throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+            }
+        });
+        
+<span class="nc" id="L160">        ButtonGroup group = new ButtonGroup();</span>
+<span class="nc" id="L161">        group.add(autosaveOnRB);</span>
+<span class="nc" id="L162">        group.add(autosaveOffRB);</span>
+<span class="nc" id="L163">        add(autosaveOnRB);</span>
+<span class="nc" id="L164">        add(autosaveOffRB);</span>
+        
+<span class="nc" id="L166">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

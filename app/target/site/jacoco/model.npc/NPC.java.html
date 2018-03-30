@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NPC.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Last Dawn</a> &gt; <a href="index.source.html" class="el_package">model.npc</a> &gt; <span class="el_source">NPC.java</span></div><h1>NPC.java</h1><pre class="source lang-java linenums">/* Last Dawn (c) by Toasty Studios is licensed under
+ * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
+ * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+ */
+package model.npc;
+
+import model.enums.StatTypes;
+import utils.NumberUtils;
+
+/**
+ *
+ * @author Toasty Studios
+ */
+public class NPC extends model.character.Character implements model.character.Class {
+
+    private static final double MODIFIER = 0.15;
+
+    private final String name;
+    private final String description;
+
+    /**
+     * init
+     *
+     * @param name
+     * @param description
+     */
+    public NPC(String name, String description, int constitution, int strength, int intelligence, int dexterity, int level) {
+<span class="fc" id="L28">        super(name, level, NPC.class.getSimpleName(), constitution, strength, intelligence, dexterity);</span>
+<span class="fc" id="L29">        this.name = name;</span>
+<span class="fc" id="L30">        this.description = description;</span>
+<span class="fc" id="L31">    }</span>
+
+    // =======================================
+    // ----------- COMBAT METHODS ------------
+    // =======================================
+    /**
+     * Uses the character basic attack
+     *
+     * @return
+     */
+    @Override
+    public int basicAttack() {
+<span class="nc" id="L43">        return (int) NumberUtils.roundDown(((stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) * MODIFIER) + inventory.weaponDamage());</span>
+    }
+
+    @Override
+    public int ability() {
+<span class="nc" id="L48">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+    }
+
+    @Override
+    public int ultimate() {
+<span class="nc" id="L53">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
