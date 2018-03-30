@@ -16,31 +16,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.ColorUIResource;
-
-class backImage extends JComponent {
-
-    Image i;
-
-//Creating Constructer
-    public backImage(Image i) {
-        this.i = i;
-
-    }
-
-//Overriding the paintComponent method
-    @Override
-    public void paintComponent(Graphics g) {
-
-        g.drawImage(i, 0, 0, null);  // Drawing image using drawImage method
-
-    }
-}
 
 /**
  *
@@ -54,18 +35,19 @@ public class MainMenuUI extends JFrame {
     private JButton loadGameButton;
     private JButton optionsButton;
     private JButton exitButton;
+    private JDialog optionsUI;
 
-    public MainMenuUI() throws IOException {
+    public MainMenuUI() {
         super();
         initUI();
     }
 
-    private void initUI() throws IOException {
+    private void initUI() {
         try {
             UIManager.put("OptionPane.background", Color.DARK_GRAY);
             UIManager.put("Panel.background", Color.DARK_GRAY);
             UIManager.put("Button.background", Color.DARK_GRAY);
-            UIManager.put("Button.foreground", Color.WHITE);    
+            UIManager.put("Button.foreground", Color.WHITE);
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalArgumentException | UnsupportedLookAndFeelException | IllegalAccessException ex) {
             System.out.println("The Main UI Look and Feel exploded!");
@@ -81,8 +63,13 @@ public class MainMenuUI extends JFrame {
         setVisible(true);
     }
 
-    private void setBackgroundImage() throws IOException {
-        BufferedImage img = ImageIO.read(new File("src\\main\\resources\\mainmenu.jpg"));
+    private void setBackgroundImage() {
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(MainMenuUI.class.getResourceAsStream("/bg/mainmenu.jpg"));
+        } catch (IOException ex) {
+            System.out.println("The background file for the main menu has imploded!");
+        }
         setContentPane(new backImage(img));
     }
 
@@ -138,28 +125,28 @@ public class MainMenuUI extends JFrame {
     }
 
     private void newGameAction() {
-        exitButton.addActionListener(new ActionListener() {
+        newGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //TODO
             }
         });
     }
 
     private void loadGameAction() {
-        exitButton.addActionListener(new ActionListener() {
+        loadGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //TODO
             }
         });
     }
 
     private void optionsAction() {
-        exitButton.addActionListener(new ActionListener() {
+        optionsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                optionsUI = new OptionsUI(MainMenuUI.this);
             }
         });
     }
@@ -171,10 +158,29 @@ public class MainMenuUI extends JFrame {
                 String string = "<html><font color=#ffffdd>Are you sure you want to exit the game?</font>";
                 if (JOptionPane.showOptionDialog(rootPane, string, "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null)
                         == JOptionPane.YES_OPTION) {
-                    dispose();
+                    System.exit(0);
                 }
             }
         });
     }
 
+}
+
+class backImage extends JComponent {
+
+    Image i;
+
+//Creating Constructer
+    public backImage(Image i) {
+        this.i = i;
+
+    }
+
+//Overriding the paintComponent method
+    @Override
+    public void paintComponent(Graphics g) {
+
+        g.drawImage(i, 0, 0, null);  // Drawing image using drawImage method
+
+    }
 }
