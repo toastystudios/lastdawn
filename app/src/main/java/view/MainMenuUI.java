@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +30,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class MainMenuUI extends JFrame {
 
+    private static final String CLOSE_MESSAGE = "<html><font color=#ffffdd>Are you sure you want to exit the game?</font>";
     private JLabel header;
     private JLabel subText;
     private JButton newGameButton;
@@ -55,11 +57,24 @@ public class MainMenuUI extends JFrame {
         setTitle("Last Dawn");
         setSize(800, 650);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setResizable(false);
         setBackgroundImage();
         initHeader();
         initButtons();
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (JOptionPane.showConfirmDialog(rootPane,
+                        CLOSE_MESSAGE, "Warning",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
         setVisible(true);
     }
 
@@ -155,8 +170,8 @@ public class MainMenuUI extends JFrame {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String string = "<html><font color=#ffffdd>Are you sure you want to exit the game?</font>";
-                if (JOptionPane.showOptionDialog(rootPane, string, "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null)
+                String string = CLOSE_MESSAGE;
+                if (JOptionPane.showOptionDialog(rootPane, string, "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null)
                         == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }

@@ -31,7 +31,7 @@ public class BinFile {
             return true;
         }catch(FileNotFoundException f){
             return false;
-        }
+        } 
     }
 
     public static boolean loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {

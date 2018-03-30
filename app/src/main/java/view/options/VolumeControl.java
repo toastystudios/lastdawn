@@ -15,14 +15,14 @@ import javax.sound.sampled.Mixer;
  */
 public class VolumeControl {
     
-    public static boolean isMuted = false;
+    private boolean isMuted = false;
 
     /**
      * Tries to mute or unmute all the sound in the application
      * if true, it will mute the app
      * if false, it will unmute the app
      */
-    public static void manageSound(boolean mute) {
+    public void manageSound(boolean mute) {
         Mixer.Info[] infos = AudioSystem.getMixerInfo();
         for (Mixer.Info info : infos) {
             Mixer mixer = AudioSystem.getMixer(info);
@@ -35,6 +35,10 @@ public class VolumeControl {
                 }
             }
         }
+    }
+    
+    public boolean getMutedStatus() {
+        return isMuted;
     }
 
 

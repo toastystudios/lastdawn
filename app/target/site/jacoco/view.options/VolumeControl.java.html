@@ -15,14 +15,14 @@ import javax.sound.sampled.Mixer;
  */
 <span class="nc" id="L16">public class VolumeControl {</span>
     
-<span class="nc" id="L18">    public static boolean isMuted = false;</span>
+<span class="nc" id="L18">    private boolean isMuted = false;</span>
 
     /**
      * Tries to mute or unmute all the sound in the application
      * if true, it will mute the app
      * if false, it will unmute the app
      */
-    public static void manageSound(boolean mute) {
+    public void manageSound(boolean mute) {
 <span class="nc" id="L26">        Mixer.Info[] infos = AudioSystem.getMixerInfo();</span>
 <span class="nc bnc" id="L27" title="All 2 branches missed.">        for (Mixer.Info info : infos) {</span>
 <span class="nc" id="L28">            Mixer mixer = AudioSystem.getMixer(info);</span>
@@ -36,6 +36,10 @@ import javax.sound.sampled.Mixer;
             }
         }
 <span class="nc" id="L38">    }</span>
+    
+    public boolean getMutedStatus() {
+<span class="nc" id="L41">        return isMuted;</span>
+    }
 
 
 }

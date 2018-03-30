@@ -25,6 +25,7 @@ import view.options.VolumeControl;
  */
 public class OptionsUI extends JDialog {
     
+    private VolumeControl volumeControl = new VolumeControl();
     private JLabel volume;
     private JLabel autosave;
     private JRadioButton volumeOnRB;
@@ -107,7 +108,7 @@ public class OptionsUI extends JDialog {
         volumeOnRB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VolumeControl.manageSound(true);
+                volumeControl.manageSound(true);
             }
         });
         
@@ -119,7 +120,7 @@ public class OptionsUI extends JDialog {
         volumeOffRB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VolumeControl.manageSound(false);
+                volumeControl.manageSound(false);
             }
         });
         
