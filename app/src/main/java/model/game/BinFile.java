@@ -16,35 +16,39 @@ import java.io.ObjectOutputStream;
  * @author jpfr8
  */
 public class BinFile {
-    
-    public static void saveGame(Game game,String filename) throws FileNotFoundException, IOException{
-        
+
+    public static boolean saveGame(Game game, String filename) throws FileNotFoundException, IOException {
+
         ObjectOutputStream outputObj = null;
-        
-        try{
-            
+
+        try {
+
             FileOutputStream outputFile = new FileOutputStream(filename);
             outputObj = new ObjectOutputStream(outputFile);
-            
+
             outputObj.writeObject(game);
-        }finally{
             outputObj.close();
+            return true;
+        }catch(FileNotFoundException f){
+            return false;
         }
     }
-    
-    public static void loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException{
-        
+
+    public static boolean loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
+
         Game game = null;
         ObjectInputStream inputObj = null;
-        
-        try{
-            
+
+        try {
+
             FileInputStream inputFile = new FileInputStream(filename);
             inputObj = new ObjectInputStream(inputFile);
-            
-            game = (Game)inputObj.readObject();
-        }finally{
+
+            game = (Game) inputObj.readObject();
             inputObj.close();
+            return true;
+        } catch (FileNotFoundException f) {
+            return false;
         }
     }
 }
