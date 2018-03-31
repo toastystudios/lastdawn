@@ -22,12 +22,13 @@ import model.player.Scientist;
  */
 public class NewGameController {
     
-    private Game game;
     private List<Enum> listClass;
     private PlayerChar player;
     
     private GameSlot slot;
     private String saveGameName;
+    
+    private String classIntro;
     
     public NewGameController(){
     }
@@ -38,7 +39,7 @@ public class NewGameController {
      * @return String with game introduction
      */
     public String getGameIntro(){
-        return game.getGameIntro();
+        return Game.getGameIntro();
     }
     
     /**
@@ -76,8 +77,14 @@ public class NewGameController {
        }  
        
        //Create save game slot and the file to store the session
-       slot = game.createGameSlot(player);
-       FileManager.saveGame(slot, saveGameName);
-       
+       slot = Game.createGameSlot(player);
+       FileManager.saveGame(slot, saveGameName);      
     }
+    
+    public String getClassIntro(PlayerChar player){
+        return Game.getClassIntro(player);
+    }
+    
+    //...input start...
+    
 }

@@ -15,7 +15,7 @@ import model.game.GameSlot;
  */
 <span class="nc" id="L16">public class SaveLoadController {</span>
     
-    public static FileManager controller;
+    private static FileManager controller;
     
     public static GameSlot gameLoader(String filename) throws IOException, FileNotFoundException, ClassNotFoundException{
 <span class="nc" id="L21">        return controller.loadGame(filename);</span>

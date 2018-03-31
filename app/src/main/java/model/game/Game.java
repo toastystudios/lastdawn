@@ -13,25 +13,23 @@ import model.player.PlayerChar;
  */
 public class Game {
     
-    private GameSlot currentSlot;
+    private static GameSlot currentSlot;
     
     /**
      * Return in-game introduction
      */
     public static String getGameIntro(){
-        //deve ir buscar a um ficheiro externo o texto a inserir aqui
-        
         return FileManager.getGameIntro();
     }
     
     /**
      * Return in-game character introduction
      */
-    public static String getClassIntro(){
-        return FileManager.getClassIntro();
+    public static String getClassIntro(PlayerChar player){
+        return FileManager.getClassIntro(player);
     }
     
-    public GameSlot createGameSlot(PlayerChar player){
+    public static GameSlot createGameSlot(PlayerChar player){
         currentSlot = new GameSlot(player);
         return currentSlot;
     }

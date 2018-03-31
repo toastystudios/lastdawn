@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import model.player.PlayerChar;
 
 /**
  *
@@ -83,10 +84,26 @@ public class FileManager {
     /**
      * Return in-game character introduction
      */
-    public static String getClassIntro() {
-        //deve ir buscar a um ficheiro externo o texto a inserir aqui
 
-        return "";
+    public static String getClassIntro(PlayerChar player){
+        //deve ir buscar a um ficheiro externo o texto a inserir aqui
+        //faz a identificação da classe do player para saber qual o ficheiro a ler
+        
+        String classIntro = null;
+        if(player.getClass().getSimpleName()=="Knight"){
+            
+        }
+        if(player.getClass().getSimpleName()=="Paladin"){
+            
+        }
+        if(player.getClass().getSimpleName()=="Archer"){
+            
+        }
+        if(player.getClass().getSimpleName()=="Scientist"){
+            
+        }
+          
+        return classIntro;
     }
 
 }
