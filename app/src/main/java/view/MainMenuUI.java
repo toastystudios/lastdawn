@@ -11,36 +11,26 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.ColorUIResource;
-
-class backImage extends JComponent {
-
-    Image i;
-
-//Creating Constructer
-    public backImage(Image i) {
-        this.i = i;
-
-    }
-
-//Overriding the paintComponent method
-    @Override
-    public void paintComponent(Graphics g) {
-
-        g.drawImage(i, 0, 0, null);  // Drawing image using drawImage method
-
-    }
-}
 
 /**
  *
@@ -48,24 +38,53 @@ class backImage extends JComponent {
  */
 public class MainMenuUI extends JFrame {
 
+    private static final String CLOSE_MESSAGE = "<html><font color=#ffffdd>Are you sure you want to exit the game?</font>";
     private JLabel header;
     private JLabel subText;
     private JButton newGameButton;
     private JButton loadGameButton;
     private JButton optionsButton;
     private JButton exitButton;
+    private JDialog optionsUI;
+    private AudioFormat af;
+    private Clip clip;
 
-    public MainMenuUI() throws IOException {
+    public MainMenuUI() {
         super();
+        initSound();
         initUI();
     }
 
-    private void initUI() throws IOException {
+    private void initSound() {
+        try {
+            InputStream is = getClass().getResourceAsStream("/sound/menu.wav");
+            AudioInputStream as1 = AudioSystem.getAudioInputStream(new BufferedInputStream(is));
+            clip = AudioSystem.getClip();
+            DataLine.Info info = new DataLine.Info(Clip.class, af);
+            
+            Line line = AudioSystem.getLine(info);
+            
+            if (!line.isOpen()) {
+                clip.open(as1);
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+                clip.start();
+            }
+            
+        } catch (UnsupportedAudioFileException ex)  {
+            System.out.println("The audio file has imploded! Bad luck to whoever is going to fix this..");
+        } catch(IOException ex) {
+            System.out.println("IO Exception..not again!");
+        } catch(LineUnavailableException ex) {
+            System.out.println("Line is unavailable, please call on a later time!");
+        }
+    }
+
+    private void initUI() {
         try {
             UIManager.put("OptionPane.background", Color.DARK_GRAY);
             UIManager.put("Panel.background", Color.DARK_GRAY);
             UIManager.put("Button.background", Color.DARK_GRAY);
-            UIManager.put("Button.foreground", Color.WHITE);    
+            UIManager.put("Button.foreground", Color.WHITE);
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalArgumentException | UnsupportedLookAndFeelException | IllegalAccessException ex) {
             System.out.println("The Main UI Look and Feel exploded!");
@@ -73,16 +92,34 @@ public class MainMenuUI extends JFrame {
         setTitle("Last Dawn");
         setSize(800, 650);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setResizable(false);
         setBackgroundImage();
         initHeader();
         initButtons();
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (JOptionPane.showConfirmDialog(rootPane,
+                        CLOSE_MESSAGE, "Warning",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.PLAIN_MESSAGE) == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
         setVisible(true);
     }
 
-    private void setBackgroundImage() throws IOException {
-        BufferedImage img = ImageIO.read(new File("src\\main\\resources\\mainmenu.jpg"));
+    private void setBackgroundImage() {
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(MainMenuUI.class.getResourceAsStream("/bg/mainmenu.jpg"));
+        } catch (IOException ex) {
+            System.out.println("The background file for the main menu has imploded!");
+        }
         setContentPane(new backImage(img));
     }
 
@@ -138,28 +175,28 @@ public class MainMenuUI extends JFrame {
     }
 
     private void newGameAction() {
-        exitButton.addActionListener(new ActionListener() {
+        newGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+               clip.stop();
             }
         });
     }
 
     private void loadGameAction() {
-        exitButton.addActionListener(new ActionListener() {
+        loadGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+               clip.stop();
             }
         });
     }
 
     private void optionsAction() {
-        exitButton.addActionListener(new ActionListener() {
+        optionsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                optionsUI = new OptionsUI(MainMenuUI.this);
             }
         });
     }
@@ -168,13 +205,32 @@ public class MainMenuUI extends JFrame {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String string = "<html><font color=#ffffdd>Are you sure you want to exit the game?</font>";
-                if (JOptionPane.showOptionDialog(rootPane, string, "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null)
+                String string = CLOSE_MESSAGE;
+                if (JOptionPane.showOptionDialog(rootPane, string, "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null)
                         == JOptionPane.YES_OPTION) {
-                    dispose();
+                    System.exit(0);
                 }
             }
         });
     }
 
+}
+
+class backImage extends JComponent {
+
+    Image i;
+
+//Creating Constructer
+    public backImage(Image i) {
+        this.i = i;
+
+    }
+
+//Overriding the paintComponent method
+    @Override
+    public void paintComponent(Graphics g) {
+
+        g.drawImage(i, 0, 0, null);  // Drawing image using drawImage method
+
+    }
 }

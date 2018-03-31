@@ -17,6 +17,13 @@ public abstract class PlayerChar extends model.character.Character {
     protected model.character.BattleMoves playerClass;
     private static final int STARTING_LEVEL = 1;
     private static final int EXP_PER_HP = 4;
+    /*
+    private int CONSTITUTION;
+    private int STRENGTH;
+    private int INTELLIGENCE;
+    private int DEXTERITY;
+    private double MODIFIER;
+    */
 
     private int xp;
 

@@ -31,7 +31,7 @@ public class FileManager {
             return true;
         }catch(FileNotFoundException f){
             return false;
-        }
+        } 
     }
 
     public static boolean loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -55,4 +55,21 @@ public class FileManager {
     public void getItemlist(){
         //RETORNA LISTA DE TODOS OS OBJECTOS ITEM (INICIO DE JOGO);
     }
+    
+        /**
+     * Return in-game introduction
+     */
+    public static String getGameIntro(){
+        //deve ir buscar a um ficheiro externo o texto a inserir aqui
+        
+        return"";
+    }
+    
+    /**
+     * Return in-game character introduction
+     */
+    public static String getClassIntro(){
+        return "";
+    }
+    
 }

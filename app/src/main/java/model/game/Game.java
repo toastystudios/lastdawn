@@ -16,12 +16,14 @@ public class Game {
      */
     public static String getGameIntro(){
         //deve ir buscar a um ficheiro externo o texto a inserir aqui
-        return "";
+        
+        return FileManager.getGameIntro();
     }
     
     /**
      * Return in-game character introduction
      */
-    public static void getPlayerIntro(){
+    public static String getClassIntro(){
+        return FileManager.getClassIntro();
     }
 }
