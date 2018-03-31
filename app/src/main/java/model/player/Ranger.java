@@ -12,7 +12,7 @@ import utils.NumberUtils;
  *
  * @author Toasty Studios
  */
-public class Ranger extends PlayerChar implements model.character.Class {
+public class Ranger extends PlayerChar implements model.character.BattleMoves {
 
     private static final int BASE_CONSTITUTION = 10;
     private static final int BASE_STRENGTH = 10;

@@ -11,7 +11,7 @@ import utils.NumberUtils;
  *
  * @author Toasty Studios
  */
-public class NPC extends model.character.Character implements model.character.Class {
+public class NPC extends model.character.Character implements model.character.BattleMoves {
 
     private static final double MODIFIER = 0.15;
 

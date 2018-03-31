@@ -11,7 +11,7 @@ import model.character.Stats;
  *
  * @author Toasty Studios
  */
-public interface Class {
+public interface BattleMoves{
     
     /**
      * Uses the character basic attack

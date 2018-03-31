@@ -14,7 +14,7 @@ import model.character.ResourceManager;
 public abstract class PlayerChar extends model.character.Character {
 
     protected ResourceManager resourceManager;
-    protected model.character.Class playerClass;
+    protected model.character.BattleMoves playerClass;
     private static final int STARTING_LEVEL = 1;
     private static final int EXP_PER_HP = 4;
 

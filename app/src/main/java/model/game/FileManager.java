@@ -15,7 +15,7 @@ import java.io.ObjectOutputStream;
  *
  * @author jpfr8
  */
-public class BinFile {
+public class FileManager {
 
     public static boolean saveGame(Game game, String filename) throws FileNotFoundException, IOException {
 
@@ -50,5 +50,9 @@ public class BinFile {
         } catch (FileNotFoundException f) {
             return false;
         }
+    }
+    
+    public void getItemlist(){
+        //RETORNA LISTA DE TODOS OS OBJECTOS ITEM (INICIO DE JOGO);
     }
 }

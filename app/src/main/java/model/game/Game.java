@@ -10,5 +10,18 @@
  * @author Toasty Studios
  */
 public class Game {
-
+    
+    /**
+     * Return in-game introduction
+     */
+    public static String getGameIntro(){
+        //deve ir buscar a um ficheiro externo o texto a inserir aqui
+        return "";
+    }
+    
+    /**
+     * Return in-game character introduction
+     */
+    public static void getPlayerIntro(){
+    }
 }
