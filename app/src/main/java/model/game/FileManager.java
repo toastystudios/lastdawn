@@ -20,7 +20,6 @@ public class FileManager {
     public static boolean saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
 
         ObjectOutputStream outputObj = null;
-
         try {
 
             FileOutputStream outputFile = new FileOutputStream(filename);
@@ -28,12 +27,12 @@ public class FileManager {
 
             outputObj.writeObject(slot);
 
-        } catch (IOException e) {
-            
+        } catch (IOException | NullPointerException e) {
+
             return false;
-            
+
         } finally {
-            
+
             outputObj.close();
             return true;
         }
@@ -51,10 +50,14 @@ public class FileManager {
 
             slot = (GameSlot) inputObj.readObject();
 
+        } catch (IOException | NullPointerException e) {
+            
+            return null;
+            
         } finally {
-           
-            inputObj.close();
 
+            inputObj.close();
+            
         }
         return slot;
     }
