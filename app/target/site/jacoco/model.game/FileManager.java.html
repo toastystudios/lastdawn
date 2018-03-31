@@ -20,59 +20,69 @@ import java.io.ObjectOutputStream;
     public static boolean saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
 
 <span class="nc" id="L22">        ObjectOutputStream outputObj = null;</span>
-
         try {
 
-<span class="nc" id="L26">            FileOutputStream outputFile = new FileOutputStream(filename);</span>
-<span class="nc" id="L27">            outputObj = new ObjectOutputStream(outputFile);</span>
+<span class="nc" id="L25">            FileOutputStream outputFile = new FileOutputStream(filename);</span>
+<span class="nc" id="L26">            outputObj = new ObjectOutputStream(outputFile);</span>
 
-<span class="nc" id="L29">            outputObj.writeObject(slot);</span>
-<span class="nc" id="L30">            outputObj.close();</span>
-<span class="nc" id="L31">            return true;</span>
-<span class="nc" id="L32">        }catch(FileNotFoundException f){</span>
-<span class="nc" id="L33">            return false;</span>
-        } 
-    }
+<span class="nc" id="L28">            outputObj.writeObject(slot);</span>
 
-    public static boolean loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
+<span class="nc" id="L30">        } catch (IOException | NullPointerException e) {</span>
 
-<span class="nc" id="L39">        GameSlot slot = null;</span>
-<span class="nc" id="L40">        ObjectInputStream inputObj = null;</span>
+<span class="nc" id="L32">            return false;</span>
 
-        try {
+        } finally {
 
-<span class="nc" id="L44">            FileInputStream inputFile = new FileInputStream(filename);</span>
-<span class="nc" id="L45">            inputObj = new ObjectInputStream(inputFile);</span>
-
-<span class="nc" id="L47">            slot = (GameSlot) inputObj.readObject();</span>
-<span class="nc" id="L48">            inputObj.close();</span>
-<span class="nc" id="L49">            return true;</span>
-<span class="nc" id="L50">        } catch (FileNotFoundException f) {</span>
-<span class="nc" id="L51">            return false;</span>
+<span class="nc" id="L36">            outputObj.close();</span>
+<span class="nc" id="L37">            return true;</span>
         }
     }
-    
-    public void getItemlist(){
+
+    public static GameSlot loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
+
+<span class="nc" id="L43">        GameSlot slot = null;</span>
+<span class="nc" id="L44">        ObjectInputStream inputObj = null;</span>
+
+        try {
+
+<span class="nc" id="L48">            FileInputStream inputFile = new FileInputStream(filename);</span>
+<span class="nc" id="L49">            inputObj = new ObjectInputStream(inputFile);</span>
+
+<span class="nc" id="L51">            slot = (GameSlot) inputObj.readObject();</span>
+
+<span class="nc" id="L53">        } catch (IOException | NullPointerException e) {</span>
+            
+<span class="nc" id="L55">            return null;</span>
+            
+        } finally {
+
+<span class="nc" id="L59">            inputObj.close();</span>
+            
+        }
+<span class="nc" id="L62">        return slot;</span>
+    }
+
+    public void getItemlist() {
         //RETORNA LISTA DE TODOS OS OBJECTOS ITEM (INICIO DE JOGO);
-<span class="nc" id="L57">    }</span>
-    
-        /**
+<span class="nc" id="L67">    }</span>
+
+    /**
      * Return in-game introduction
      */
-    public static String getGameIntro(){
+    public static String getGameIntro() {
         //deve ir buscar a um ficheiro externo o texto a inserir aqui
-        
-<span class="nc" id="L65">        return&quot;&quot;;</span>
+
+<span class="nc" id="L75">        return &quot;&quot;;</span>
     }
-    
+
     /**
      * Return in-game character introduction
      */
-    public static String getClassIntro(){
+    public static String getClassIntro() {
         //deve ir buscar a um ficheiro externo o texto a inserir aqui
-        
-<span class="nc" id="L74">        return &quot;&quot;;</span>
+
+<span class="nc" id="L84">        return &quot;&quot;;</span>
     }
-    
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

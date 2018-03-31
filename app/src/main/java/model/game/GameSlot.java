@@ -4,13 +4,14 @@
  */
 package model.game;
 
+import java.io.Serializable;
 import model.player.PlayerChar;
 
 /**
  *
  * @author Toasty Studios
  */
-public class GameSlot {
+public class GameSlot implements Serializable{
     
     private PlayerChar player;
     //...posição no mapa

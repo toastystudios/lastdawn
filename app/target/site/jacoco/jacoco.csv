@@ -52,7 +52,7 @@ Last Dawn,view,NewGameUI,11,0,0,0,4,0,2,0,2,0
 Last Dawn,view,backImage,15,0,0,0,5,0,2,0,2,0
 Last Dawn,model.game,GameSlot,7,0,0,0,4,0,2,0,2,0
 Last Dawn,model.game,Dice,27,0,0,0,6,0,3,0,3,0
-Last Dawn,model.game,FileManager,55,0,0,0,21,0,6,0,6,0
+Last Dawn,model.game,FileManager,66,0,0,0,21,0,6,0,6,0
 Last Dawn,model.game,BattleHandler,344,0,46,0,95,0,31,0,8,0
 Last Dawn,model.game,Options,3,0,0,0,1,0,1,0,1,0
 Last Dawn,model.game,Game,16,0,0,0,5,0,4,0,4,0

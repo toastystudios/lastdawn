@@ -7,23 +7,22 @@ package controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import model.game.FileManager;
-import model.game.Game;
 import model.game.GameSlot;
 
 /**
  *
  * @author Toasty Studios
  */
-<span class="nc" id="L17">public class SaveLoadController {</span>
+<span class="nc" id="L16">public class SaveLoadController {</span>
     
     public static FileManager controller;
     
-    public static boolean gameLoader(String filename) throws IOException, FileNotFoundException, ClassNotFoundException{
-<span class="nc" id="L22">        return controller.loadGame(filename);</span>
+    public static GameSlot gameLoader(String filename) throws IOException, FileNotFoundException, ClassNotFoundException{
+<span class="nc" id="L21">        return controller.loadGame(filename);</span>
     }
     
     public static boolean gameSaver(GameSlot slot, String filename) throws IOException{
-<span class="nc" id="L26">        return controller.saveGame(slot,filename);</span>
+<span class="nc" id="L25">        return controller.saveGame(slot,filename);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
