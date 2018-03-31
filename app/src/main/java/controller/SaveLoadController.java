@@ -15,7 +15,7 @@ import model.game.GameSlot;
  */
 public class SaveLoadController {
     
-    public static FileManager controller;
+    private static FileManager controller;
     
     public static GameSlot gameLoader(String filename) throws IOException, FileNotFoundException, ClassNotFoundException{
         return controller.loadGame(filename);
