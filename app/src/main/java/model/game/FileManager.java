@@ -27,14 +27,19 @@ public class FileManager {
             outputObj = new ObjectOutputStream(outputFile);
 
             outputObj.writeObject(slot);
+
+        } catch (IOException e) {
+            
+            return false;
+            
+        } finally {
+            
             outputObj.close();
             return true;
-        }catch(FileNotFoundException f){
-            return false;
-        } 
+        }
     }
 
-    public static boolean loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static GameSlot loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
 
         GameSlot slot = null;
         ObjectInputStream inputObj = null;
@@ -45,33 +50,35 @@ public class FileManager {
             inputObj = new ObjectInputStream(inputFile);
 
             slot = (GameSlot) inputObj.readObject();
+
+        } finally {
+           
             inputObj.close();
-            return true;
-        } catch (FileNotFoundException f) {
-            return false;
+
         }
+        return slot;
     }
-    
-    public void getItemlist(){
+
+    public void getItemlist() {
         //RETORNA LISTA DE TODOS OS OBJECTOS ITEM (INICIO DE JOGO);
     }
-    
-        /**
+
+    /**
      * Return in-game introduction
      */
-    public static String getGameIntro(){
+    public static String getGameIntro() {
         //deve ir buscar a um ficheiro externo o texto a inserir aqui
-        
-        return"";
+
+        return "";
     }
-    
+
     /**
      * Return in-game character introduction
      */
-    public static String getClassIntro(){
+    public static String getClassIntro() {
         //deve ir buscar a um ficheiro externo o texto a inserir aqui
-        
+
         return "";
     }
-    
+
 }

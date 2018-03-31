@@ -7,7 +7,6 @@ package controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import model.game.FileManager;
-import model.game.Game;
 import model.game.GameSlot;
 
 /**
@@ -18,7 +17,7 @@ public class SaveLoadController {
     
     public static FileManager controller;
     
-    public static boolean gameLoader(String filename) throws IOException, FileNotFoundException, ClassNotFoundException{
+    public static GameSlot gameLoader(String filename) throws IOException, FileNotFoundException, ClassNotFoundException{
         return controller.loadGame(filename);
     }
     
