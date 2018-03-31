@@ -20,52 +20,49 @@ public class FileManager {
 
     public static boolean saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
 
-        ObjectOutputStream outputObj = null;
         try {
+            ObjectOutputStream outputObj = null;
+            try {
 
-            FileOutputStream outputFile = new FileOutputStream(filename);
-            outputObj = new ObjectOutputStream(outputFile);
+                FileOutputStream outputFile = new FileOutputStream(filename);
+                outputObj = new ObjectOutputStream(outputFile);
 
-            outputObj.writeObject(slot);
+                outputObj.writeObject(slot);
 
-        } catch (IOException | NullPointerException e) {
+            } finally {
 
-            return false;
-
-        } finally {
-
-            if (outputObj == null) {
                 outputObj.close();
-                return false;
-            } else {
                 return true;
             }
+        } catch (IOException e) {
+            return false;
         }
     }
 
     public static GameSlot loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
 
-        GameSlot slot = null;
-        ObjectInputStream inputObj = null;
-
         try {
+            GameSlot slot = null;
+            ObjectInputStream inputObj = null;
 
-            FileInputStream inputFile = new FileInputStream(filename);
-            inputObj = new ObjectInputStream(inputFile);
+            try {
 
-            slot = (GameSlot) inputObj.readObject();
+                FileInputStream inputFile = new FileInputStream(filename);
+                inputObj = new ObjectInputStream(inputFile);
 
-        } catch (IOException | NullPointerException e) {
+                slot = (GameSlot) inputObj.readObject();
 
-            return null;
+            } catch (IOException | NullPointerException e) {
 
-        } finally {
-
-            if (inputObj == null) {
                 return null;
+
+            } finally {
+                inputObj.close();
             }
+            return slot;
+        } catch (IOException e) {
+            return null;
         }
-        return slot;
     }
 
     public void getItemlist() {
