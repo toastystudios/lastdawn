@@ -34,7 +34,7 @@ public class FileManager {
                 outputObj.close();
                 return true;
             }
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
             return false;
         }
     }
@@ -60,7 +60,7 @@ public class FileManager {
                 inputObj.close();
             }
             return slot;
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
             return null;
         }
     }
