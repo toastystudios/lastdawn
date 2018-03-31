@@ -25,7 +25,7 @@ public class NPC extends model.character.Character implements model.character.Ba
      * @param description
      */
     public NPC(String name, String description, int constitution, int strength, int intelligence, int dexterity, int level) {
-        super(name, level, NPC.class.getSimpleName(), constitution, strength, intelligence, dexterity);
+        super(name, level, constitution, strength, intelligence, dexterity);
         this.name = name;
         this.description = description;
     }

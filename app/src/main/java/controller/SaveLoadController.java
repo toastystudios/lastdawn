@@ -8,10 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import model.game.FileManager;
 import model.game.Game;
+import model.game.GameSlot;
 
 /**
  *
- * @author jpfr8
+ * @author Toasty Studios
  */
 public class SaveLoadController {
     
@@ -21,7 +22,7 @@ public class SaveLoadController {
         return controller.loadGame(filename);
     }
     
-    public static boolean gameSaver(Game game, String filename) throws IOException{
-        return controller.saveGame(game,filename);
+    public static boolean gameSaver(GameSlot slot, String filename) throws IOException{
+        return controller.saveGame(slot,filename);
     }
 }

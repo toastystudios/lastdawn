@@ -21,7 +21,7 @@ public class Scientist extends PlayerChar implements model.character.BattleMoves
     private static final double MODIFIER = 0.15;
 
     public Scientist(String name) {
-        super(name, Scientist.class.getSimpleName(), BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);
+        super(name, BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);
     }
 
     // =======================================

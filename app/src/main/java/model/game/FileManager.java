@@ -13,11 +13,11 @@ import java.io.ObjectOutputStream;
 
 /**
  *
- * @author jpfr8
+ * @author Toasty Studios
  */
 public class FileManager {
 
-    public static boolean saveGame(Game game, String filename) throws FileNotFoundException, IOException {
+    public static boolean saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
 
         ObjectOutputStream outputObj = null;
 
@@ -26,7 +26,7 @@ public class FileManager {
             FileOutputStream outputFile = new FileOutputStream(filename);
             outputObj = new ObjectOutputStream(outputFile);
 
-            outputObj.writeObject(game);
+            outputObj.writeObject(slot);
             outputObj.close();
             return true;
         }catch(FileNotFoundException f){
@@ -36,7 +36,7 @@ public class FileManager {
 
     public static boolean loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
 
-        Game game = null;
+        GameSlot slot = null;
         ObjectInputStream inputObj = null;
 
         try {
@@ -44,7 +44,7 @@ public class FileManager {
             FileInputStream inputFile = new FileInputStream(filename);
             inputObj = new ObjectInputStream(inputFile);
 
-            game = (Game) inputObj.readObject();
+            slot = (GameSlot) inputObj.readObject();
             inputObj.close();
             return true;
         } catch (FileNotFoundException f) {
@@ -69,6 +69,8 @@ public class FileManager {
      * Return in-game character introduction
      */
     public static String getClassIntro(){
+        //deve ir buscar a um ficheiro externo o texto a inserir aqui
+        
         return "";
     }
     

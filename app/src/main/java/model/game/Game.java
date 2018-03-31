@@ -5,11 +5,15 @@
  
  package model.game;
 
+import model.player.PlayerChar;
+
 /**
  *
  * @author Toasty Studios
  */
 public class Game {
+    
+    private GameSlot currentSlot;
     
     /**
      * Return in-game introduction
@@ -25,5 +29,10 @@ public class Game {
      */
     public static String getClassIntro(){
         return FileManager.getClassIntro();
+    }
+    
+    public GameSlot createGameSlot(PlayerChar player){
+        currentSlot = new GameSlot(player);
+        return currentSlot;
     }
 }

@@ -32,7 +32,7 @@ public abstract class Character {
      * @param startingLevel
      * @param className
      */
-    public Character(String name, int startingLevel, String className, int constitution, int strength, int intelligence, int dexterity) {
+    public Character(String name, int startingLevel, int constitution, int strength, int intelligence, int dexterity) {
         this.inventory = new Inventory();
         this.level = startingLevel;
         this.stats = new Stats(constitution, strength, intelligence, dexterity);

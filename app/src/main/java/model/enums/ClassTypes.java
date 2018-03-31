@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Henrique Moura Costa
+ * @author Toasty Studios
  */
 public enum ClassTypes {
     KNIGHT {

@@ -4,12 +4,22 @@
  */
 package view;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 /**
  *
- * @author Henrique Moura Costa
+ * @author Toasty Studios
  */
-public class NewGameUI extends JFrame {
+public class NewGameUI extends JDialog {
+    
+    public NewGameUI(JFrame main) {
+        super(main);
+        initUI();
+    }
+
+    private void initUI() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

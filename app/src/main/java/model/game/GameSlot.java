@@ -4,18 +4,24 @@
  */
 package model.game;
 
+import model.player.PlayerChar;
+
 /**
  *
- * @author Henrique Moura Costa
+ * @author Toasty Studios
  */
-public class Session {
+public class GameSlot {
     
-    public Session(){
-        
+    private PlayerChar player;
+    //...posição no mapa
+    
+    
+    public GameSlot(PlayerChar player){
+        this.player=player;
     }
     
     
-    public void updateSession(){
+    public void updateGameSlot(){
         
     }
 }

@@ -21,7 +21,7 @@ public class Knight extends PlayerChar implements model.character.BattleMoves {
     private static final double MODIFIER = 0.20;
 
     public Knight(String name) {
-        super(name, Knight.class.getSimpleName(), BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);
+        super(name, BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);
     }
     
     

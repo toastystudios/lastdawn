@@ -14,7 +14,6 @@ import model.character.ResourceManager;
 public abstract class PlayerChar extends model.character.Character {
 
     protected ResourceManager resourceManager;
-    protected model.character.BattleMoves playerClass;
     private static final int STARTING_LEVEL = 1;
     private static final int EXP_PER_HP = 4;
     /*
@@ -27,8 +26,8 @@ public abstract class PlayerChar extends model.character.Character {
 
     private int xp;
 
-    public PlayerChar(String name, String playerClass, int constitution, int strength, int intelligence, int dexterity) {
-        super(name, STARTING_LEVEL, playerClass, constitution, strength, intelligence, dexterity);
+    public PlayerChar(String name, int constitution, int strength, int intelligence, int dexterity) {
+        super(name, STARTING_LEVEL, constitution, strength, intelligence, dexterity);
         this.resourceManager = new ResourceManager();
     }
 

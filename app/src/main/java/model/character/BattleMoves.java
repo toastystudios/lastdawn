@@ -5,8 +5,6 @@
  
  package model.character;
 
-import model.character.Stats;
-
 /**
  *
  * @author Toasty Studios

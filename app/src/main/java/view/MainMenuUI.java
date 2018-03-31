@@ -178,7 +178,9 @@ public class MainMenuUI extends JFrame {
         newGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+               //follow up code
                clip.stop();
+               dispose();
             }
         });
     }
@@ -220,7 +222,7 @@ class backImage extends JComponent {
 
     Image i;
 
-//Creating Constructer
+//Creating Constructor
     public backImage(Image i) {
         this.i = i;
 

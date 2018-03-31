@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BattleHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Last Dawn</a> &gt; <a href="index.source.html" class="el_package">model.game</a> &gt; <span class="el_source">BattleHandler.java</span></div><h1>BattleHandler.java</h1><pre class="source lang-java linenums">/* Last Dawn (c) by Toasty Studios is licensed under
+ * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
+ * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+ */
+package model.game;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+import model.enums.Abilities;
+import model.npc.NPC;
+import model.player.PlayerChar;
+import utils.NumberUtils;
+import model.character.Character;
+
+/**
+ *
+ * @author Toasty Studios
+ */
+<span class="nc" id="L19">public class BattleHandler {</span>
+
+    private static final int CRITICAL_MISS = 2;
+    private static final int CRITICAL_HIT = 19;
+    private static final int MISS = 0;
+    private static final double CRITICAL_HIT_MODIFIER = 1.3;
+    private static final int ROLL_BONUS_HIT = 4;
+    private static final int ROLL_INITIATIVE = 10;
+
+    private int attack(Character defender, Character attacker, Abilities ability) {
+
+        //Roll a dice from 1 to 20
+<span class="nc" id="L31">        int diceRoll = Dice.rollDie();</span>
+
+        //Calculate attacker damage if hits
+<span class="nc" id="L34">        int damage = 0;</span>
+
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (ability.equals(Abilities.BASIC)) {</span>
+<span class="nc" id="L37">            damage = attacker.basicAttack() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        } else if (ability.equals(Abilities.ABILITY)) {</span>
+<span class="nc" id="L39">            damage = attacker.ability() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        } else if (ability.equals(Abilities.ULTIMATE)) {</span>
+<span class="nc" id="L41">            damage = attacker.ultimate() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();</span>
+        }
+
+        //Try critical hit
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (diceRoll &gt;= CRITICAL_HIT) {</span>
+<span class="nc" id="L46">            return (int) NumberUtils.roundDown(damage * CRITICAL_HIT_MODIFIER);</span>
+        }
+
+        //Try critical miss
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (diceRoll &lt;= CRITICAL_MISS) {</span>
+<span class="nc" id="L51">            attacker.decreaseHealth(1);</span>
+<span class="nc" id="L52">            return MISS;</span>
+        }
+
+        //Compare the roll against enemy's dexterity
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (diceRoll &gt;= defender.dexterity()) {</span>
+
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            if (damage &gt;= 1) {</span>
+<span class="nc" id="L59">                return damage;</span>
+            } else {
+<span class="nc" id="L61">                return MISS;</span>
+            }
+
+        } else {
+<span class="nc" id="L65">            return MISS;</span>
+        }
+    }
+
+    /**
+     * Prompts user for their input regarding choosing an attack move
+     *
+     * @param player
+     * @return
+     */
+    private int promptUser(PlayerChar player) {
+<span class="nc" id="L76">        Scanner scanner = new Scanner(System.in);</span>
+<span class="nc" id="L77">        int option = 0;</span>
+
+<span class="nc" id="L79">        boolean resources = true;</span>
+<span class="nc" id="L80">        boolean thrown = false;</span>
+
+        do {
+            try {
+<span class="nc" id="L84">                option = scanner.nextInt();</span>
+<span class="nc" id="L85">            } catch (InputMismatchException ex) {</span>
+<span class="nc" id="L86">                System.out.println(&quot;Unrecognized move!&quot;);</span>
+<span class="nc" id="L87">                thrown = true;</span>
+<span class="nc" id="L88">            }</span>
+
+<span class="nc bnc" id="L90" title="All 8 branches missed.">        } while (option &lt; 0 || option &gt; 3 || thrown == true || resources == false);</span>
+<span class="nc" id="L91">        return option;</span>
+    }
+
+    /**
+     * Prints the player damage and decreases npc hp
+     * @param damage
+     * @param npc 
+     */
+    private void printPlayerDamage(int damage, NPC npc) {
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        if (damage &gt; 0) {</span>
+<span class="nc" id="L101">            System.out.println(&quot;\nYou hit your enemy for &quot; + damage + &quot; damage!&quot;);</span>
+<span class="nc" id="L102">            npc.decreaseHealth(damage);</span>
+        } else {
+<span class="nc" id="L104">            System.out.println(&quot;\nYour attack missed!&quot;);</span>
+        }
+<span class="nc" id="L106">    }</span>
+
+    /**
+     * Prints the NPC damage and decreases player health
+     * @param damage
+     * @param player 
+     */
+    private void printNPCDamage(int damage, PlayerChar player) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (damage &gt; 0) {</span>
+<span class="nc" id="L115">            System.out.println(&quot;\nYou've been hit for &quot; + damage + &quot; damage!&quot;);</span>
+<span class="nc" id="L116">            player.decreaseHealth(damage);</span>
+        } else {
+<span class="nc" id="L118">            System.out.println(&quot;\nYour enemy missed the attack!&quot;);</span>
+        }
+<span class="nc" id="L120">    }</span>
+
+    /**
+     * Tries to attack and verifies if the player can use the chosen attack move
+     * @param player
+     * @param npc 
+     */
+    private void attackMove(PlayerChar player, NPC npc) {
+<span class="nc" id="L128">        int userMove = 0;</span>
+<span class="nc" id="L129">        boolean flag = true;</span>
+<span class="nc" id="L130">        int damage = 0;</span>
+
+        do {
+<span class="nc" id="L133">            userMove = promptUser(player);</span>
+
+<span class="nc bnc" id="L135" title="All 2 branches missed.">            if (userMove == 2) {</span>
+
+<span class="nc bnc" id="L137" title="All 2 branches missed.">                if (player.ability() != -1) {</span>
+<span class="nc" id="L138">                    flag = true;</span>
+<span class="nc" id="L139">                    damage = attack(npc, player, Abilities.ABILITY);</span>
+<span class="nc" id="L140">                    printPlayerDamage(damage, npc);</span>
+                } else {
+<span class="nc" id="L142">                    System.out.println(&quot;\nYou do not have enough resources to cast your ability!&quot;);</span>
+<span class="nc" id="L143">                    System.out.print(&quot;\n1. Basic Attack 2. Ability 3. Ultimate -&gt; &quot;);</span>
+<span class="nc" id="L144">                    flag = false;</span>
+                }
+
+<span class="nc bnc" id="L147" title="All 2 branches missed.">            } else if (userMove == 3) {</span>
+
+<span class="nc bnc" id="L149" title="All 2 branches missed.">                if (player.ultimate() != -1) {</span>
+<span class="nc" id="L150">                    flag = true;</span>
+<span class="nc" id="L151">                    damage = attack(npc, player, Abilities.ULTIMATE);</span>
+<span class="nc" id="L152">                    printPlayerDamage(damage, npc);</span>
+                } else {
+<span class="nc" id="L154">                    System.out.println(&quot;\nYou do not have enough resources to cast your ultimate!&quot;);</span>
+<span class="nc" id="L155">                    System.out.print(&quot;\n1. Basic Attack 2. Ability 3. Ultimate -&gt; &quot;);</span>
+<span class="nc" id="L156">                    flag = false;</span>
+                }
+
+            } else {
+<span class="nc" id="L160">                flag = true;</span>
+<span class="nc" id="L161">                damage = attack(npc, player, Abilities.BASIC);</span>
+<span class="nc" id="L162">                printPlayerDamage(damage, npc);</span>
+            }
+
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        } while (flag == false);</span>
+<span class="nc" id="L166">    }</span>
+
+    /**
+     * Prints the header for the player and npc health, and abilities available
+     * @param player
+     * @param npc 
+     */
+    private void printHeader(PlayerChar player, NPC npc) {
+<span class="nc" id="L174">        System.out.println(&quot;\n------- Player -------  |  --------  NPC --------\n&quot;</span>
+<span class="nc" id="L175">                + &quot;Player Health: &quot; + player.getCurrentHealth() + &quot;\t|  Enemy Health: &quot; + npc.getCurrentHealth() + &quot;\n&quot;</span>
+<span class="nc" id="L176">                + &quot;Player Resources: &quot; + player.getResources() + &quot;\t|&quot;);</span>
+<span class="nc" id="L177">        System.out.print(&quot;\n1. Basic Attack 2. Ability 3. Ultimate -&gt; &quot;);</span>
+<span class="nc" id="L178">    }</span>
+
+    /**
+     * Runs the battle
+     * @param player
+     * @param npc
+     * @return
+     * @throws InterruptedException 
+     */
+    public Character battlePVE(PlayerChar player, NPC npc) throws InterruptedException {
+<span class="nc" id="L188">        int initiative = Dice.customRollDie(ROLL_INITIATIVE);</span>
+<span class="nc" id="L189">        int damage = 0;</span>
+
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        if (initiative &gt;= ROLL_INITIATIVE / 2) {</span>
+<span class="nc" id="L192">            System.out.println(&quot;\nYou have gained initivate, you strike first!&quot;);</span>
+<span class="nc" id="L193">            Thread.sleep(250);</span>
+<span class="nc" id="L194">            printHeader(player, npc);</span>
+<span class="nc" id="L195">            Thread.sleep(250);</span>
+<span class="nc" id="L196">            attackMove(player, npc);</span>
+        }
+
+<span class="nc bnc" id="L199" title="All 4 branches missed.">        while (player.getCurrentHealth() &gt; 0 &amp;&amp; npc.getCurrentHealth() &gt; 0) {</span>
+
+            //NPC attacks the player
+<span class="nc" id="L202">            Thread.sleep(250);</span>
+<span class="nc" id="L203">            System.out.println(&quot;\nYour enemy is attacking!&quot;);</span>
+<span class="nc" id="L204">            damage = attack(player, npc, Abilities.BASIC);</span>
+<span class="nc" id="L205">            Thread.sleep(250);</span>
+<span class="nc" id="L206">            printNPCDamage(damage, player);</span>
+
+<span class="nc bnc" id="L208" title="All 2 branches missed.">            if (player.getCurrentHealth() &lt;= 0) {</span>
+<span class="nc" id="L209">                return npc;</span>
+            }
+            
+<span class="nc" id="L212">            Thread.sleep(250);</span>
+<span class="nc" id="L213">            System.out.println(&quot;\nIt's your turn!&quot;);</span>
+<span class="nc" id="L214">            Thread.sleep(250);</span>
+<span class="nc" id="L215">            printHeader(player, npc);</span>
+<span class="nc" id="L216">            Thread.sleep(250);</span>
+<span class="nc" id="L217">            attackMove(player, npc);</span>
+
+<span class="nc bnc" id="L219" title="All 2 branches missed.">            if (npc.getCurrentHealth() &lt;= 0) {</span>
+<span class="nc" id="L220">                return player;</span>
+            }
+
+        }
+
+<span class="nc" id="L225">        return null;</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

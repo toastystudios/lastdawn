@@ -4,19 +4,30 @@
  */
 package controller;
 
+import java.io.IOException;
 import java.util.List;
 import model.enums.ClassTypes;
+import model.game.FileManager;
 import model.game.Game;
+import model.game.GameSlot;
+import model.player.Knight;
+import model.player.Paladin;
+import model.player.PlayerChar;
+import model.player.Ranger;
+import model.player.Scientist;
 
 /**
  *
- * @author Henrique Moura Costa
+ * @author Toasty Studios
  */
 public class NewGameController {
     
     private Game game;
-    private List<ClassTypes> listClass;
+    private List<Enum> listClass;
+    private PlayerChar player;
     
+    private GameSlot slot;
+    private String saveGameName;
     
     public NewGameController(){
     }
@@ -36,7 +47,37 @@ public class NewGameController {
      * @return list of classes in game
      */
     public List<Enum> getClasses(){
-        return ClassTypes.getListClass();
+        listClass = ClassTypes.getListClass();
+        return listClass;
     }
     
+    /**
+     * Creates the new character
+     * 
+     * @param name the input name of the character
+     * @param playerClass  the input class picked for the character
+     */
+    public void createChar(String name,String playerClass) throws IOException{
+       //If option picked was Knight
+       if(playerClass==ClassTypes.KNIGHT.toString()){
+           player=new Knight(name);
+       }
+       //If option picked was Paladin
+       if(playerClass==ClassTypes.PALADIN.toString()){
+           player=new Paladin(name);
+       }
+       //If option picked was Paladin
+       if(playerClass==ClassTypes.RANGER.toString()){
+           player=new Ranger(name);
+       }
+       //If option picked was Paladin
+       if(playerClass==ClassTypes.SCIENTIST.toString()){
+           player=new Scientist(name);
+       }  
+       
+       //Create save game slot and the file to store the session
+       slot = game.createGameSlot(player);
+       FileManager.saveGame(slot, saveGameName);
+       
+    }
 }

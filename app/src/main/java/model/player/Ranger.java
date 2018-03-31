@@ -21,7 +21,7 @@ public class Ranger extends PlayerChar implements model.character.BattleMoves {
     private static final double MODIFIER = 0.15;
 
     public Ranger(String name) {
-        super(name, Ranger.class.getSimpleName(), BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);
+        super(name, BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);
     }
     
     // =======================================
