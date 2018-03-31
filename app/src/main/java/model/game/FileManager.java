@@ -34,11 +34,11 @@ public class FileManager {
 
         } finally {
 
-            if (!outputObj.equals(null)) {
+            if (outputObj == null) {
                 outputObj.close();
-                return true;
-            } else {
                 return false;
+            } else {
+                return true;
             }
         }
     }
@@ -61,7 +61,7 @@ public class FileManager {
 
         } finally {
 
-            if (!inputObj.equals(null)) {
+            if (inputObj == null) {
                 return null;
             }
         }
@@ -84,25 +84,24 @@ public class FileManager {
     /**
      * Return in-game character introduction
      */
-
-    public static String getClassIntro(PlayerChar player){
+    public static String getClassIntro(PlayerChar player) {
         //deve ir buscar a um ficheiro externo o texto a inserir aqui
         //faz a identificação da classe do player para saber qual o ficheiro a ler
-        
+
         String classIntro = null;
-        if(player.getClass().getSimpleName()=="Knight"){
-            
+        if (player.getClass().getSimpleName() == "Knight") {
+
         }
-        if(player.getClass().getSimpleName()=="Paladin"){
-            
+        if (player.getClass().getSimpleName() == "Paladin") {
+
         }
-        if(player.getClass().getSimpleName()=="Archer"){
-            
+        if (player.getClass().getSimpleName() == "Archer") {
+
         }
-        if(player.getClass().getSimpleName()=="Scientist"){
-            
+        if (player.getClass().getSimpleName() == "Scientist") {
+
         }
-          
+
         return classIntro;
     }
 
