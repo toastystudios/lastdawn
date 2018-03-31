@@ -33,8 +33,12 @@ public class FileManager {
 
         } finally {
 
-            outputObj.close();
-            return true;
+            if (!outputObj.equals(null)) {
+                outputObj.close();
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -51,13 +55,14 @@ public class FileManager {
             slot = (GameSlot) inputObj.readObject();
 
         } catch (IOException | NullPointerException e) {
-            
+
             return null;
-            
+
         } finally {
 
-            inputObj.close();
-            
+            if (!inputObj.equals(null)) {
+                return null;
+            }
         }
         return slot;
     }
