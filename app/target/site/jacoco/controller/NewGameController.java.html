@@ -22,15 +22,16 @@ import model.player.Scientist;
  */
 public class NewGameController {
     
-    private Game game;
     private List&lt;Enum&gt; listClass;
     private PlayerChar player;
     
     private GameSlot slot;
     private String saveGameName;
     
-<span class="nc" id="L32">    public NewGameController(){</span>
-<span class="nc" id="L33">    }</span>
+    private String classIntro;
+    
+<span class="nc" id="L33">    public NewGameController(){</span>
+<span class="nc" id="L34">    }</span>
     
     /**
      * Get in-game introduction
@@ -38,7 +39,7 @@ public class NewGameController {
      * @return String with game introduction
      */
     public String getGameIntro(){
-<span class="nc" id="L41">        return game.getGameIntro();</span>
+<span class="nc" id="L42">        return Game.getGameIntro();</span>
     }
     
     /**
@@ -47,8 +48,8 @@ public class NewGameController {
      * @return list of classes in game
      */
     public List&lt;Enum&gt; getClasses(){
-<span class="nc" id="L50">        listClass = ClassTypes.getListClass();</span>
-<span class="nc" id="L51">        return listClass;</span>
+<span class="nc" id="L51">        listClass = ClassTypes.getListClass();</span>
+<span class="nc" id="L52">        return listClass;</span>
     }
     
     /**
@@ -59,26 +60,32 @@ public class NewGameController {
      */
     public void createChar(String name,String playerClass) throws IOException{
        //If option picked was Knight
-<span class="nc bnc" id="L62" title="All 2 branches missed.">       if(playerClass==ClassTypes.KNIGHT.toString()){</span>
-<span class="nc" id="L63">           player=new Knight(name);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">       if(playerClass==ClassTypes.KNIGHT.toString()){</span>
+<span class="nc" id="L64">           player=new Knight(name);</span>
        }
        //If option picked was Paladin
-<span class="nc bnc" id="L66" title="All 2 branches missed.">       if(playerClass==ClassTypes.PALADIN.toString()){</span>
-<span class="nc" id="L67">           player=new Paladin(name);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">       if(playerClass==ClassTypes.PALADIN.toString()){</span>
+<span class="nc" id="L68">           player=new Paladin(name);</span>
        }
        //If option picked was Paladin
-<span class="nc bnc" id="L70" title="All 2 branches missed.">       if(playerClass==ClassTypes.RANGER.toString()){</span>
-<span class="nc" id="L71">           player=new Ranger(name);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">       if(playerClass==ClassTypes.RANGER.toString()){</span>
+<span class="nc" id="L72">           player=new Ranger(name);</span>
        }
        //If option picked was Paladin
-<span class="nc bnc" id="L74" title="All 2 branches missed.">       if(playerClass==ClassTypes.SCIENTIST.toString()){</span>
-<span class="nc" id="L75">           player=new Scientist(name);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">       if(playerClass==ClassTypes.SCIENTIST.toString()){</span>
+<span class="nc" id="L76">           player=new Scientist(name);</span>
        }  
        
        //Create save game slot and the file to store the session
-<span class="nc" id="L79">       slot = game.createGameSlot(player);</span>
-<span class="nc" id="L80">       FileManager.saveGame(slot, saveGameName);</span>
-       
+<span class="nc" id="L80">       slot = Game.createGameSlot(player);</span>
+<span class="nc" id="L81">       FileManager.saveGame(slot, saveGameName);      </span>
 <span class="nc" id="L82">    }</span>
+    
+    public String getClassIntro(PlayerChar player){
+<span class="nc" id="L85">        return Game.getClassIntro(player);</span>
+    }
+    
+    //...input start...
+    
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

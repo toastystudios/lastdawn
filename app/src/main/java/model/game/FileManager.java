@@ -79,17 +79,26 @@ public class FileManager {
     /**
      * Return in-game character introduction
      */
-<<<<<<< HEAD
+
     public static String getClassIntro(PlayerChar player){
         //deve ir buscar a um ficheiro externo o texto a inserir aqui
         //faz a identificação da classe do player para saber qual o ficheiro a ler
         
-=======
-    public static String getClassIntro() {
-        //deve ir buscar a um ficheiro externo o texto a inserir aqui
-
->>>>>>> e535a1e2296abadb862b183357c663016ffd2dfa
-        return "";
+        String classIntro = null;
+        if(player.getClass().getSimpleName()=="Knight"){
+            
+        }
+        if(player.getClass().getSimpleName()=="Paladin"){
+            
+        }
+        if(player.getClass().getSimpleName()=="Archer"){
+            
+        }
+        if(player.getClass().getSimpleName()=="Scientist"){
+            
+        }
+          
+        return classIntro;
     }
 
 }
