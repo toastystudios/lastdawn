@@ -20,10 +20,9 @@ public class FileManager {
 
     public static void saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
 
-        try {
+        try (FileOutputStream outputFile = new FileOutputStream(filename)) {
 
-            FileOutputStream outputFile = new FileOutputStream(filename);
-            ObjectOutputStream outputObj = new ObjectOutputStream(outputFile);;
+            ObjectOutputStream outputObj = new ObjectOutputStream(outputFile);
 
             try {
 
@@ -42,9 +41,8 @@ public class FileManager {
     public static GameSlot loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
 
         GameSlot slot = null;
-        try {
+        try (FileInputStream inputFile = new FileInputStream(filename)){
 
-            FileInputStream inputFile = new FileInputStream(filename);
             ObjectInputStream inputObj = new ObjectInputStream(inputFile);
 
             try {
