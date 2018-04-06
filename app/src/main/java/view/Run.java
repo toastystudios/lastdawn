@@ -20,6 +20,9 @@ public class Run {
         logger.info("Logging an INFO-level message");
 
         new MainMenuUI();
+        
+
+        
 
     }
 
