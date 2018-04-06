@@ -21,7 +21,7 @@ public class SaveLoadController {
         return controller.loadGame(filename);
     }
     
-    public static boolean gameSaver(GameSlot slot, String filename) throws IOException{
-        return controller.saveGame(slot,filename);
+    public static void gameSaver(GameSlot slot, String filename) throws IOException{
+        controller.saveGame(slot,filename);
     }
 }

@@ -5,6 +5,7 @@
 package model.game;
 
 import java.io.Serializable;
+import java.util.Objects;
 import model.player.PlayerChar;
 
 /**
@@ -25,4 +26,28 @@ public class GameSlot implements Serializable{
     public void updateGameSlot(){
         
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.player);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final GameSlot other = (GameSlot) obj;
+        return true;
+    }
+    
+    
 }

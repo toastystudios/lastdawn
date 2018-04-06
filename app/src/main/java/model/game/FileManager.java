@@ -18,47 +18,42 @@ import model.player.PlayerChar;
  */
 public class FileManager {
 
-    public static boolean saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
+    public static void saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
 
-        ObjectOutputStream outputObj = null;
-        try {
+        try (FileOutputStream outputFile = new FileOutputStream(filename)) {
 
-            FileOutputStream outputFile = new FileOutputStream(filename);
-            outputObj = new ObjectOutputStream(outputFile);
+            ObjectOutputStream outputObj = new ObjectOutputStream(outputFile);
 
-            outputObj.writeObject(slot);
+            try {
 
-        } catch (IOException | NullPointerException e) {
+                outputObj.writeObject(slot);
 
-            return false;
+            } finally {
 
-        } finally {
+                outputObj.close();
 
-            outputObj.close();
-            return true;
+            }
+        } catch (IOException e) {
+            System.err.println("File not found");
         }
     }
 
     public static GameSlot loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
 
         GameSlot slot = null;
-        ObjectInputStream inputObj = null;
+        try (FileInputStream inputFile = new FileInputStream(filename)){
 
-        try {
+            ObjectInputStream inputObj = new ObjectInputStream(inputFile);
 
-            FileInputStream inputFile = new FileInputStream(filename);
-            inputObj = new ObjectInputStream(inputFile);
+            try {
 
-            slot = (GameSlot) inputObj.readObject();
+                slot = (GameSlot) inputObj.readObject();
 
-        } catch (IOException | NullPointerException e) {
-            
-            return null;
-            
-        } finally {
-
-            inputObj.close();
-            
+            } finally {
+                inputObj.close();
+            }
+        } catch (NullPointerException | IOException e) {
+            System.err.println("File not found");
         }
         return slot;
     }
@@ -79,25 +74,24 @@ public class FileManager {
     /**
      * Return in-game character introduction
      */
-
-    public static String getClassIntro(PlayerChar player){
+    public static String getClassIntro(PlayerChar player) {
         //deve ir buscar a um ficheiro externo o texto a inserir aqui
         //faz a identificação da classe do player para saber qual o ficheiro a ler
-        
+
         String classIntro = null;
-        if(player.getClass().getSimpleName()=="Knight"){
-            
+        if (player.getClass().getSimpleName() == "Knight") {
+
         }
-        if(player.getClass().getSimpleName()=="Paladin"){
-            
+        if (player.getClass().getSimpleName() == "Paladin") {
+
         }
-        if(player.getClass().getSimpleName()=="Archer"){
-            
+        if (player.getClass().getSimpleName() == "Archer") {
+
         }
-        if(player.getClass().getSimpleName()=="Scientist"){
-            
+        if (player.getClass().getSimpleName() == "Scientist") {
+
         }
-          
+
         return classIntro;
     }
 }
