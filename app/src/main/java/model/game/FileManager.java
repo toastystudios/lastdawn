@@ -21,11 +21,11 @@ public class FileManager {
     public static void saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
 
         try {
-            ObjectOutputStream outputObj = null;
-            try {
 
-                FileOutputStream outputFile = new FileOutputStream(filename);
-                outputObj = new ObjectOutputStream(outputFile);
+            FileOutputStream outputFile = new FileOutputStream(filename);
+            ObjectOutputStream outputObj = new ObjectOutputStream(outputFile);;
+
+            try {
 
                 outputObj.writeObject(slot);
 
@@ -43,12 +43,11 @@ public class FileManager {
 
         GameSlot slot = null;
         try {
-            ObjectInputStream inputObj = null;
+
+            FileInputStream inputFile = new FileInputStream(filename);
+            ObjectInputStream inputObj = new ObjectInputStream(inputFile);
 
             try {
-
-                FileInputStream inputFile = new FileInputStream(filename);
-                inputObj = new ObjectInputStream(inputFile);
 
                 slot = (GameSlot) inputObj.readObject();
 
