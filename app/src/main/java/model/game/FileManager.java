@@ -18,51 +18,44 @@ import model.player.PlayerChar;
  */
 public class FileManager {
 
-    public static boolean saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
+    public static void saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
 
-        try {
-            ObjectOutputStream outputObj = null;
+        try (FileOutputStream outputFile = new FileOutputStream(filename)) {
+
+            ObjectOutputStream outputObj = new ObjectOutputStream(outputFile);
+
             try {
-
-                FileOutputStream outputFile = new FileOutputStream(filename);
-                outputObj = new ObjectOutputStream(outputFile);
 
                 outputObj.writeObject(slot);
 
             } finally {
 
                 outputObj.close();
-                return true;
+
             }
-        } catch (NullPointerException | IOException e) {
-            return false;
+        } catch (IOException e) {
+            System.err.println("File not found");
         }
     }
 
     public static GameSlot loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
 
-        try {
-            GameSlot slot = null;
-            ObjectInputStream inputObj = null;
+        GameSlot slot = null;
+        try (FileInputStream inputFile = new FileInputStream(filename)){
+
+            ObjectInputStream inputObj = new ObjectInputStream(inputFile);
 
             try {
 
-                FileInputStream inputFile = new FileInputStream(filename);
-                inputObj = new ObjectInputStream(inputFile);
-
                 slot = (GameSlot) inputObj.readObject();
-
-            } catch (IOException | NullPointerException e) {
-
-                return null;
 
             } finally {
                 inputObj.close();
             }
-            return slot;
         } catch (NullPointerException | IOException e) {
-            return null;
+            System.err.println("File not found");
         }
+        return slot;
     }
 
     public void getItemlist() {
