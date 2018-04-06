@@ -18,7 +18,7 @@ import model.player.PlayerChar;
  */
 public class FileManager {
 
-    public static boolean saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
+    public static void saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
 
         try {
             ObjectOutputStream outputObj = null;
@@ -32,17 +32,17 @@ public class FileManager {
             } finally {
 
                 outputObj.close();
-                return true;
+
             }
-        } catch (NullPointerException | IOException e) {
-            return false;
+        } catch (IOException e) {
+            System.err.println("File not found");
         }
     }
 
     public static GameSlot loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
 
+        GameSlot slot = null;
         try {
-            GameSlot slot = null;
             ObjectInputStream inputObj = null;
 
             try {
@@ -52,17 +52,13 @@ public class FileManager {
 
                 slot = (GameSlot) inputObj.readObject();
 
-            } catch (IOException | NullPointerException e) {
-
-                return null;
-
             } finally {
                 inputObj.close();
             }
-            return slot;
         } catch (NullPointerException | IOException e) {
-            return null;
+            System.err.println("File not found");
         }
+        return slot;
     }
 
     public void getItemlist() {
