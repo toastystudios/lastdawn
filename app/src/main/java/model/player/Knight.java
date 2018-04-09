@@ -5,6 +5,7 @@
 package model.player;
 
 import model.enums.StatTypes;
+import model.game.Dice;
 import model.player.PlayerChar;
 import utils.NumberUtils;
 
@@ -19,6 +20,9 @@ public class Knight extends PlayerChar implements model.character.BattleMoves {
     private static final int BASE_INTELLIGENCE = 10;
     private static final int BASE_DEXTERITY = 10;
     private static final double MODIFIER = 0.20;
+    private static final double AOE_MODIFIER = 0.75;
+    private static final int BONUS_ROLL = 4; 
+    private static final int BONUS_ROLL_ULTIMATE = 6;
 
     public Knight(String name) {
         super(name, BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);
@@ -36,7 +40,9 @@ public class Knight extends PlayerChar implements model.character.BattleMoves {
     @Override
     public int basicAttack() {
         resourceManager.generateResource();
-        return (int) NumberUtils.roundDown(((stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) * MODIFIER) + inventory.weaponDamage());
+        int damage = (int) NumberUtils.roundDown(((stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) * MODIFIER) + inventory.weaponDamage());
+        damage += Dice.customRollDie(BONUS_ROLL);
+        return damage;
     }
 
     /**
@@ -47,7 +53,12 @@ public class Knight extends PlayerChar implements model.character.BattleMoves {
     @Override
     public int ability() {
         if (resourceManager.spendAbilityResource() != -1) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            int damage = (int) NumberUtils.roundDown(((
+                    (stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) 
+                    * MODIFIER) 
+                    + inventory.weaponDamage()) * AOE_MODIFIER);
+            damage += Dice.customRollDie(BONUS_ROLL);
+            return damage;
         } else {
             return -1;
         }
@@ -61,7 +72,12 @@ public class Knight extends PlayerChar implements model.character.BattleMoves {
     @Override
     public int ultimate() {
         if (resourceManager.spendUltimateResources() != -1) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            int damage = (int) NumberUtils.roundDown((((
+                    (stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString()))
+                    * MODIFIER
+                    + inventory.weaponDamage()))));
+            damage += Dice.customRollDie(BONUS_ROLL_ULTIMATE);
+            return damage;
         } else {
             return -1;
         }

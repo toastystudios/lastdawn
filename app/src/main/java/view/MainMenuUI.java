@@ -46,38 +46,13 @@ public class MainMenuUI extends JFrame {
     private JButton optionsButton;
     private JButton exitButton;
     private JDialog optionsUI;
-    private AudioFormat af;
     private Clip clip;
 
     public MainMenuUI() {
         super();
-        initSound();
         initUI();
     }
 
-    private void initSound() {
-        try {
-            InputStream is = getClass().getResourceAsStream("/sound/menu.wav");
-            AudioInputStream as1 = AudioSystem.getAudioInputStream(new BufferedInputStream(is));
-            clip = AudioSystem.getClip();
-            DataLine.Info info = new DataLine.Info(Clip.class, af);
-            
-            Line line = AudioSystem.getLine(info);
-            
-            if (!line.isOpen()) {
-                clip.open(as1);
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-                clip.start();
-            }
-            
-        } catch (UnsupportedAudioFileException ex)  {
-            System.out.println("The audio file has imploded! Bad luck to whoever is going to fix this..");
-        } catch(IOException ex) {
-            System.out.println("IO Exception..not again!");
-        } catch(LineUnavailableException ex) {
-            System.out.println("Line is unavailable, please call on a later time!");
-        }
-    }
 
     private void initUI() {
         try {
