@@ -5,14 +5,23 @@
  
  package model.npc;
 
+import java.util.Random;
+
 /**
  *
  * @author Toasty Studios
  */
 public class EnemyNPC extends NPC {
-
+    
+    private double rareDropChance;
+    
     public EnemyNPC(String name, String description, int constitution, int strength, int intelligence, int dexterity, int level) {
         super(name, description, constitution, strength, intelligence, dexterity, level);
+        this.rareDropChance = Math.random()*5;
+    }
+    
+    public double getDropChance(){
+        return rareDropChance;
     }
 
 }
