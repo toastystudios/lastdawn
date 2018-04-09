@@ -4,10 +4,8 @@
  */
 package view;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import model.map.Coordinates;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultEdge;
@@ -22,19 +20,14 @@ public class JGraphTDemo {
     public static void main(String[] args) {
         //shortest path demo
         Graph g = new SimpleWeightedGraph<>(DefaultEdge.class);
-        Coordinates a = new Coordinates(1, 1);
-        Coordinates b = new Coordinates(1, 2);
-        Coordinates c = new Coordinates(1, 3);
-        Coordinates d = new Coordinates(1, 4);
        
-        g.addVertex(a);
-        g.addVertex(b);
-        g.addVertex(c);
-        g.addVertex(d);
-        g.addEdge(a, c, 1);
-        g.addEdge(c, d, 2);
-        g.addEdge(d, a, 3);
-        g.addEdge(a, d, 4);
+        g.addVertex("Manobro City");
+        g.addVertex("Sasuke");
+        g.addVertex("Naruto");
+        g.addVertex("SASUKEEEEEEEEEEE");
+        g.addEdge("Sasuke", "Manobro City", 50);
+        g.addEdge("Naruto", "Sasuke", 200);
+        g.addEdge("Sasuke", "SASUKEEEEEEEEEEE", 150);
         
         Set<Integer> edges = g.edgeSet();
         
@@ -43,10 +36,10 @@ public class JGraphTDemo {
         }
         DijkstraShortestPath sp = new DijkstraShortestPath(g);
         
-        List<Coordinates> shortestPath = sp.getPath(a, c).getVertexList();
+        List<String> shortestPath = sp.getPath("Naruto", "SASUKEEEEEEEEEEE").getVertexList();
         
-        for (Coordinates coord : shortestPath) {
-            System.out.println("Path: \n" + coord);
+        for (String s : shortestPath) {
+            System.out.println("Path: " + s );
         }
     }
 }
