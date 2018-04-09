@@ -7,7 +7,7 @@ Last Dawn,model.map,Map,3,0,0,0,1,0,1,0,1,0
 Last Dawn,model.map,World,3,0,0,0,1,0,1,0,1,0
 Last Dawn,model.map,Local,3,0,0,0,1,0,1,0,1,0
 Last Dawn,controller,NewGameController,66,0,8,0,17,0,9,0,5,0
-Last Dawn,controller,SaveLoadController,14,0,0,0,3,0,3,0,3,0
+Last Dawn,controller,SaveLoadController,14,0,0,0,4,0,3,0,3,0
 Last Dawn,view.options,VolumeControl,63,0,6,0,13,0,6,0,3,0
 Last Dawn,model.repo,Inventory,121,274,19,21,23,58,17,16,3,10
 Last Dawn,model.npc,EnemyNPC,10,0,0,0,2,0,1,0,1,0
@@ -34,6 +34,7 @@ Last Dawn,model.enums,ClassTypes.new ClassTypes() {...},8,0,0,0,2,0,2,0,2,0
 Last Dawn,model.enums,StatTypes,0,59,0,0,0,6,0,2,0,2
 Last Dawn,model.quest,QuestMisc,3,0,0,0,1,0,1,0,1,0
 Last Dawn,model.quest,Quest,3,0,0,0,1,0,1,0,1,0
+Last Dawn,view,JGraphTDemo,77,0,2,0,16,0,3,0,2,0
 Last Dawn,view,Run,15,0,0,0,5,0,3,0,3,0
 Last Dawn,view,ResourceUtil,12,0,0,0,3,0,2,0,2,0
 Last Dawn,view,MainMenuUI,353,0,2,0,95,0,11,0,10,0
@@ -50,9 +51,9 @@ Last Dawn,view,MainMenuUI.new ActionListener() {...},11,0,0,0,3,0,2,0,2,0
 Last Dawn,view,MainMenuUI.new ActionListener() {...},14,0,0,0,4,0,2,0,2,0
 Last Dawn,view,NewGameUI,11,0,0,0,4,0,2,0,2,0
 Last Dawn,view,backImage,15,0,0,0,5,0,2,0,2,0
-Last Dawn,model.game,GameSlot,7,0,0,0,4,0,2,0,2,0
+Last Dawn,model.game,GameSlot,40,0,6,0,15,0,7,0,4,0
 Last Dawn,model.game,Dice,27,0,0,0,6,0,3,0,3,0
-Last Dawn,model.game,FileManager,87,0,8,0,28,0,10,0,6,0
+Last Dawn,model.game,FileManager,80,0,8,0,26,0,10,0,6,0
 Last Dawn,model.game,BattleHandler,344,0,46,0,95,0,31,0,8,0
 Last Dawn,model.game,Options,3,0,0,0,1,0,1,0,1,0
 Last Dawn,model.game,Game,15,0,0,0,5,0,4,0,4,0

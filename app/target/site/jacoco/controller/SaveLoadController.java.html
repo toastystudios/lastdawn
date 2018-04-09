@@ -21,8 +21,8 @@ import model.game.GameSlot;
 <span class="nc" id="L21">        return controller.loadGame(filename);</span>
     }
     
-    public static boolean gameSaver(GameSlot slot, String filename) throws IOException{
-<span class="nc" id="L25">        return controller.saveGame(slot,filename);</span>
-    }
+    public static void gameSaver(GameSlot slot, String filename) throws IOException{
+<span class="nc" id="L25">        controller.saveGame(slot,filename);</span>
+<span class="nc" id="L26">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
