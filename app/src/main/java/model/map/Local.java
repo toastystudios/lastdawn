@@ -5,10 +5,40 @@
  
  package model.map;
 
+import java.util.Set;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleWeightedGraph;
+
 /**
  *
  * @author Toasty Studios
  */
-public class Local {
+public abstract class Local {
 
+    private String name;
+    private Kingdom kingdom;
+    private Graph<District,Road> ditrictGraph;
+    
+    public Local(String name,Kingdom kingdom){
+        this.name = name;
+        this.ditrictGraph = new SimpleWeightedGraph<>(Road.class);
+        this.kingdom = kingdom;
+    }
+    
+    public String getLocalName(){
+        return name;
+    }
+    
+    public boolean newKingdom(Kingdom kingdom){
+        if(kingdom != null) {
+            this.kingdom = kingdom;
+            return true;
+        }
+        return false;
+    }
+    
+    public String getCurrentKingdom(){
+        return this.kingdom.toString();
+    }
 }
