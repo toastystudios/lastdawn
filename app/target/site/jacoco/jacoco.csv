@@ -35,25 +35,28 @@ Last Dawn,model.enums,ClassTypes.new ClassTypes() {...},8,0,0,0,2,0,2,0,2,0
 Last Dawn,model.enums,ClassTypes.new ClassTypes() {...},8,0,0,0,2,0,2,0,2,0
 Last Dawn,model.enums,ClassTypes.new ClassTypes() {...},8,0,0,0,2,0,2,0,2,0
 Last Dawn,model.enums,StatTypes,0,59,0,0,0,6,0,2,0,2
-Last Dawn,model.quest,QuestMisc,3,0,0,0,1,0,1,0,1,0
-Last Dawn,model.quest,Quest,3,0,0,0,1,0,1,0,1,0
+Last Dawn,view,MainFrame.new WindowAdapter() {...},18,0,2,0,4,0,3,0,2,0
 Last Dawn,view,JGraphTDemo,95,0,4,0,19,0,4,0,2,0
-Last Dawn,view,Run,15,0,0,0,5,0,3,0,3,0
+Last Dawn,view,Run,21,0,0,0,7,0,3,0,3,0
 Last Dawn,view,ResourceUtil,12,0,0,0,3,0,2,0,2,0
-Last Dawn,view,MainMenuUI,297,0,0,0,77,0,9,0,9,0
+Last Dawn,view,MainMenuUI,256,0,0,0,63,0,9,0,9,0
+Last Dawn,view,MainFrame,61,0,0,0,20,0,2,0,2,0
+Last Dawn,view,optionsBackground,26,0,0,0,8,0,2,0,2,0
+Last Dawn,view,ImagePanel,53,0,0,0,15,0,4,0,4,0
 Last Dawn,view,OptionsUI.new ActionListener() {...},11,0,0,0,2,0,2,0,2,0
 Last Dawn,view,OptionsUI.new ActionListener() {...},11,0,0,0,2,0,2,0,2,0
-Last Dawn,view,OptionsUI,342,0,0,0,82,0,7,0,7,0
+Last Dawn,view,OptionsUI,345,0,0,0,82,0,7,0,7,0
 Last Dawn,view,OptionsUI.new ActionListener() {...},10,0,0,0,3,0,2,0,2,0
 Last Dawn,view,OptionsUI.new ActionListener() {...},12,0,0,0,3,0,2,0,2,0
 Last Dawn,view,OptionsUI.new ActionListener() {...},12,0,0,0,3,0,2,0,2,0
-Last Dawn,view,MainMenuUI.new WindowAdapter() {...},18,0,2,0,4,0,3,0,2,0
-Last Dawn,view,MainMenuUI.new ActionListener() {...},23,0,2,0,5,0,3,0,2,0
+Last Dawn,view,MainMenuUI.new ActionListener() {...},11,0,0,0,3,0,2,0,2,0
+Last Dawn,view,MainMenuUI.new ActionListener() {...},22,0,2,0,5,0,3,0,2,0
 Last Dawn,view,MainMenuUI.new ActionListener() {...},16,0,0,0,3,0,2,0,2,0
 Last Dawn,view,MainMenuUI.new ActionListener() {...},11,0,0,0,3,0,2,0,2,0
-Last Dawn,view,MainMenuUI.new ActionListener() {...},14,0,0,0,4,0,2,0,2,0
+Last Dawn,view,GameUI,3,0,0,0,2,0,1,0,1,0
 Last Dawn,view,NewGameUI,11,0,0,0,4,0,2,0,2,0
-Last Dawn,view,backImage,15,0,0,0,5,0,2,0,2,0
+Last Dawn,model.quest,QuestMisc,3,0,0,0,1,0,1,0,1,0
+Last Dawn,model.quest,Quest,3,0,0,0,1,0,1,0,1,0
 Last Dawn,model.io,FileImport,36,95,2,8,14,22,3,5,1,2
 Last Dawn,model.game,GameSlot,40,0,6,0,15,0,7,0,4,0
 Last Dawn,model.game,Dice,27,0,0,0,6,0,3,0,3,0

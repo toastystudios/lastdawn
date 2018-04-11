@@ -8,27 +8,25 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -36,9 +34,8 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Toasty Studios
  */
-public class MainMenuUI extends JFrame {
+public class MainMenuUI extends JPanel {
 
-    private static final String CLOSE_MESSAGE = &quot;&lt;html&gt;&lt;font color=#ffffdd&gt;Are you sure you want to exit the game?&lt;/font&gt;&quot;;
     private JLabel header;
     private JLabel subText;
     private JButton newGameButton;
@@ -47,168 +44,122 @@ public class MainMenuUI extends JFrame {
     private JButton exitButton;
     private JDialog optionsUI;
     private Clip clip;
+    private final JFrame main;
+    private JPanel bg;
 
-    public MainMenuUI() {
-<span class="nc" id="L52">        super();</span>
-<span class="nc" id="L53">        initUI();</span>
-<span class="nc" id="L54">    }</span>
-
+    public MainMenuUI(JFrame main) {
+<span class="nc" id="L51">        super();</span>
+<span class="nc" id="L52">        setLayout(null);</span>
+<span class="nc" id="L53">        this.main = main;</span>
+<span class="nc" id="L54">        initUI();</span>
+<span class="nc" id="L55">    }</span>
 
     private void initUI() {
-        try {
-<span class="nc" id="L59">            UIManager.put(&quot;OptionPane.background&quot;, Color.DARK_GRAY);</span>
-<span class="nc" id="L60">            UIManager.put(&quot;Panel.background&quot;, Color.DARK_GRAY);</span>
-<span class="nc" id="L61">            UIManager.put(&quot;Button.background&quot;, Color.DARK_GRAY);</span>
-<span class="nc" id="L62">            UIManager.put(&quot;Button.foreground&quot;, Color.WHITE);</span>
-<span class="nc" id="L63">            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());</span>
-<span class="nc" id="L64">        } catch (ClassNotFoundException | InstantiationException | IllegalArgumentException | UnsupportedLookAndFeelException | IllegalAccessException ex) {</span>
-<span class="nc" id="L65">            System.out.println(&quot;The Main UI Look and Feel exploded!&quot;);</span>
-<span class="nc" id="L66">        }</span>
-<span class="nc" id="L67">        setTitle(&quot;Last Dawn&quot;);</span>
-<span class="nc" id="L68">        setSize(800, 650);</span>
-<span class="nc" id="L69">        setLocationRelativeTo(null);</span>
-<span class="nc" id="L70">        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);</span>
-<span class="nc" id="L71">        setResizable(false);</span>
-<span class="nc" id="L72">        setBackgroundImage();</span>
-<span class="nc" id="L73">        initHeader();</span>
-<span class="nc" id="L74">        initButtons();</span>
-
-<span class="nc" id="L76">        addWindowListener(new java.awt.event.WindowAdapter() {</span>
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-<span class="nc bnc" id="L79" title="All 2 branches missed.">                if (JOptionPane.showConfirmDialog(rootPane,</span>
-                        CLOSE_MESSAGE, &quot;Warning&quot;,
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.PLAIN_MESSAGE) == JOptionPane.YES_OPTION) {
-<span class="nc" id="L83">                    System.exit(0);</span>
-                }
-<span class="nc" id="L85">            }</span>
-        });
-
-<span class="nc" id="L88">        setVisible(true);</span>
-<span class="nc" id="L89">    }</span>
+<span class="nc" id="L58">        initHeader();</span>
+<span class="nc" id="L59">        initButtons();</span>
+<span class="nc" id="L60">        setBackgroundImage();</span>
+<span class="nc" id="L61">        setVisible(true);</span>
+<span class="nc" id="L62">    }</span>
 
     private void setBackgroundImage() {
-<span class="nc" id="L92">        BufferedImage img = null;</span>
-        try {
-<span class="nc" id="L94">            img = ImageIO.read(MainMenuUI.class.getResourceAsStream(&quot;/bg/mainmenu.jpg&quot;));</span>
-<span class="nc" id="L95">        } catch (IOException ex) {</span>
-<span class="nc" id="L96">            System.out.println(&quot;The background file for the main menu has imploded!&quot;);</span>
-<span class="nc" id="L97">        }</span>
-<span class="nc" id="L98">        setContentPane(new backImage(img));</span>
-<span class="nc" id="L99">    }</span>
+<span class="nc" id="L65">        ImagePanel panel = new ImagePanel(new ImageIcon(getClass()</span>
+<span class="nc" id="L66">                                         .getResource(&quot;/bg/mainmenu.jpg&quot;))</span>
+<span class="nc" id="L67">                                         .getImage());</span>
+<span class="nc" id="L68">        add(panel);</span>
+<span class="nc" id="L69">    }</span>
 
     private void initHeader() {
-<span class="nc" id="L102">        header = new JLabel();</span>
-<span class="nc" id="L103">        header.setText(&quot;Last Dawn&quot;);</span>
-<span class="nc" id="L104">        Font headerFont = new Font(&quot;Parchment&quot;, Font.PLAIN, 200);</span>
-<span class="nc" id="L105">        header.setFont(headerFont);</span>
-<span class="nc" id="L106">        header.setForeground(Color.LIGHT_GRAY);</span>
-<span class="nc" id="L107">        header.setBounds(110, -120, 800, 500);</span>
+<span class="nc" id="L72">        header = new JLabel();</span>
+<span class="nc" id="L73">        header.setText(&quot;Last Dawn&quot;);</span>
+<span class="nc" id="L74">        Font headerFont = new Font(&quot;Parchment&quot;, Font.PLAIN, 200);</span>
+<span class="nc" id="L75">        header.setFont(headerFont);</span>
+<span class="nc" id="L76">        header.setForeground(Color.LIGHT_GRAY);</span>
+<span class="nc" id="L77">        header.setBounds(110, -120, 800, 500);</span>
 
-<span class="nc" id="L109">        Font subFont = new Font(&quot;Harrington&quot;, Font.PLAIN, 24);</span>
-<span class="nc" id="L110">        subText = new JLabel();</span>
-<span class="nc" id="L111">        subText.setText(&quot;The journey of a thousand miles begins with one step&quot;);</span>
-<span class="nc" id="L112">        subText.setFont(subFont);</span>
-<span class="nc" id="L113">        subText.setForeground(Color.LIGHT_GRAY);</span>
-<span class="nc" id="L114">        subText.setBounds(130, 0, 800, 500);</span>
+<span class="nc" id="L79">        Font subFont = new Font(&quot;Harrington&quot;, Font.PLAIN, 24);</span>
+<span class="nc" id="L80">        subText = new JLabel();</span>
+<span class="nc" id="L81">        subText.setText(&quot;The journey of a thousand miles begins with one step&quot;);</span>
+<span class="nc" id="L82">        subText.setFont(subFont);</span>
+<span class="nc" id="L83">        subText.setForeground(Color.LIGHT_GRAY);</span>
+<span class="nc" id="L84">        subText.setBounds(130, 0, 800, 500);</span>
 
-<span class="nc" id="L116">        add(header);</span>
-<span class="nc" id="L117">        add(subText);</span>
-<span class="nc" id="L118">    }</span>
+<span class="nc" id="L86">        super.add(header);</span>
+<span class="nc" id="L87">        super.add(subText);</span>
+<span class="nc" id="L88">    }</span>
 
     private void initButtons() {
-<span class="nc" id="L121">        newGameButton = new JButton(&quot;New Game&quot;);</span>
-<span class="nc" id="L122">        loadGameButton = new JButton(&quot;Load Game&quot;);</span>
-<span class="nc" id="L123">        optionsButton = new JButton(&quot;Options&quot;);</span>
-<span class="nc" id="L124">        exitButton = new JButton(&quot;Exit&quot;);</span>
+<span class="nc" id="L91">        newGameButton = new JButton(&quot;New Game&quot;);</span>
+<span class="nc" id="L92">        loadGameButton = new JButton(&quot;Load Game&quot;);</span>
+<span class="nc" id="L93">        optionsButton = new JButton(&quot;Options&quot;);</span>
+<span class="nc" id="L94">        exitButton = new JButton(&quot;Exit&quot;);</span>
 
-<span class="nc" id="L126">        newGameButton.setBounds(247, 330, 300, 50);</span>
-<span class="nc" id="L127">        newGameButton.setForeground(Color.ORANGE);</span>
-<span class="nc" id="L128">        newGameButton.setFocusPainted(false);</span>
-<span class="nc" id="L129">        newGameAction();</span>
+<span class="nc" id="L96">        newGameButton.setBounds(247, 330, 300, 50);</span>
+<span class="nc" id="L97">        newGameButton.setForeground(Color.ORANGE);</span>
+<span class="nc" id="L98">        newGameButton.setFocusPainted(false);</span>
+<span class="nc" id="L99">        newGameAction();</span>
 
-<span class="nc" id="L131">        loadGameButton.setBounds(247, 385, 300, 50);</span>
-<span class="nc" id="L132">        loadGameButton.setForeground(Color.ORANGE);</span>
-<span class="nc" id="L133">        loadGameButton.setFocusPainted(false);</span>
-<span class="nc" id="L134">        loadGameAction();</span>
+<span class="nc" id="L101">        loadGameButton.setBounds(247, 385, 300, 50);</span>
+<span class="nc" id="L102">        loadGameButton.setForeground(Color.ORANGE);</span>
+<span class="nc" id="L103">        loadGameButton.setFocusPainted(false);</span>
+<span class="nc" id="L104">        loadGameAction();</span>
 
-<span class="nc" id="L136">        optionsButton.setBounds(247, 440, 300, 50);</span>
-<span class="nc" id="L137">        optionsButton.setForeground(Color.ORANGE);</span>
-<span class="nc" id="L138">        optionsButton.setFocusPainted(false);</span>
-<span class="nc" id="L139">        optionsAction();</span>
+<span class="nc" id="L106">        optionsButton.setBounds(247, 440, 300, 50);</span>
+<span class="nc" id="L107">        optionsButton.setForeground(Color.ORANGE);</span>
+<span class="nc" id="L108">        optionsButton.setFocusPainted(false);</span>
+<span class="nc" id="L109">        optionsAction();</span>
 
-<span class="nc" id="L141">        exitButton.setBounds(247, 495, 300, 50);</span>
-<span class="nc" id="L142">        exitButton.setForeground(Color.ORANGE);</span>
-<span class="nc" id="L143">        exitButton.setFocusPainted(false);</span>
-<span class="nc" id="L144">        exitGameAction();</span>
+<span class="nc" id="L111">        exitButton.setBounds(247, 495, 300, 50);</span>
+<span class="nc" id="L112">        exitButton.setForeground(Color.ORANGE);</span>
+<span class="nc" id="L113">        exitButton.setFocusPainted(false);</span>
+<span class="nc" id="L114">        exitGameAction();</span>
 
-<span class="nc" id="L146">        add(newGameButton);</span>
-<span class="nc" id="L147">        add(loadGameButton);</span>
-<span class="nc" id="L148">        add(optionsButton);</span>
-<span class="nc" id="L149">        add(exitButton);</span>
-<span class="nc" id="L150">    }</span>
+<span class="nc" id="L116">        super.add(newGameButton);</span>
+<span class="nc" id="L117">        super.add(loadGameButton);</span>
+<span class="nc" id="L118">        super.add(optionsButton);</span>
+<span class="nc" id="L119">        super.add(exitButton);</span>
+<span class="nc" id="L120">    }</span>
 
     private void newGameAction() {
-<span class="nc" id="L153">        newGameButton.addActionListener(new ActionListener() {</span>
+<span class="nc" id="L123">        newGameButton.addActionListener(new ActionListener() {</span>
             @Override
             public void actionPerformed(ActionEvent e) {
-               //follow up code
-<span class="nc" id="L157">               clip.stop();</span>
-<span class="nc" id="L158">               dispose();</span>
+                //follow up code
+<span class="nc" id="L127">                clip.stop();</span>
+<span class="nc" id="L128">            }</span>
+        });
+<span class="nc" id="L130">    }</span>
+
+    private void loadGameAction() {
+<span class="nc" id="L133">        loadGameButton.addActionListener(new ActionListener() {</span>
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L136">                clip.stop();</span>
+<span class="nc" id="L137">            }</span>
+        });
+<span class="nc" id="L139">    }</span>
+
+    private void optionsAction() {
+<span class="nc" id="L142">        optionsButton.addActionListener(new ActionListener() {</span>
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L145">                optionsUI = new OptionsUI(MainMenuUI.this);</span>
+<span class="nc" id="L146">            }</span>
+        });
+<span class="nc" id="L148">    }</span>
+
+    private void exitGameAction() {
+<span class="nc" id="L151">        exitButton.addActionListener(new ActionListener() {</span>
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L154">                String string = ResourceUtil.CLOSE_MESSAGE;</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">                if (JOptionPane.showOptionDialog(MainMenuUI.this, string, &quot;Warning&quot;, JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null)</span>
+                        == JOptionPane.YES_OPTION) {
+<span class="nc" id="L157">                    System.exit(0);</span>
+                }
 <span class="nc" id="L159">            }</span>
         });
 <span class="nc" id="L161">    }</span>
 
-    private void loadGameAction() {
-<span class="nc" id="L164">        loadGameButton.addActionListener(new ActionListener() {</span>
-            @Override
-            public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L167">               clip.stop();</span>
-<span class="nc" id="L168">            }</span>
-        });
-<span class="nc" id="L170">    }</span>
-
-    private void optionsAction() {
-<span class="nc" id="L173">        optionsButton.addActionListener(new ActionListener() {</span>
-            @Override
-            public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L176">                optionsUI = new OptionsUI(MainMenuUI.this);</span>
-<span class="nc" id="L177">            }</span>
-        });
-<span class="nc" id="L179">    }</span>
-
-    private void exitGameAction() {
-<span class="nc" id="L182">        exitButton.addActionListener(new ActionListener() {</span>
-            @Override
-            public void actionPerformed(ActionEvent e) {
-<span class="nc" id="L185">                String string = CLOSE_MESSAGE;</span>
-<span class="nc bnc" id="L186" title="All 2 branches missed.">                if (JOptionPane.showOptionDialog(rootPane, string, &quot;Warning&quot;, JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null)</span>
-                        == JOptionPane.YES_OPTION) {
-<span class="nc" id="L188">                    System.exit(0);</span>
-                }
-<span class="nc" id="L190">            }</span>
-        });
-<span class="nc" id="L192">    }</span>
-
 }
 
-class backImage extends JComponent {
-
-    Image i;
-
-//Creating Constructor
-<span class="nc" id="L201">    public backImage(Image i) {</span>
-<span class="nc" id="L202">        this.i = i;</span>
-
-<span class="nc" id="L204">    }</span>
-
-//Overriding the paintComponent method
-    @Override
-    public void paintComponent(Graphics g) {
-
-<span class="nc" id="L210">        g.drawImage(i, 0, 0, null);  // Drawing image using drawImage method</span>
-
-<span class="nc" id="L212">    }</span>
-}
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

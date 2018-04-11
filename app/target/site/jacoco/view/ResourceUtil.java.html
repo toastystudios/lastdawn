@@ -13,10 +13,12 @@ import java.net.URL;
  * @author Toasty Studios
  */
 <span class="nc" id="L15">public class ResourceUtil {</span>
+    
+    public static final String CLOSE_MESSAGE = &quot;&lt;html&gt;&lt;font color=#ffffdd&gt;Are you sure you want to exit the game?&lt;/font&gt;&quot;;
 
     public static Image getImage(final String pathAndFileName) {
-<span class="nc" id="L18">        final URL url = Thread.currentThread().getContextClassLoader().getResource(pathAndFileName);</span>
-<span class="nc" id="L19">        return Toolkit.getDefaultToolkit().getImage(url);</span>
+<span class="nc" id="L20">        final URL url = Thread.currentThread().getContextClassLoader().getResource(pathAndFileName);</span>
+<span class="nc" id="L21">        return Toolkit.getDefaultToolkit().getImage(url);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

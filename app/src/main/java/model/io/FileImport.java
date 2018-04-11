@@ -23,9 +23,8 @@ public class FileImport {
     public static ArrayList<Local> readLocalFile(String file) throws FileNotFoundException {
 
         ArrayList<Local> list = new ArrayList<>();
-        BufferedReader in = new BufferedReader(new FileReader(file));
 
-        try {
+        try (BufferedReader in = new BufferedReader(new FileReader(file))) {
 
             String line;
 
@@ -46,13 +45,11 @@ public class FileImport {
         return list;
     }
 
-    public static GameMap readRoadFile(String roadFile,String localFile) throws FileNotFoundException {
+    public static GameMap readRoadFile(String roadFile, String localFile) throws FileNotFoundException {
 
         GameMap map = new GameMap("game");
 
-        BufferedReader in = new BufferedReader(new FileReader(roadFile));
-
-        try {
+        try (BufferedReader in = new BufferedReader(new FileReader(roadFile));) {
 
             String line;
 
@@ -61,24 +58,24 @@ public class FileImport {
                 String[] word = line.split(",");
 
                 ArrayList<Local> localList = readLocalFile(localFile);
-               
+
                 Local loc1 = null;
                 Local loc2 = null;
-                
-                for(Local local : localList){
-                    
-                    if(local.getLocalName().equalsIgnoreCase(word[0])){ 
+
+                for (Local local : localList) {
+
+                    if (local.getLocalName().equalsIgnoreCase(word[0])) {
                         loc1 = local;
                     }
-                    
-                    if(local.getLocalName().equalsIgnoreCase(word[1])){
+
+                    if (local.getLocalName().equalsIgnoreCase(word[1])) {
                         loc2 = local;
                     }
-                    
+
                 }
-                
+
                 map.addRoad(loc1, loc2, new Road(Double.valueOf(word[2])));
-                
+
             }
 
             in.close();
