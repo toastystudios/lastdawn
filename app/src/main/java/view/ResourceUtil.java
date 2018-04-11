@@ -13,6 +13,8 @@ import java.net.URL;
  * @author Toasty Studios
  */
 public class ResourceUtil {
+    
+    public static final String CLOSE_MESSAGE = "<html><font color=#ffffdd>Are you sure you want to exit the game?</font>";
 
     public static Image getImage(final String pathAndFileName) {
         final URL url = Thread.currentThread().getContextClassLoader().getResource(pathAndFileName);
