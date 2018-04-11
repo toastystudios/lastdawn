@@ -34,11 +34,11 @@ public class BattleHandler {
         int damage = 0;
 
         if (ability.equals(Abilities.BASIC)) {
-            damage = attacker.basicAttack() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();
+            damage = attacker.basicAttack() - defender.defense();
         } else if (ability.equals(Abilities.ABILITY)) {
-            damage = attacker.ability() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();
+            damage = attacker.ability()     - defender.defense();
         } else if (ability.equals(Abilities.ULTIMATE)) {
-            damage = attacker.ultimate() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();
+            damage = attacker.ultimate()    - defender.defense();
         }
 
         //Try critical hit

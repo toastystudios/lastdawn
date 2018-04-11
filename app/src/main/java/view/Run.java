@@ -7,6 +7,7 @@ package view;
 import java.io.IOException;
 import java.util.logging.Logger;
 import javax.swing.UnsupportedLookAndFeelException;
+import view.options.Sound;
 
 /**
  *
@@ -18,7 +19,8 @@ public class Run {
 
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         logger.info("Logging an INFO-level message");
-
+          
+        new Sound();
         new MainMenuUI();
         
 
