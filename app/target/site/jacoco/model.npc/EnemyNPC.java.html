@@ -2,8 +2,10 @@
  * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
  * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
  */
- 
- package model.npc;
+package model.npc;
+
+import java.util.Random;
+import model.map.Local;
 
 /**
  *
@@ -11,9 +13,16 @@
  */
 public class EnemyNPC extends NPC {
 
+    private double rareDropChance;
+
     public EnemyNPC(String name, String description, int constitution, int strength, int intelligence, int dexterity, int level) {
-<span class="nc" id="L15">        super(name, description, constitution, strength, intelligence, dexterity, level);</span>
-<span class="nc" id="L16">    }</span>
+<span class="nc" id="L19">        super(name, description, constitution, strength, intelligence, dexterity, level);</span>
+<span class="nc" id="L20">        this.rareDropChance = Math.random() * 5;</span>
+<span class="nc" id="L21">    }</span>
+
+    public double getDropChance() {
+<span class="nc" id="L24">        return rareDropChance;</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

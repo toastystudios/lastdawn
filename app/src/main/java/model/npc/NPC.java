@@ -5,6 +5,7 @@
 package model.npc;
 
 import model.enums.StatTypes;
+import model.map.Local;
 import utils.NumberUtils;
 
 /**

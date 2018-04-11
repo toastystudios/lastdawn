@@ -10,21 +10,10 @@ package model.map;
  */
 public class Road {
     
-    private String name;
     private double chanceOfEnemy;
     
-    public Road(String name,double chanceOfEnemy){
-        this.name = name;
+    public Road(double chanceOfEnemy){
         this.chanceOfEnemy = chanceOfEnemy;
-    }
-    
-    public Road(String name){
-        this.name = name;
-        this.chanceOfEnemy = 0;
-    }
-    
-    public String getRoadName(){
-        return this.name;
     }
     
     public double getChanceOfEnemy(){

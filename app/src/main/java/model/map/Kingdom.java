@@ -9,5 +9,7 @@ package model.map;
  * @author jpfr8
  */
 public enum Kingdom {
-    
+    KINGDOM1,
+    KINGDOM2,
+    KINGDOM3;
 }

@@ -5,6 +5,8 @@
  
  package model.npc;
 
+import model.map.Local;
+
 /**
  *
  * @author Toasty Studios

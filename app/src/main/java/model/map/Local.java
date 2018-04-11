@@ -14,7 +14,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
  *
  * @author Toasty Studios
  */
-public abstract class Local {
+public class Local {
 
     private String name;
     private Kingdom kingdom;
@@ -41,4 +41,5 @@ public abstract class Local {
     public String getCurrentKingdom(){
         return this.kingdom.toString();
     }
+    
 }

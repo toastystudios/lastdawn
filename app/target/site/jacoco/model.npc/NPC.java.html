@@ -5,6 +5,7 @@
 package model.npc;
 
 import model.enums.StatTypes;
+import model.map.Local;
 import utils.NumberUtils;
 
 /**
@@ -25,10 +26,10 @@ public class NPC extends model.character.Character implements model.character.Ba
      * @param description
      */
     public NPC(String name, String description, int constitution, int strength, int intelligence, int dexterity, int level) {
-<span class="fc" id="L28">        super(name, level, constitution, strength, intelligence, dexterity);</span>
-<span class="fc" id="L29">        this.name = name;</span>
-<span class="fc" id="L30">        this.description = description;</span>
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L29">        super(name, level, constitution, strength, intelligence, dexterity);</span>
+<span class="fc" id="L30">        this.name = name;</span>
+<span class="fc" id="L31">        this.description = description;</span>
+<span class="fc" id="L32">    }</span>
 
     // =======================================
     // ----------- COMBAT METHODS ------------
@@ -40,17 +41,17 @@ public class NPC extends model.character.Character implements model.character.Ba
      */
     @Override
     public int basicAttack() {
-<span class="nc" id="L43">        return (int) NumberUtils.roundDown(((stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) * MODIFIER) + inventory.weaponDamage());</span>
+<span class="nc" id="L44">        return (int) NumberUtils.roundDown(((stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) * MODIFIER) + inventory.weaponDamage());</span>
     }
 
     @Override
     public int ability() {
-<span class="nc" id="L48">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+<span class="nc" id="L49">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
     }
 
     @Override
     public int ultimate() {
-<span class="nc" id="L53">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+<span class="nc" id="L54">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
     }
 
 }

@@ -12,7 +12,7 @@ import model.npc.NPC;
  *
  * @author jpfr8
  */
-public class District {
+public class District{
     
     private String name;
     private Set<NPC> npcs;
