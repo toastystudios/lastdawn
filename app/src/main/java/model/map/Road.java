@@ -16,9 +16,45 @@ public class Road {
         this.chanceOfEnemy = chanceOfEnemy;
     }
     
+    public Road(){
+        
+    }
+    
     public double getChanceOfEnemy(){
         return this.chanceOfEnemy;
     }  
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 11 * hash + (int) (Double.doubleToLongBits(this.chanceOfEnemy) ^ (Double.doubleToLongBits(this.chanceOfEnemy) >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Road other = (Road) obj;
+        if (Double.doubleToLongBits(this.chanceOfEnemy) != Double.doubleToLongBits(other.chanceOfEnemy)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Road{" + "chanceOfEnemy=" + chanceOfEnemy + '}';
+    }
+    
+    
     
     
 }

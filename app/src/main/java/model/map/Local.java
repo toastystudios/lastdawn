@@ -5,6 +5,7 @@
  
  package model.map;
 
+import java.util.Objects;
 import java.util.Set;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
@@ -41,5 +42,46 @@ public class Local {
     public String getCurrentKingdom(){
         return this.kingdom.toString();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.name);
+        hash = 67 * hash + Objects.hashCode(this.kingdom);
+        hash = 67 * hash + Objects.hashCode(this.ditrictGraph);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Local other = (Local) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (this.kingdom != other.kingdom) {
+            return false;
+        }
+        if (!Objects.equals(this.ditrictGraph, other.ditrictGraph)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    @Override
+    public String toString() {
+        return "Local{" + "name=" + name + ", kingdom=" + kingdom + ", ditrictGraph=" + ditrictGraph + '}';
+    }
+    
+    
     
 }

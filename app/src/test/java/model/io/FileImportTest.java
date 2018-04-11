@@ -19,22 +19,22 @@ import static org.junit.Assert.*;
  * @author jpfr8
  */
 public class FileImportTest {
-    
+
     public FileImportTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -44,22 +44,23 @@ public class FileImportTest {
      */
     @Test
     public void testReadLocalFile() throws Exception {
-        
+
         System.out.println("readLocalFile");
-        ArrayList<Local> list = FileImport.readLocalFile("cidades.txt");
-        assertEquals(list.size(),11);
-        
+        GameMap list = FileImport.readLocalFile("cidades.txt");
+        assertEquals(list.getGraph().vertexSet().size(), 11);
+
     }
 
-//    /**
-//     * Test of readRoadFile method, of class FileImport.
-//     */
-//    @Test
-//    public void testReadRoadFile() throws Exception {
-//        System.out.println("readRoadFile");
-//        GameMap map = FileImport.readRoadFile("roads.txt","cidades.txt");
-//        System.out.println(map.getGraph());
-//        
-//    }
-    
+    /**
+     * Test of readRoadFile method, of class FileImport.
+     */
+    @Test
+    public void testReadRoadFile() throws Exception {
+        System.out.println("readRoadFile");
+        GameMap map = FileImport.readRoadFile("roads.txt", "cidades.txt");
+        System.out.println(map.getGraph());
+        assertEquals(map.getGraph().vertexSet().size(), 11);
+        assertEquals(map.getGraph().edgeSet().size(), 20);
+    }
+
 }

@@ -20,9 +20,9 @@ import model.map.Road;
  */
 public class FileImport {
 
-    public static ArrayList<Local> readLocalFile(String file) throws FileNotFoundException {
+    public static GameMap readLocalFile(String file) throws FileNotFoundException {
 
-        ArrayList<Local> list = new ArrayList<>();
+        GameMap list = new GameMap("game");
 
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
 
@@ -32,7 +32,7 @@ public class FileImport {
 
                 String[] word = line.split(",");
 
-                list.add(new Local(word[0], Kingdom.KINGDOM1));
+                list.addLocal(new Local(word[0], Kingdom.KINGDOM1));
 
             }
 
@@ -49,7 +49,7 @@ public class FileImport {
 
         GameMap map = new GameMap("game");
 
-        try (BufferedReader in = new BufferedReader(new FileReader(roadFile));) {
+        try (BufferedReader in = new BufferedReader(new FileReader(roadFile))) {
 
             String line;
 
@@ -57,32 +57,33 @@ public class FileImport {
 
                 String[] word = line.split(",");
 
-                ArrayList<Local> localList = readLocalFile(localFile);
+                GameMap localList = readLocalFile(localFile);
 
                 Local loc1 = null;
                 Local loc2 = null;
-
-                for (Local local : localList) {
+                
+                System.out.println(localList);
+                
+                for (Local local : localList.getGraph().vertexSet()) {
 
                     if (local.getLocalName().equalsIgnoreCase(word[0])) {
                         loc1 = local;
-                    }
-
-                    if (local.getLocalName().equalsIgnoreCase(word[1])) {
+                    } else if (local.getLocalName().equalsIgnoreCase(word[1])) {
                         loc2 = local;
                     }
 
                 }
 
-                map.addRoad(loc1, loc2, new Road(Double.valueOf(word[2])));
+                Road road = new Road(Double.valueOf(word[2]));
+                map.addRoad(loc1, loc2, road);
 
             }
 
             in.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("file not found");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("io found");
         }
 
         return map;

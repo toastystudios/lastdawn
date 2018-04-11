@@ -14,8 +14,8 @@ import org.jgrapht.graph.SimpleWeightedGraph;
  */
 public class GameMap {
 
-    private String name;
-    private Graph<Local, Road> graph;
+    private static String name;
+    private static Graph<Local, Road> graph;
 
     public GameMap(String name) {
         this.name = name;
@@ -36,10 +36,14 @@ public class GameMap {
     }
 
     public boolean addRoad(Local v1, Local v2,Road road) {
-        if (road == null || graph.containsEdge(v1, v2)) {
+        if (road == null || v1 == null || v2 == null || graph.containsEdge(v1, v2)) {
             return false;
         } else {
+//            System.out.println(v1);
+//            System.out.println(v2);
+//            System.out.println(road);
             graph.addEdge(v1, v2, road);
+            System.out.println(graph);
             return true;
         }
     }
@@ -51,4 +55,5 @@ public class GameMap {
     public String toString() {
         return name;
     }
+    
 }
