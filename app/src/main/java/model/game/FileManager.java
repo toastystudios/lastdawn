@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import model.map.World;
 import model.player.PlayerChar;
 
 /**
@@ -94,4 +95,7 @@ public class FileManager {
 
         return classIntro;
     }
+
 }
+
+
