@@ -2,7 +2,7 @@
  * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
  * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
  */
-package view;
+package view.utils;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  *
  * @author Sachi
  */
-class ImagePanel extends JPanel {
+public class ImagePanel extends JPanel {
 
     private Image img;
 

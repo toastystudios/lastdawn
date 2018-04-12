@@ -9,10 +9,17 @@ Last Dawn,model.map,Road,14,60,4,4,7,13,6,4,2,4
 Last Dawn,model.map,GameMap,21,52,7,7,6,13,8,5,2,4
 Last Dawn,model.map,Local,23,102,7,7,10,21,8,6,2,5
 Last Dawn,controller,NewGameController,65,0,8,0,17,0,9,0,5,0
+Last Dawn,controller,InventoryController,11,0,0,0,4,0,2,0,2,0
 Last Dawn,controller,SaveLoadController,14,0,0,0,4,0,3,0,3,0
 Last Dawn,view.options,Sound,61,0,2,0,20,0,4,0,3,0
 Last Dawn,view.options,VolumeControl,63,0,6,0,13,0,6,0,3,0
-Last Dawn,model.repo,Inventory,121,274,19,21,23,58,17,16,3,10
+Last Dawn,view.utils,LimitLinesDocumentListener,109,0,6,0,38,0,13,0,10,0
+Last Dawn,view.utils,LimitLinesDocumentListener.new Runnable() {...},15,0,0,0,3,0,2,0,2,0
+Last Dawn,view.utils,Console,81,0,2,0,23,0,8,0,7,0
+Last Dawn,view.utils,ResourceUtil,12,0,0,0,3,0,2,0,2,0
+Last Dawn,view.utils,Console.ConsoleOutputStream,172,0,22,0,46,0,16,0,5,0
+Last Dawn,view.utils,ImagePanel,53,0,0,0,15,0,4,0,4,0
+Last Dawn,model.repo,Inventory,148,274,21,21,28,58,19,16,4,10
 Last Dawn,model.npc,EnemyNPC,18,0,0,0,4,0,2,0,2,0
 Last Dawn,model.npc,ShopNPC,10,0,0,0,2,0,1,0,1,0
 Last Dawn,model.npc,NPC,33,15,0,0,3,4,3,1,3,1
@@ -36,24 +43,22 @@ Last Dawn,model.enums,ClassTypes.new ClassTypes() {...},8,0,0,0,2,0,2,0,2,0
 Last Dawn,model.enums,ClassTypes.new ClassTypes() {...},8,0,0,0,2,0,2,0,2,0
 Last Dawn,model.enums,StatTypes,0,59,0,0,0,6,0,2,0,2
 Last Dawn,view,MainFrame.new WindowAdapter() {...},18,0,2,0,4,0,3,0,2,0
-Last Dawn,view,JGraphTDemo,95,0,4,0,19,0,4,0,2,0
-Last Dawn,view,Run,21,0,0,0,7,0,3,0,3,0
-Last Dawn,view,ResourceUtil,12,0,0,0,3,0,2,0,2,0
-Last Dawn,view,MainMenuUI,256,0,0,0,63,0,9,0,9,0
-Last Dawn,view,MainFrame,61,0,0,0,20,0,2,0,2,0
+Last Dawn,view,Run,36,0,2,0,10,0,4,0,3,0
+Last Dawn,view,MainMenuUI,259,0,0,0,64,0,9,0,9,0
+Last Dawn,view,GameUI.new ActionListener() {...},13,0,0,0,3,0,2,0,2,0
+Last Dawn,view,MainFrame,57,0,0,0,20,0,2,0,2,0
 Last Dawn,view,optionsBackground,26,0,0,0,8,0,2,0,2,0
-Last Dawn,view,ImagePanel,53,0,0,0,15,0,4,0,4,0
 Last Dawn,view,OptionsUI.new ActionListener() {...},11,0,0,0,2,0,2,0,2,0
 Last Dawn,view,OptionsUI.new ActionListener() {...},11,0,0,0,2,0,2,0,2,0
 Last Dawn,view,OptionsUI,345,0,0,0,82,0,7,0,7,0
 Last Dawn,view,OptionsUI.new ActionListener() {...},10,0,0,0,3,0,2,0,2,0
 Last Dawn,view,OptionsUI.new ActionListener() {...},12,0,0,0,3,0,2,0,2,0
 Last Dawn,view,OptionsUI.new ActionListener() {...},12,0,0,0,3,0,2,0,2,0
-Last Dawn,view,MainMenuUI.new ActionListener() {...},11,0,0,0,3,0,2,0,2,0
+Last Dawn,view,MainMenuUI.new ActionListener() {...},17,0,0,0,3,0,2,0,2,0
 Last Dawn,view,MainMenuUI.new ActionListener() {...},22,0,2,0,5,0,3,0,2,0
 Last Dawn,view,MainMenuUI.new ActionListener() {...},16,0,0,0,3,0,2,0,2,0
-Last Dawn,view,MainMenuUI.new ActionListener() {...},11,0,0,0,3,0,2,0,2,0
-Last Dawn,view,GameUI,3,0,0,0,2,0,1,0,1,0
+Last Dawn,view,MainMenuUI.new ActionListener() {...},7,0,0,0,2,0,2,0,2,0
+Last Dawn,view,GameUI,617,0,4,0,136,0,12,0,10,0
 Last Dawn,view,NewGameUI,11,0,0,0,4,0,2,0,2,0
 Last Dawn,model.quest,QuestMisc,3,0,0,0,1,0,1,0,1,0
 Last Dawn,model.quest,Quest,3,0,0,0,1,0,1,0,1,0
@@ -63,7 +68,7 @@ Last Dawn,model.game,Dice,27,0,0,0,6,0,3,0,3,0
 Last Dawn,model.game,FileManager,80,0,8,0,26,0,10,0,6,0
 Last Dawn,model.game,BattleHandler,335,0,46,0,95,0,31,0,8,0
 Last Dawn,model.game,Options,3,0,0,0,1,0,1,0,1,0
-Last Dawn,model.game,Game,15,0,0,0,5,0,4,0,4,0
+Last Dawn,model.game,Game,20,0,0,0,6,0,5,0,5,0
 Last Dawn,model.item,Item,0,30,0,0,0,11,0,4,0,4
 Last Dawn,model.item,Throwable,9,0,0,0,2,0,1,0,1,0
 Last Dawn,model.item,Weapon,0,27,0,0,0,6,0,3,0,3

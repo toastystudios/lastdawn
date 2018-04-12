@@ -4,19 +4,252 @@
  */
 package view;
 
+import controller.InventoryController;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import model.game.Game;
+import model.item.Item;
+import view.utils.Console;
+import view.utils.ImagePanel;
 
 /**
  *
  * @author ruial
  */
 public class GameUI extends JPanel {
+
+    private InventoryController inventoryController;
+
+    private JScrollPane consoleScroll;
+    private JTextPane consoleOutput;
+    private JList&lt;Item&gt; inventory;
+    private JTextPane playerHealth;
+    private JTextPane playerResources;
+    private JLabel currentLocation;
+    private JLabel constitutionValue;
+    private JLabel strengthValue;
+    private JLabel dexterityValue;
+    private JLabel intelligenceValue;
+    private DefaultListModel&lt;String&gt; inventoryList;
+    private JList&lt;Item&gt; equipped;
+    private DefaultListModel&lt;String&gt; equippedList;
+    private Game game;
+
+    public GameUI(JFrame main, Game game) {
+<span class="nc" id="L53">        super();</span>
+<span class="nc" id="L54">        setLayout(null);</span>
+<span class="nc" id="L55">        inventoryController = new InventoryController(game.player());</span>
+<span class="nc" id="L56">        initUI();</span>
+<span class="nc" id="L57">    }</span>
+
+    private void initUI() {
+<span class="nc" id="L60">        initPlayerInfo();</span>
+
+        //Seperator between player info and console
+<span class="nc" id="L63">        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);</span>
+<span class="nc" id="L64">        separator.setBounds(0, 110, 800, 5);</span>
+<span class="nc" id="L65">        separator.setBackground(Color.white.darker());</span>
+<span class="nc" id="L66">        separator.setForeground(Color.black);</span>
+<span class="nc" id="L67">        add(separator);</span>
+
+<span class="nc" id="L69">        initConsole();</span>
+<span class="nc" id="L70">        initInventory();</span>
+<span class="nc" id="L71">        initEquippedGear();</span>
+<span class="nc" id="L72">        initDynamicPanel();</span>
+<span class="nc" id="L73">    }</span>
     
-    public GameUI(JFrame main) {
-<span class="nc" id="L17">        super();</span>
+    private void initEquippedGear() {
+<span class="nc" id="L76">        equippedList = new DefaultListModel&lt;&gt;();</span>
+<span class="nc" id="L77">        equipped = new JList(equippedList);</span>
+<span class="nc" id="L78">        equipped.setBackground(Color.DARK_GRAY.brighter());</span>
+<span class="nc" id="L79">        equipped.setForeground(Color.white);</span>
+<span class="nc" id="L80">        equipped.setPreferredSize(new Dimension(200, 600));</span>
+<span class="nc" id="L81">        equipped.setBorder(BorderFactory.createLineBorder(Color.black.brighter()));</span>
+<span class="nc" id="L82">        equipped.setBounds(610, 115, 180, 115);       </span>
         
-<span class="nc" id="L19">    }</span>
-    
+<span class="nc" id="L84">        refreshEquippedList();</span>
+        
+<span class="nc" id="L86">        add(equipped);</span>
+        
+<span class="nc" id="L88">    }</span>
+
+    private void initInventory() {
+<span class="nc" id="L91">        inventoryList = new DefaultListModel&lt;&gt;();</span>
+<span class="nc" id="L92">        inventory = new JList(inventoryList);</span>
+<span class="nc" id="L93">        inventory.setBackground(Color.DARK_GRAY.brighter());</span>
+<span class="nc" id="L94">        inventory.setForeground(Color.white);</span>
+<span class="nc" id="L95">        inventory.setPreferredSize(new Dimension(200, 600));</span>
+<span class="nc" id="L96">        inventory.setBorder(BorderFactory.createLineBorder(Color.black.brighter()));</span>
+<span class="nc" id="L97">        inventory.setBounds(610, 235, 180, 365);</span>
+
+<span class="nc" id="L99">        refreshInventoryList();</span>
+
+<span class="nc" id="L101">        add(inventory);</span>
+<span class="nc" id="L102">    }</span>
+
+    private void initPlayerInfo() {
+        //Draw the player avatar
+<span class="nc" id="L106">        ImagePanel avatar = new ImagePanel(new ImageIcon(getClass()</span>
+<span class="nc" id="L107">                .getResource(&quot;/ingame/avatar.png&quot;))</span>
+<span class="nc" id="L108">                .getImage());</span>
+
+<span class="nc" id="L110">        avatar.setBounds(5, 5, 100, 100);</span>
+
+<span class="nc" id="L112">        playerHealth = new JTextPane();</span>
+<span class="nc" id="L113">        playerHealth.setText(&quot;       Health&quot;);</span>
+<span class="nc" id="L114">        playerHealth.setEditable(false);</span>
+<span class="nc" id="L115">        playerHealth.setBorder(BorderFactory.createLineBorder(Color.yellow));</span>
+<span class="nc" id="L116">        playerHealth.setBounds(110, 30, 100, 25);</span>
+
+<span class="nc" id="L118">        playerResources = new JTextPane();</span>
+<span class="nc" id="L119">        playerResources.setText(&quot;     Resources&quot;);</span>
+<span class="nc" id="L120">        playerResources.setEditable(false);</span>
+<span class="nc" id="L121">        playerResources.setBorder(BorderFactory.createLineBorder(Color.yellow));</span>
+<span class="nc" id="L122">        playerResources.setBounds(110, 60, 100, 25);</span>
+
+        //Title of the stats
+<span class="nc" id="L125">        JLabel stats = new JLabel(&quot;Stats&quot;);</span>
+<span class="nc" id="L126">        stats.setBounds(325, 5, 50, 10);</span>
+<span class="nc" id="L127">        stats.setForeground(Color.WHITE);</span>
+
+<span class="nc" id="L129">        JLabel strength = new JLabel(&quot;Strength:&quot;);</span>
+<span class="nc" id="L130">        strength.setBounds(265, 30, 75, 15);</span>
+<span class="nc" id="L131">        strength.setForeground(Color.WHITE);</span>
+
+<span class="nc" id="L133">        strengthValue = new JLabel();</span>
+<span class="nc" id="L134">        strengthValue.setBounds(320, 30, 75, 15);</span>
+<span class="nc" id="L135">        strengthValue.setForeground(Color.WHITE);</span>
+
+<span class="nc" id="L137">        JLabel constitution = new JLabel(&quot;Constitution:&quot;);</span>
+<span class="nc" id="L138">        constitution.setBounds(245, 60, 75, 15);</span>
+<span class="nc" id="L139">        constitution.setForeground(Color.WHITE);</span>
+
+<span class="nc" id="L141">        constitutionValue = new JLabel();</span>
+<span class="nc" id="L142">        constitutionValue.setBounds(320, 60, 75, 15);</span>
+<span class="nc" id="L143">        constitutionValue.setForeground(Color.WHITE);</span>
+
+<span class="nc" id="L145">        JLabel dexterity = new JLabel(&quot;Dexterity:&quot;);</span>
+<span class="nc" id="L146">        dexterity.setBounds(340, 60, 75, 15);</span>
+<span class="nc" id="L147">        dexterity.setForeground(Color.WHITE);</span>
+
+<span class="nc" id="L149">        dexterityValue = new JLabel();</span>
+<span class="nc" id="L150">        dexterityValue.setBounds(410, 60, 75, 15);</span>
+<span class="nc" id="L151">        dexterityValue.setForeground(Color.WHITE);</span>
+
+<span class="nc" id="L153">        JLabel intelligence = new JLabel(&quot;Intelligence:&quot;);</span>
+<span class="nc" id="L154">        intelligence.setForeground(Color.WHITE);</span>
+<span class="nc" id="L155">        intelligence.setBounds(340, 30, 75, 15);</span>
+
+<span class="nc" id="L157">        intelligenceValue = new JLabel();</span>
+<span class="nc" id="L158">        intelligenceValue.setBounds(410, 30, 75, 15);</span>
+<span class="nc" id="L159">        intelligenceValue.setForeground(Color.WHITE);</span>
+
+<span class="nc" id="L161">        this.strengthValue.setText(&quot;12&quot;);</span>
+<span class="nc" id="L162">        this.dexterityValue.setText(&quot;12&quot;);</span>
+<span class="nc" id="L163">        this.intelligenceValue.setText(&quot;12&quot;);</span>
+<span class="nc" id="L164">        this.constitutionValue.setText(&quot;12&quot;);</span>
+
+<span class="nc" id="L166">        JLabel playerMap = new JLabel(&quot;Current Location&quot;);</span>
+<span class="nc" id="L167">        playerMap.setForeground(Color.WHITE);</span>
+<span class="nc" id="L168">        playerMap.setBounds(490, 5, 100, 15);</span>
+
+<span class="nc" id="L170">        currentLocation = new JLabel();</span>
+<span class="nc" id="L171">        currentLocation.setText(&quot;Starting Area&quot;);</span>
+<span class="nc" id="L172">        currentLocation.setForeground(Color.white);</span>
+<span class="nc" id="L173">        currentLocation.setBounds(500, 30, 100, 15);</span>
+
+<span class="nc" id="L175">        JButton playerOptions = new JButton(&quot;Options&quot;);</span>
+<span class="nc" id="L176">        playerOptions.setOpaque(false);</span>
+<span class="nc" id="L177">        playerOptions.setBounds(650, 30, 100, 25);        </span>
+<span class="nc" id="L178">        playerOptions.addActionListener(new ActionListener() {</span>
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L181">                new OptionsUI(GameUI.this);</span>
+<span class="nc" id="L182">            }</span>
+        });
+
+        //Player area -&gt; Avatar, health and resources
+<span class="nc" id="L186">        add(avatar);</span>
+<span class="nc" id="L187">        add(playerHealth);</span>
+<span class="nc" id="L188">        add(playerResources);</span>
+
+        //Player Stats
+<span class="nc" id="L191">        add(stats);</span>
+<span class="nc" id="L192">        add(constitution);</span>
+<span class="nc" id="L193">        add(constitutionValue);</span>
+<span class="nc" id="L194">        add(dexterity);</span>
+<span class="nc" id="L195">        add(dexterityValue);</span>
+<span class="nc" id="L196">        add(strength);</span>
+<span class="nc" id="L197">        add(strengthValue);</span>
+<span class="nc" id="L198">        add(intelligence);</span>
+<span class="nc" id="L199">        add(intelligenceValue);</span>
+
+        //Player Map current location
+<span class="nc" id="L202">        add(playerMap);</span>
+<span class="nc" id="L203">        add(currentLocation);</span>
+
+        //Options
+<span class="nc" id="L206">        add(playerOptions);</span>
+
+<span class="nc" id="L208">    }</span>
+
+    private void initDynamicPanel() {
+<span class="nc" id="L211">        JPanel panel = new JPanel(null);</span>
+<span class="nc" id="L212">        panel.setBackground(Color.red);</span>
+<span class="nc" id="L213">        panel.setPreferredSize(new Dimension(200, 600));</span>
+<span class="nc" id="L214">        panel.setBorder(BorderFactory.createLineBorder(Color.yellow));</span>
+<span class="nc" id="L215">        panel.setBounds(5, 115, 600, 330);</span>
+<span class="nc" id="L216">        add(panel);</span>
+<span class="nc" id="L217">    }</span>
+
+    private void initConsole() {
+        //Create the console output area
+<span class="nc" id="L221">        consoleOutput = new JTextPane();</span>
+<span class="nc" id="L222">        consoleOutput.setPreferredSize(new Dimension(600, 300));</span>
+<span class="nc" id="L223">        consoleOutput.setBackground(Color.DARK_GRAY.brighter());</span>
+<span class="nc" id="L224">        consoleOutput.setBorder(BorderFactory.createLineBorder(Color.black.brighter()));</span>
+<span class="nc" id="L225">        consoleOutput.setBounds(5, 450, 600, 150);</span>
+
+<span class="nc" id="L227">        consoleScroll = new JScrollPane(consoleOutput, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);</span>
+<span class="nc" id="L228">        consoleScroll.setBounds(5, 450, 600, 150);</span>
+
+        //Redirect the console output to the GUI
+<span class="nc" id="L231">        Console console = new Console(consoleOutput);</span>
+<span class="nc" id="L232">        console.redirectOut(Color.WHITE, System.out);</span>
+<span class="nc" id="L233">        console.redirectErr(Color.red, System.err);</span>
+<span class="nc" id="L234">        console.setMessageLines(100);</span>
+
+<span class="nc" id="L236">        add(consoleScroll);</span>
+<span class="nc" id="L237">    }</span>
+
+    public void updateCurrentLocation(String location) {
+<span class="nc" id="L240">        this.currentLocation.setText(location);</span>
+<span class="nc" id="L241">    }</span>
+
+    public void refreshInventoryList() {
+<span class="nc bnc" id="L244" title="All 2 branches missed.">        for (int i = 0; i &lt; 20; i++) {</span>
+<span class="nc" id="L245">            inventoryList.addElement(&quot;I am an Inventory Item!&quot;);</span>
+        }
+<span class="nc" id="L247">    }</span>
+    public void refreshEquippedList() {
+<span class="nc bnc" id="L249" title="All 2 branches missed.">        for (int i = 0; i &lt; 6; i++) {</span>
+<span class="nc" id="L250">            equippedList.addElement(&quot;I am an equipment Item!&quot;);</span>
+        }
+<span class="nc" id="L252">    }</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

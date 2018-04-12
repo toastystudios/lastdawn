@@ -6,29 +6,20 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import model.game.Game;
+import view.utils.ImagePanel;
+import view.OptionsUI;
+import view.utils.ResourceUtil;
 
 /**
  *
@@ -46,11 +37,13 @@ public class MainMenuUI extends JPanel {
     private Clip clip;
     private final JFrame main;
     private JPanel bg;
+    private Game game;
 
-    public MainMenuUI(JFrame main) {
+    public MainMenuUI(JFrame main, Game game) {
         super();
         setLayout(null);
         this.main = main;
+        this.game = game;
         initUI();
     }
 
@@ -83,8 +76,8 @@ public class MainMenuUI extends JPanel {
         subText.setForeground(Color.LIGHT_GRAY);
         subText.setBounds(130, 0, 800, 500);
 
-        super.add(header);
-        super.add(subText);
+        add(header);
+        add(subText);
     }
 
     private void initButtons() {
@@ -113,18 +106,17 @@ public class MainMenuUI extends JPanel {
         exitButton.setFocusPainted(false);
         exitGameAction();
 
-        super.add(newGameButton);
-        super.add(loadGameButton);
-        super.add(optionsButton);
-        super.add(exitButton);
+        add(newGameButton);
+        add(loadGameButton);
+        add(optionsButton);
+        add(exitButton);
     }
 
     private void newGameAction() {
         newGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //follow up code
-                clip.stop();
+                GameUI gameUI = new GameUI(main, game);
             }
         });
     }
@@ -133,7 +125,6 @@ public class MainMenuUI extends JPanel {
         loadGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clip.stop();
             }
         });
     }
