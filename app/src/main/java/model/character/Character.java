@@ -12,6 +12,7 @@ import model.item.armour.Chest;
 import model.item.armour.Head;
 import model.item.armour.Jewelry;
 import model.item.armour.Legs;
+import model.map.Local;
 import model.repo.Inventory;
 
 /**
@@ -239,7 +240,7 @@ public abstract class Character {
      *
      */
     public boolean unequipItem(String slot) {
-        
+
         Item item = inventory.searchSlot(slot);
 
         if (item instanceof Weapon) {

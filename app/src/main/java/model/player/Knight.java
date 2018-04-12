@@ -6,6 +6,7 @@ package model.player;
 
 import model.enums.StatTypes;
 import model.game.Dice;
+import model.map.Local;
 import model.player.PlayerChar;
 import utils.NumberUtils;
 

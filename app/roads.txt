@@ -1,0 +1,10 @@
+Porto,Lisboa,0.3
+Lisboa,Lamego,0.4
+Khaer,Lamego,0.8
+St Tirso,Khaer,0.1
+Aliados,Aveiro,0
+Leiria,Algarve,0.3
+Whiterun,Viseu,0.7
+Lamego,Viseu,0.2
+Lamego,Algarve,0.7
+Khaer,Lamego,0.5
