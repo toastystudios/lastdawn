@@ -2,14 +2,32 @@
  * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
  * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
  */
- 
- package model.map;
+package model.map;
+
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleWeightedGraph;
 
 /**
  *
  * @author Toasty Studios
  */
-<span class="nc" id="L12">public class Map {</span>
+public class Map {
 
+    private String name;
+    private Graph&lt;Local, Road&gt; graph;
+
+<span class="nc" id="L20">    public Map(String name) {</span>
+<span class="nc" id="L21">        this.name = name;</span>
+<span class="nc" id="L22">        this.graph = new SimpleWeightedGraph&lt;&gt;(Road.class);</span>
+<span class="nc" id="L23">    }</span>
+    
+    public String getName(){
+<span class="nc" id="L26">        return name;</span>
+    }
+    
+    public String toString(){
+<span class="nc" id="L30">        return name;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

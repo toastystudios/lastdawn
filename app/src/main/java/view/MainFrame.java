@@ -4,6 +4,7 @@
  */
 package view;
 
+import view.utils.ResourceUtil;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import model.game.Game;
 
 /**
  *
@@ -19,11 +21,11 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class MainFrame extends JFrame {
     
-    private JPanel menu;
-    private JPanel game;
+    private Game game;
 
 
-    public MainFrame() {
+    public MainFrame(Game game) {
+        this.game = game;
         initUI();
         setVisible(true);
     }
@@ -58,10 +60,6 @@ public class MainFrame extends JFrame {
                 }
             }
         });
-    
-    
-        add(new MainMenuUI(MainFrame.this));
-    
     }
 
 }

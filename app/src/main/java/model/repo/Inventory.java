@@ -4,8 +4,10 @@
  */
 package model.repo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import model.enums.StatTypes;
 import model.item.Armour;
@@ -262,6 +264,16 @@ public class Inventory {
      */
     public Item searchSlot(String slot) {
         return equipped.get(slot);
+    }
+    
+    public List<Item> getAllItems() {
+        List<Item> list = new ArrayList<>();
+        
+        for (String key : items.keySet()) {
+            list.add(items.get(key));
+        }
+        
+        return list;
     }
 
 }

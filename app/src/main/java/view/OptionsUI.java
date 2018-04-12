@@ -4,6 +4,7 @@
  */
 package view;
 
+import view.utils.ImagePanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

@@ -5,11 +5,41 @@
  
  package model.map;
 
+import java.util.Set;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleWeightedGraph;
+
 /**
  *
  * @author Toasty Studios
  */
-<span class="nc" id="L12">public class Local {</span>
+public abstract class Local {
 
+    private String name;
+    private Kingdom kingdom;
+    private Graph&lt;District,Road&gt; ditrictGraph;
+    
+<span class="nc" id="L23">    public Local(String name,Kingdom kingdom){</span>
+<span class="nc" id="L24">        this.name = name;</span>
+<span class="nc" id="L25">        this.ditrictGraph = new SimpleWeightedGraph&lt;&gt;(Road.class);</span>
+<span class="nc" id="L26">        this.kingdom = kingdom;</span>
+<span class="nc" id="L27">    }</span>
+    
+    public String getLocalName(){
+<span class="nc" id="L30">        return name;</span>
+    }
+    
+    public boolean newKingdom(Kingdom kingdom){
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        if(kingdom != null) {</span>
+<span class="nc" id="L35">            this.kingdom = kingdom;</span>
+<span class="nc" id="L36">            return true;</span>
+        }
+<span class="nc" id="L38">        return false;</span>
+    }
+    
+    public String getCurrentKingdom(){
+<span class="nc" id="L42">        return this.kingdom.toString();</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
