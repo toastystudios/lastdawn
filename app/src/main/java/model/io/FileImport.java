@@ -33,7 +33,7 @@ public class FileImport {
                 String[] word = line.split(",");
 
                 list.addLocal(new Local(word[0], Kingdom.KINGDOM1));
-
+            
             }
 
             in.close();
@@ -47,8 +47,7 @@ public class FileImport {
 
     public static GameMap readRoadFile(String roadFile, String localFile) throws FileNotFoundException {
 
-        GameMap map = new GameMap("game");
-
+        GameMap localList = readLocalFile(localFile);
         try (BufferedReader in = new BufferedReader(new FileReader(roadFile))) {
 
             String line;
@@ -57,25 +56,22 @@ public class FileImport {
 
                 String[] word = line.split(",");
 
-                GameMap localList = readLocalFile(localFile);
-
                 Local loc1 = null;
                 Local loc2 = null;
-                
-                System.out.println(localList);
                 
                 for (Local local : localList.getGraph().vertexSet()) {
 
                     if (local.getLocalName().equalsIgnoreCase(word[0])) {
                         loc1 = local;
-                    } else if (local.getLocalName().equalsIgnoreCase(word[1])) {
+                    }
+                    if (local.getLocalName().equalsIgnoreCase(word[1])) {
                         loc2 = local;
                     }
 
                 }
 
                 Road road = new Road(Double.valueOf(word[2]));
-                map.addRoad(loc1, loc2, road);
+                localList.addRoad(loc1, loc2, road);
 
             }
 
@@ -86,6 +82,6 @@ public class FileImport {
             System.out.println("io found");
         }
 
-        return map;
+        return localList;
     }
 }

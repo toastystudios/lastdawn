@@ -53,6 +53,12 @@ public class GameMap {
     }
 
     public String toString() {
+        for(Local local : graph.vertexSet()){
+            System.out.println(local);
+        }
+//        for(Road road : graph.edgeSet()){
+//            System.out.println(road);
+//        }
         return name;
     }
     

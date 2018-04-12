@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Road.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Last Dawn</a> &gt; <a href="index.source.html" class="el_package">model.map</a> &gt; <span class="el_source">Road.java</span></div><h1>Road.java</h1><pre class="source lang-java linenums">/* Last Dawn (c) by Toasty Studios is licensed under
+ * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
+ * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+ */
+package model.map;
+
+/**
+ *
+ * @author jpfr8
+ */
+public class Road {
+    
+    private double chanceOfEnemy;
+    
+<span class="fc" id="L15">    public Road(double chanceOfEnemy){</span>
+<span class="fc" id="L16">        this.chanceOfEnemy = chanceOfEnemy;</span>
+<span class="fc" id="L17">    }</span>
+    
+<span class="nc" id="L19">    public Road(){</span>
+        
+<span class="nc" id="L21">    }</span>
+    
+    public double getChanceOfEnemy(){
+<span class="nc" id="L24">        return this.chanceOfEnemy;</span>
+    }  
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L29">        int hash = 5;</span>
+<span class="fc" id="L30">        hash = 11 * hash + (int) (Double.doubleToLongBits(this.chanceOfEnemy) ^ (Double.doubleToLongBits(this.chanceOfEnemy) &gt;&gt;&gt; 32));</span>
+<span class="fc" id="L31">        return hash;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L37">            return true;</span>
+        }
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L40">            return false;</span>
+        }
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L43">            return false;</span>
+        }
+<span class="fc" id="L45">        final Road other = (Road) obj;</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (Double.doubleToLongBits(this.chanceOfEnemy) != Double.doubleToLongBits(other.chanceOfEnemy)) {</span>
+<span class="nc" id="L47">            return false;</span>
+        }
+<span class="fc" id="L49">        return true;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L54">        return &quot;Road{&quot; + &quot;chanceOfEnemy=&quot; + chanceOfEnemy + '}';</span>
+    }
+    
+    
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
