@@ -1,0 +1,10 @@
+Lamego,Lisboa,0.5
+Lamego,Porto,0.7
+Lamego,Viseu,0
+Lamego,Santo Tirso,0.1
+Porto,Aveiro,0.2
+Porto,Algarve,0.4
+Porto,Lisboa,0.2
+Lisboa,Coco,1
+Lisboa,Leiria,0.3
+Lisboa,Khaer,0.5

@@ -2,13 +2,14 @@
  * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
  * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
  */
- 
- package model.map;
+package model.map;
 
 /**
  *
- * @author Toasty Studios
+ * @author jpfr8
  */
-public class World {
-
+public enum Kingdom {
+    KINGDOM1,
+    KINGDOM2,
+    KINGDOM3;
 }

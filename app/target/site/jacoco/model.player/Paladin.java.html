@@ -5,6 +5,7 @@
 package model.player;
 
 import model.enums.StatTypes;
+import model.map.Local;
 import model.player.PlayerChar;
 import utils.NumberUtils;
 
@@ -21,8 +22,8 @@ public class Paladin extends PlayerChar implements model.character.BattleMoves {
     private static final double MODIFIER = 0.15;
 
     public Paladin(String name) {
-<span class="nc" id="L24">        super(name, BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);</span>
-<span class="nc" id="L25">    }</span>
+<span class="nc" id="L25">        super(name, BASE_CONSTITUTION, BASE_STRENGTH, BASE_INTELLIGENCE, BASE_DEXTERITY);</span>
+<span class="nc" id="L26">    }</span>
 
     // =======================================
     // ----------- COMBAT METHODS ------------
@@ -34,8 +35,8 @@ public class Paladin extends PlayerChar implements model.character.BattleMoves {
      */
     @Override
     public int basicAttack() {
-<span class="nc" id="L37">        resourceManager.generateResource();</span>
-<span class="nc" id="L38">        return (int) NumberUtils.roundDown(((stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) * MODIFIER) + inventory.weaponDamage());</span>
+<span class="nc" id="L38">        resourceManager.generateResource();</span>
+<span class="nc" id="L39">        return (int) NumberUtils.roundDown(((stats.strength() + inventory.equipmentStats().get(StatTypes.STRENGTH.toString())) * MODIFIER) + inventory.weaponDamage());</span>
     }
 
     /**
@@ -45,10 +46,10 @@ public class Paladin extends PlayerChar implements model.character.BattleMoves {
      */
     @Override
     public int ability() {
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (resourceManager.spendAbilityResource() != -1) {</span>
-<span class="nc" id="L49">            throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (resourceManager.spendAbilityResource() != -1) {</span>
+<span class="nc" id="L50">            throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
         } else {
-<span class="nc" id="L51">            return -1;</span>
+<span class="nc" id="L52">            return -1;</span>
         }
     }
 
@@ -59,10 +60,10 @@ public class Paladin extends PlayerChar implements model.character.BattleMoves {
      */
     @Override
     public int ultimate() {
-<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (resourceManager.spendUltimateResources() != -1) {</span>
-<span class="nc" id="L63">            throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (resourceManager.spendUltimateResources() != -1) {</span>
+<span class="nc" id="L64">            throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
         } else {
-<span class="nc" id="L65">            return -1;</span>
+<span class="nc" id="L66">            return -1;</span>
         }
     }
 }

@@ -34,11 +34,11 @@ import model.character.Character;
 <span class="nc" id="L34">        int damage = 0;</span>
 
 <span class="nc bnc" id="L36" title="All 2 branches missed.">        if (ability.equals(Abilities.BASIC)) {</span>
-<span class="nc" id="L37">            damage = attacker.basicAttack() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();</span>
+<span class="nc" id="L37">            damage = attacker.basicAttack() - defender.defense();</span>
 <span class="nc bnc" id="L38" title="All 2 branches missed.">        } else if (ability.equals(Abilities.ABILITY)) {</span>
-<span class="nc" id="L39">            damage = attacker.ability() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();</span>
+<span class="nc" id="L39">            damage = attacker.ability()     - defender.defense();</span>
 <span class="nc bnc" id="L40" title="All 2 branches missed.">        } else if (ability.equals(Abilities.ULTIMATE)) {</span>
-<span class="nc" id="L41">            damage = attacker.ultimate() + Dice.customRollDie(ROLL_BONUS_HIT) - defender.defense();</span>
+<span class="nc" id="L41">            damage = attacker.ultimate()    - defender.defense();</span>
         }
 
         //Try critical hit

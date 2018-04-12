@@ -5,6 +5,7 @@
  
  package model.game;
 
+import model.player.Knight;
 import model.player.PlayerChar;
 
 /**
@@ -14,6 +15,7 @@ import model.player.PlayerChar;
 public class Game {
     
     private static GameSlot currentSlot;
+    private PlayerChar player;
     
     /**
      * Return in-game introduction
@@ -32,5 +34,9 @@ public class Game {
     public static GameSlot createGameSlot(PlayerChar player){
         currentSlot = new GameSlot(player);
         return currentSlot;
+    }
+    
+    public PlayerChar player() {
+        return new Knight("José");
     }
 }

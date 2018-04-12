@@ -29,7 +29,7 @@ public class Sound {
         initSound();
     };
 
-    private void initSound() {
+    public void initSound() {
         try {
             InputStream is = getClass().getResourceAsStream("/sound/menu.wav");
             AudioInputStream as1 = AudioSystem.getAudioInputStream(new BufferedInputStream(is));
@@ -53,7 +53,7 @@ public class Sound {
         }
     }
     
-    private void stopClip() {
+    public void stopClip() {
         clip.stop();
     }
     

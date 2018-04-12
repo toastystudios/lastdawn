@@ -7,24 +7,40 @@ package view;
 import java.io.IOException;
 import java.util.logging.Logger;
 import javax.swing.UnsupportedLookAndFeelException;
+import model.game.Game;
+import view.options.Sound;
 
 /**
  *
  * @author Toasty Studios
  */
-<span class="nc" id="L15">public class Run {</span>
+<span class="nc" id="L17">public class Run {</span>
 
-<span class="nc" id="L17">    private static Logger logger = Logger.getLogger(&quot;InfoLogging&quot;);</span>
+<span class="nc" id="L19">    private static Logger logger = Logger.getLogger(&quot;InfoLogging&quot;);</span>
 
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-<span class="nc" id="L20">        logger.info(&quot;Logging an INFO-level message&quot;);</span>
+<span class="nc" id="L22">        logger.info(&quot;Logging an INFO-level message&quot;);</span>
 
+<<<<<<< HEAD
 <span class="nc" id="L22">        new MainMenuUI();</span>
         
 
         
 
 <span class="nc" id="L27">    }</span>
+=======
+<span class="nc" id="L24">        Game game = new Game();</span>
+        
+<span class="nc" id="L26">        new MainFrame(game);</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        for (int i = 0; i &lt; 20; i++) {</span>
+<span class="nc" id="L28">            System.out.println(&quot;system out&quot;);</span>
+        }
+        
+<span class="nc" id="L31">        Sound sound = new Sound();</span>
+<span class="nc" id="L32">        sound.initSound();</span>
+
+<span class="nc" id="L34">    }</span>
+>>>>>>> 35be38d49089fd17d925e28abd755f5b262e8238
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -6,6 +6,8 @@
 package model.player;
 
 import model.character.ResourceManager;
+import model.map.Kingdom;
+import model.map.Local;
 
 /**
  *
@@ -16,13 +18,14 @@ public abstract class PlayerChar extends model.character.Character {
     protected ResourceManager resourceManager;
     private static final int STARTING_LEVEL = 1;
     private static final int EXP_PER_HP = 4;
+    private static final Local LOCAL_INITIAL = new Local("lol", Kingdom.KINGDOM1);
     /*
     private int CONSTITUTION;
     private int STRENGTH;
     private int INTELLIGENCE;
     private int DEXTERITY;
     private double MODIFIER;
-    */
+     */
 
     private int xp;
 
@@ -54,11 +57,11 @@ public abstract class PlayerChar extends model.character.Character {
      */
     @Override
     public abstract int ultimate();
-    
-    
+
     /**
      * Returns how many resources the player has
-     * @return 
+     *
+     * @return
      */
     public int getResources() {
         return this.resourceManager.getResources();
