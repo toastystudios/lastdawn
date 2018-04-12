@@ -39,11 +39,7 @@ public class GameMap {
         if (road == null || v1 == null || v2 == null || graph.containsEdge(v1, v2)) {
             return false;
         } else {
-//            System.out.println(v1);
-//            System.out.println(v2);
-//            System.out.println(road);
             graph.addEdge(v1, v2, road);
-            System.out.println(graph);
             return true;
         }
     }
@@ -53,12 +49,6 @@ public class GameMap {
     }
 
     public String toString() {
-        for(Local local : graph.vertexSet()){
-            System.out.println(local);
-        }
-//        for(Road road : graph.edgeSet()){
-//            System.out.println(road);
-//        }
         return name;
     }
     
