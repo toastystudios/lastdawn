@@ -59,7 +59,11 @@ public class MainFrame extends JFrame {
                     System.exit(0);
                 }
             }
-        });
+        }); 
+        
+//    add(new MainMenuUI(MainFrame.this, game));
+    add(new GameUI(MainFrame.this, game));
     }
+
 
 }
