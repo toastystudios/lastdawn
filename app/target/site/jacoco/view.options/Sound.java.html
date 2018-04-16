@@ -25,35 +25,37 @@ public class Sound {
     private AudioFormat af;
     private Clip clip;
     
-<span class="nc" id="L28">    public Sound(){};</span>
+<span class="nc" id="L28">    public Sound(){</span>
+<span class="nc" id="L29">        initSound();</span>
+<span class="nc" id="L30">    };</span>
 
     public void initSound() {
         try {
-<span class="nc" id="L32">            InputStream is = getClass().getResourceAsStream(&quot;/sound/menu.wav&quot;);</span>
-<span class="nc" id="L33">            AudioInputStream as1 = AudioSystem.getAudioInputStream(new BufferedInputStream(is));</span>
-<span class="nc" id="L34">            clip = AudioSystem.getClip();</span>
-<span class="nc" id="L35">            DataLine.Info info = new DataLine.Info(Clip.class, af);</span>
+<span class="nc" id="L34">            InputStream is = getClass().getResourceAsStream(&quot;/sound/menu.wav&quot;);</span>
+<span class="nc" id="L35">            AudioInputStream as1 = AudioSystem.getAudioInputStream(new BufferedInputStream(is));</span>
+<span class="nc" id="L36">            clip = AudioSystem.getClip();</span>
+<span class="nc" id="L37">            DataLine.Info info = new DataLine.Info(Clip.class, af);</span>
 
-<span class="nc" id="L37">            Line line = AudioSystem.getLine(info);</span>
+<span class="nc" id="L39">            Line line = AudioSystem.getLine(info);</span>
 
-<span class="nc bnc" id="L39" title="All 2 branches missed.">            if (!line.isOpen()) {</span>
-<span class="nc" id="L40">                clip.open(as1);</span>
-<span class="nc" id="L41">                clip.loop(Clip.LOOP_CONTINUOUSLY);</span>
-<span class="nc" id="L42">                clip.start();</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            if (!line.isOpen()) {</span>
+<span class="nc" id="L42">                clip.open(as1);</span>
+<span class="nc" id="L43">                clip.loop(Clip.LOOP_CONTINUOUSLY);</span>
+<span class="nc" id="L44">                clip.start();</span>
             }
 
-<span class="nc" id="L45">        } catch (UnsupportedAudioFileException ex) {</span>
-<span class="nc" id="L46">            System.out.println(&quot;The audio file has imploded! Bad luck to whoever is going to fix this..&quot;);</span>
-<span class="nc" id="L47">        } catch (IOException ex) {</span>
-<span class="nc" id="L48">            System.out.println(&quot;IO Exception..not again!&quot;);</span>
-<span class="nc" id="L49">        } catch (LineUnavailableException ex) {</span>
-<span class="nc" id="L50">            System.out.println(&quot;Line is unavailable, please call on a later time!&quot;);</span>
-<span class="nc" id="L51">        }</span>
-<span class="nc" id="L52">    }</span>
+<span class="nc" id="L47">        } catch (UnsupportedAudioFileException ex) {</span>
+<span class="nc" id="L48">            System.out.println(&quot;The audio file has imploded! Bad luck to whoever is going to fix this..&quot;);</span>
+<span class="nc" id="L49">        } catch (IOException ex) {</span>
+<span class="nc" id="L50">            System.out.println(&quot;IO Exception..not again!&quot;);</span>
+<span class="nc" id="L51">        } catch (LineUnavailableException ex) {</span>
+<span class="nc" id="L52">            System.out.println(&quot;Line is unavailable, please call on a later time!&quot;);</span>
+<span class="nc" id="L53">        }</span>
+<span class="nc" id="L54">    }</span>
     
     public void stopClip() {
-<span class="nc" id="L55">        clip.stop();</span>
-<span class="nc" id="L56">    }</span>
+<span class="nc" id="L57">        clip.stop();</span>
+<span class="nc" id="L58">    }</span>
     
     
 

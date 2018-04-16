@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: utils.NumberUtilsTest
 -------------------------------------------------------------------------------
-<<<<<<< HEAD
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec
-=======
-<<<<<<< HEAD
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 sec
-=======
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec
->>>>>>> 35be38d49089fd17d925e28abd755f5b262e8238
->>>>>>> 1a835dc96e0f84529ff549ed73beaffe8d03ecfe

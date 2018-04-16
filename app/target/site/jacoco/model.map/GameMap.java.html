@@ -39,27 +39,17 @@ public class GameMap {
 <span class="pc bpc" id="L39" title="3 of 8 branches missed.">        if (road == null || v1 == null || v2 == null || graph.containsEdge(v1, v2)) {</span>
 <span class="fc" id="L40">            return false;</span>
         } else {
-//            System.out.println(v1);
-//            System.out.println(v2);
-//            System.out.println(road);
-<span class="fc" id="L45">            graph.addEdge(v1, v2, road);</span>
-<span class="fc" id="L46">            System.out.println(graph);</span>
-<span class="fc" id="L47">            return true;</span>
+<span class="fc" id="L42">            graph.addEdge(v1, v2, road);</span>
+<span class="fc" id="L43">            return true;</span>
         }
     }
     
     public Graph&lt;Local, Road&gt; getGraph(){
-<span class="fc" id="L52">        return graph;</span>
+<span class="fc" id="L48">        return graph;</span>
     }
 
     public String toString() {
-<span class="nc bnc" id="L56" title="All 2 branches missed.">        for(Local local : graph.vertexSet()){</span>
-<span class="nc" id="L57">            System.out.println(local);</span>
-<span class="nc" id="L58">        }</span>
-//        for(Road road : graph.edgeSet()){
-//            System.out.println(road);
-//        }
-<span class="nc" id="L62">        return name;</span>
+<span class="nc" id="L52">        return name;</span>
     }
     
 }

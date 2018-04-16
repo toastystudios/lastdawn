@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: model.item.MiscTest
 -------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec
-=======
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 sec
->>>>>>> 1a835dc96e0f84529ff549ed73beaffe8d03ecfe
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec

@@ -59,8 +59,12 @@ public class MainFrame extends JFrame {
 <span class="nc" id="L59">                    System.exit(0);</span>
                 }
 <span class="nc" id="L61">            }</span>
-        });
-<span class="nc" id="L63">    }</span>
+        }); 
+        
+//    add(new MainMenuUI(MainFrame.this, game));
+<span class="nc" id="L65">    add(new GameUI(MainFrame.this, game));</span>
+<span class="nc" id="L66">    }</span>
+
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

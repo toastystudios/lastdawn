@@ -18,7 +18,7 @@ public abstract class PlayerChar extends model.character.Character {
     protected ResourceManager resourceManager;
     private static final int STARTING_LEVEL = 1;
     private static final int EXP_PER_HP = 4;
-<span class="nc" id="L21">    private static final Local LOCAL_INITIAL = new Local(&quot;lol&quot;, Kingdom.KINGDOM1);</span>
+    private static Local local;
     /*
     private int CONSTITUTION;
     private int STRENGTH;
@@ -32,7 +32,8 @@ public abstract class PlayerChar extends model.character.Character {
     public PlayerChar(String name, int constitution, int strength, int intelligence, int dexterity) {
 <span class="nc" id="L33">        super(name, STARTING_LEVEL, constitution, strength, intelligence, dexterity);</span>
 <span class="nc" id="L34">        this.resourceManager = new ResourceManager();</span>
-<span class="nc" id="L35">    }</span>
+<span class="nc" id="L35">        this.local = new Local(&quot;lol&quot;, Kingdom.KINGDOM1);</span>
+<span class="nc" id="L36">    }</span>
 
     /**
      * Uses the player basic attack
@@ -64,7 +65,7 @@ public abstract class PlayerChar extends model.character.Character {
      * @return
      */
     public int getResources() {
-<span class="nc" id="L67">        return this.resourceManager.getResources();</span>
+<span class="nc" id="L68">        return this.resourceManager.getResources();</span>
     }
 
     /**
@@ -74,7 +75,7 @@ public abstract class PlayerChar extends model.character.Character {
      * @return
      */
     private int increaseLevel() {
-<span class="nc" id="L77">        return level++;</span>
+<span class="nc" id="L78">        return level++;</span>
     }
 
     /**
@@ -83,12 +84,12 @@ public abstract class PlayerChar extends model.character.Character {
      * @return
      */
     private double xpToLevel() {
-<span class="nc" id="L86">        double total = 0;</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">        for (int i = 1; i &lt; level; i++) {</span>
-<span class="nc" id="L88">            total += Math.floor(i + 300 * Math.pow(2, i / 7.0));</span>
+<span class="nc" id="L87">        double total = 0;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        for (int i = 1; i &lt; level; i++) {</span>
+<span class="nc" id="L89">            total += Math.floor(i + 300 * Math.pow(2, i / 7.0));</span>
         }
 
-<span class="nc" id="L91">        return Math.floor(total / 4);</span>
+<span class="nc" id="L92">        return Math.floor(total / 4);</span>
     }
 
     /**
@@ -97,7 +98,7 @@ public abstract class PlayerChar extends model.character.Character {
      * @return
      */
     private int experienceGained(model.character.Character enemy) {
-<span class="nc" id="L100">        return enemy.getMaxHealth() * EXP_PER_HP;</span>
+<span class="nc" id="L101">        return enemy.getMaxHealth() * EXP_PER_HP;</span>
     }
 
     /**
@@ -108,13 +109,25 @@ public abstract class PlayerChar extends model.character.Character {
      * @return
      */
     public int increaseXP(model.character.Character enemy) {
-<span class="nc" id="L111">        this.xp += experienceGained(enemy);</span>
+<span class="nc" id="L112">        this.xp += experienceGained(enemy);</span>
 
-<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (xp &gt;= (xpToLevel())) {</span>
-<span class="nc" id="L114">            increaseLevel();</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (xp &gt;= (xpToLevel())) {</span>
+<span class="nc" id="L115">            increaseLevel();</span>
         }
 
-<span class="nc" id="L117">        return xp;</span>
+<span class="nc" id="L118">        return xp;</span>
+    }
+    /**
+     * Changes player location
+     * @param local
+     * @return 
+     */
+    public boolean changeLocation(Local local){
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        if(local == null) return false;</span>
+        else{
+<span class="nc" id="L128">            this.local = local;</span>
+        }
+<span class="nc" id="L130">        return true;</span>
     }
 
 }
