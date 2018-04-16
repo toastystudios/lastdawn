@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dice.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Last Dawn</a> &gt; <a href="index.source.html" class="el_package">model.game</a> &gt; <span class="el_source">Dice.java</span></div><h1>Dice.java</h1><pre class="source lang-java linenums">/* Last Dawn (c) by Toasty Studios is licensed under
+ * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
+ * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+ */
+package model.game;
+
+import java.util.Random;
+
+/**
+ *
+ * @author Toasty Studios
+ */
+public class Dice {
+
+<span class="nc" id="L15">    private Dice() {</span>
+<span class="nc" id="L16">        throw new IllegalStateException(&quot;Utility class&quot;);</span>
+    }
+
+    private static final int SIDES = 20;
+
+    /**
+     * Rolls the die, returning a value from 1 to 20.
+     *
+     * @return
+     */
+    public static int rollDie() {
+<span class="nc" id="L27">        Random rand = new Random();</span>
+<span class="nc" id="L28">        return (rand.nextInt(SIDES) + 1);</span>
+    }
+
+    /**
+     * Rolls the die, given a boundary
+     *
+     * @param bound
+     * @return
+     */
+    public static int customRollDie(int bound) {
+<span class="nc" id="L38">        Random rand = new Random();</span>
+<span class="nc" id="L39">        return (rand.nextInt(bound) + 1);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

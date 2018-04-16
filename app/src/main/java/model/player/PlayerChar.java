@@ -18,7 +18,7 @@ public abstract class PlayerChar extends model.character.Character {
     protected ResourceManager resourceManager;
     private static final int STARTING_LEVEL = 1;
     private static final int EXP_PER_HP = 4;
-    private static final Local LOCAL_INITIAL = new Local("lol", Kingdom.KINGDOM1);
+    private static Local local;
     /*
     private int CONSTITUTION;
     private int STRENGTH;
@@ -32,6 +32,7 @@ public abstract class PlayerChar extends model.character.Character {
     public PlayerChar(String name, int constitution, int strength, int intelligence, int dexterity) {
         super(name, STARTING_LEVEL, constitution, strength, intelligence, dexterity);
         this.resourceManager = new ResourceManager();
+        this.local = new Local("lol", Kingdom.KINGDOM1);
     }
 
     /**
@@ -115,6 +116,18 @@ public abstract class PlayerChar extends model.character.Character {
         }
 
         return xp;
+    }
+    /**
+     * Changes player location
+     * @param local
+     * @return 
+     */
+    public boolean changeLocation(Local local){
+        if(local == null) return false;
+        else{
+            this.local = local;
+        }
+        return true;
     }
 
 }

@@ -25,7 +25,9 @@ public class Sound {
     private AudioFormat af;
     private Clip clip;
     
-    public Sound(){};
+    public Sound(){
+        initSound();
+    };
 
     public void initSound() {
         try {

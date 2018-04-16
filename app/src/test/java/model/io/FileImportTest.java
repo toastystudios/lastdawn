@@ -47,7 +47,7 @@ public class FileImportTest {
 
         System.out.println("readLocalFile");
         GameMap list = FileImport.readLocalFile("cidades.txt");
-        assertEquals(list.getGraph().vertexSet().size(), 11);
+        assertEquals(list.getGraph().vertexSet().size(), 10);
 
     }
 
@@ -59,8 +59,8 @@ public class FileImportTest {
         System.out.println("readRoadFile");
         GameMap map = FileImport.readRoadFile("roads.txt", "cidades.txt");
         System.out.println(map.getGraph());
-        assertEquals(map.getGraph().vertexSet().size(), 11);
-        assertEquals(map.getGraph().edgeSet().size(), 20);
+        assertEquals(map.getGraph().vertexSet().size(), 10);
+        assertEquals(map.getGraph().edgeSet().size(), 5);
     }
 
 }

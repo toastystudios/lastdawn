@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Last Dawn</a> &gt; <a href="index.source.html" class="el_package">model.game</a> &gt; <span class="el_source">FileManager.java</span></div><h1>FileManager.java</h1><pre class="source lang-java linenums">/* Last Dawn (c) by Toasty Studios is licensed under
+ * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
+ * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+ */
+package model.game;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import model.player.PlayerChar;
+
+/**
+ *
+ * @author Toasty Studios
+ */
+<span class="nc" id="L19">public class FileManager {</span>
+
+    public static void saveGame(GameSlot slot, String filename) throws FileNotFoundException, IOException {
+
+<span class="nc" id="L23">        try (FileOutputStream outputFile = new FileOutputStream(filename)) {</span>
+
+<span class="nc" id="L25">            ObjectOutputStream outputObj = new ObjectOutputStream(outputFile);</span>
+
+            try {
+
+<span class="nc" id="L29">                outputObj.writeObject(slot);</span>
+
+            } finally {
+
+<span class="nc" id="L33">                outputObj.close();</span>
+
+            }
+<span class="nc" id="L36">        } catch (IOException e) {</span>
+<span class="nc" id="L37">            System.err.println(&quot;File not found&quot;);</span>
+<span class="nc" id="L38">        }</span>
+<span class="nc" id="L39">    }</span>
+
+    public static GameSlot loadGame(String filename) throws FileNotFoundException, IOException, ClassNotFoundException {
+
+<span class="nc" id="L43">        GameSlot slot = null;</span>
+<span class="nc" id="L44">        try (FileInputStream inputFile = new FileInputStream(filename)){</span>
+
+<span class="nc" id="L46">            ObjectInputStream inputObj = new ObjectInputStream(inputFile);</span>
+
+            try {
+
+<span class="nc" id="L50">                slot = (GameSlot) inputObj.readObject();</span>
+
+            } finally {
+<span class="nc" id="L53">                inputObj.close();</span>
+            }
+<span class="nc" id="L55">        } catch (NullPointerException | IOException e) {</span>
+<span class="nc" id="L56">            System.err.println(&quot;File not found&quot;);</span>
+<span class="nc" id="L57">        }</span>
+<span class="nc" id="L58">        return slot;</span>
+    }
+
+    public void getItemlist() {
+        //RETORNA LISTA DE TODOS OS OBJECTOS ITEM (INICIO DE JOGO);
+<span class="nc" id="L63">    }</span>
+
+    /**
+     * Return in-game introduction
+     */
+    public static String getGameIntro() {
+        //deve ir buscar a um ficheiro externo o texto a inserir aqui
+
+<span class="nc" id="L71">        return &quot;&quot;;</span>
+    }
+
+    /**
+     * Return in-game character introduction
+     */
+    public static String getClassIntro(PlayerChar player) {
+        //deve ir buscar a um ficheiro externo o texto a inserir aqui
+        //faz a identificação da classe do player para saber qual o ficheiro a ler
+
+<span class="nc" id="L81">        String classIntro = null;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (player.getClass().getSimpleName() == &quot;Knight&quot;) {</span>
+
+        }
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (player.getClass().getSimpleName() == &quot;Paladin&quot;) {</span>
+
+        }
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (player.getClass().getSimpleName() == &quot;Archer&quot;) {</span>
+
+        }
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (player.getClass().getSimpleName() == &quot;Scientist&quot;) {</span>
+
+        }
+
+<span class="nc" id="L95">        return classIntro;</span>
+    }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,7 @@
+organization=toasty
+projectKey=toastystudios:LastDawn
+serverUrl=https://sonarcloud.io
+serverVersion=7.1.1.10702
+dashboardUrl=https://sonarcloud.io/dashboard/index/toastystudios:LastDawn
+ceTaskId=AWK263XfX0BbYiea-t9R
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWK263XfX0BbYiea-t9R
