@@ -14,12 +14,13 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.awt.*;
 import java.io.File;
 
 public class GameLoader extends StateBasedGame {
 
     private static final String NAME = "Last Dawn";
-    public static AppGameContainer appgc;
+    private static AppGameContainer appgc;
 
     public GameLoader(String name) {
         super(name);
@@ -35,10 +36,35 @@ public class GameLoader extends StateBasedGame {
         this.enterState(States.MENU);
     }
 
+    public static void setFullscreen() {
+        try {
+            appgc.setFullscreen(true);
+        } catch (SlickException e) {
+            return;
+        }
+    }
+
+    public static void setWindowed() {
+        try {
+            appgc.setFullscreen(false);
+        } catch (SlickException e) {
+            return;
+        }
+    }
+
+    public static void changeResolution(int width, int height, boolean fullscreen) {
+        try {
+            appgc.setDisplayMode(width, height, fullscreen);
+        } catch (SlickException e) {
+            return;
+        }
+    }
+
     public void run() {
         try {
+           Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
            appgc = new AppGameContainer(new GameLoader(NAME));
-           appgc.setDisplayMode(800,600, false);
+           appgc.setDisplayMode(screenSize.width,screenSize.height, false);
            appgc.setVSync(true);
            appgc.start();
         } catch(SlickException ex) {
