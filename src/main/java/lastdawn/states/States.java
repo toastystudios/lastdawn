@@ -8,6 +8,10 @@
 
 package lastdawn.states;
 
+/**
+ * Available states - aka windows - for the game.
+ * Each state must have an ID (integer) so it's good practice to store them as static variables or enum.
+ */
 public class States {
     public static final int MENU = 0;
     public static final int OPTIONS = 1;

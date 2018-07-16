@@ -9,15 +9,27 @@
 package lastdawn.utils;
 
 import org.newdawn.slick.SlickException;
-import  org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * Converts a java awt font to a slick2d font
+ */
 public class FontLoader {
 
+    /**
+     * Loads a font from the disk and converts it from a java awt font to a slick 2d font.
+     * Note: We must add an effect to the font for it to display - it's a slick2d problem and cannot be avoided.
+     * The effect we added does not do anything noticeable, though.
+     *
+     * @param fontSize
+     * @param fontName
+     * @return
+     */
     public static UnicodeFont getFont(int fontSize, String fontName) {
         UnicodeFont ufont = null;
         try {

@@ -10,7 +10,6 @@ package lastdawn.engine;
 
 import lastdawn.states.States;
 import lastdawn.utils.FontLoader;
-import lastdawn.utils.Resolutions;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -21,6 +20,9 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 
+/**
+ * The game menu - responsible for calling the new game, load game and options state.
+ */
 public class MenuState extends BasicGameState {
 
     private static final int MENU_OPTIONS = 4;
@@ -51,6 +53,13 @@ public class MenuState extends BasicGameState {
         return States.MENU;
     }
 
+    /**
+     * Only runs once - initializes the variables we need to initialize only once
+     *
+     * @param gameContainer
+     * @param stateBasedGame
+     * @throws SlickException
+     */
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         headerFont = FontLoader.getFont(120, "OldLondon.ttf");
         subTextFont = FontLoader.getFont(30, "OldLondon.ttf");
@@ -58,15 +67,17 @@ public class MenuState extends BasicGameState {
         menuMusic = new Music("/assets/sound/menu.wav");
         menuSoundFX = new Sound("/assets/sound/hover.wav");
         input = gameContainer.getInput();
+
         if (!menuMusic.playing()) menuMusic.loop();
+
         mouse = "No input yet!";
 
 
-        baseX = gameContainer.getWidth() / 2 - BUTTON_WIDTH/2;
+        baseX = gameContainer.getWidth() / 2 - BUTTON_WIDTH / 2;
         baseY = gameContainer.getHeight() / 2;
 
         int count = 0;
-        for (int i = MENU_OPTIONS-1; i >= 0; i--) {
+        for (int i = MENU_OPTIONS - 1; i >= 0; i--) {
             buttonCoordinates[i][MIN_X] = baseX;
             buttonCoordinates[i][MAX_X] = baseX + BUTTON_WIDTH;
             buttonCoordinates[i][MIN_Y] = baseY - (count * SPACING);
@@ -75,6 +86,14 @@ public class MenuState extends BasicGameState {
         }
     }
 
+    /**
+     * Runs 60 times per second, draws what we see on the screen
+     *
+     * @param gameContainer
+     * @param stateBasedGame
+     * @param graphics
+     * @throws SlickException
+     */
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         Image img = new Image("/assets/bg/mainmenu.jpg", false, Image.FILTER_NEAREST);
         graphics.drawImage(img, 0, -400);
@@ -95,6 +114,14 @@ public class MenuState extends BasicGameState {
 
     }
 
+    /**
+     * Runs an update when the conditions are verified - same logic as render, mostly.
+     *
+     * @param gameContainer
+     * @param stateBasedGame
+     * @param i
+     * @throws SlickException
+     */
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         int xpos = Mouse.getX();
         int ypos = Mouse.getY();
@@ -102,6 +129,13 @@ public class MenuState extends BasicGameState {
         checkForInput(gameContainer, stateBasedGame);
     }
 
+    /**
+     * Creates a button for the menu
+     *
+     * @param x
+     * @param y
+     * @param g
+     */
     private void createMenuRectangle(int x, int y, Graphics g) {
         Rectangle rectangle = new Rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT);
         g.fill(rectangle);
@@ -109,6 +143,13 @@ public class MenuState extends BasicGameState {
         g.draw(rectangle);
     }
 
+    /**
+     * Creates a border for the previously created button
+     *
+     * @param x
+     * @param y
+     * @param g
+     */
     private void createBorderRectangle(int x, int y, Graphics g) {
         Rectangle rectangle = new Rectangle(x, y, BUTTON_WIDTH + 5, BUTTON_HEIGHT + 5);
         g.fill(rectangle);
@@ -116,6 +157,14 @@ public class MenuState extends BasicGameState {
         g.draw(rectangle);
     }
 
+    /**
+     * Adds texts to the button
+     *
+     * @param x
+     * @param y
+     * @param g
+     * @param i
+     */
     private void createTextFields(int x, int y, Graphics g, int i) {
 
         switch (i) {
@@ -136,6 +185,12 @@ public class MenuState extends BasicGameState {
         }
     }
 
+    /**
+     * When the cursor is in the bounds of a rectangle - aka a button - and the mouse is pressed, runs the code that the button is supposed to.
+     *
+     * @param gc
+     * @param sbg
+     */
     private void checkForInput(GameContainer gc, StateBasedGame sbg) {
 
         //Exit Game
@@ -145,9 +200,9 @@ public class MenuState extends BasicGameState {
                 && Mouse.getY() >= buttonCoordinates[EXIT_GAME][MAX_Y]) {
 
             if (input.isMousePressed(input.MOUSE_LEFT_BUTTON)) {
-                menuSoundFX.play();
-                gc.sleep(200);
-                gc.exit();
+                menuSoundFX.play(); //plays a chime-like sound when we click
+                gc.sleep(200); //thread sleeps for 200ms otherwise sound won't play because the game closes too fast
+                gc.exit(); //exits the game
             }
 
         } else if (Mouse.getX() >= buttonCoordinates[OPTIONS][MIN_X]
@@ -157,7 +212,7 @@ public class MenuState extends BasicGameState {
                 && input.isMousePressed(input.MOUSE_LEFT_BUTTON)) {
 
             menuSoundFX.play();
-            gc.sleep(200);
+            gc.sleep(200); //see exit game comment, same logic applies
             sbg.enterState(States.OPTIONS);
 
         } else if (Mouse.getX() >= buttonCoordinates[LOAD_GAME][MIN_X]
@@ -167,7 +222,7 @@ public class MenuState extends BasicGameState {
                 && input.isMousePressed(input.MOUSE_LEFT_BUTTON)) {
 
             menuSoundFX.play();
-            gc.sleep(200);
+            gc.sleep(200); //see exit game comment, same logic applies
             sbg.enterState(States.LOAD);
 
         } else if (Mouse.getX() >= buttonCoordinates[NEW_GAME][MIN_X]
@@ -177,7 +232,7 @@ public class MenuState extends BasicGameState {
                 && input.isMousePressed(input.MOUSE_LEFT_BUTTON)) {
 
             menuSoundFX.play();
-            gc.sleep(200);
+            gc.sleep(200); //see exit game comment, same logic applies
             sbg.enterState(States.NEW);
         }
     }

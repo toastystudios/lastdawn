@@ -8,6 +8,9 @@
 
 package lastdawn.utils;
 
+/**
+ * Contains all the game available resolutions and cycles through them
+ */
 public class Resolutions {
 
     private int height;
@@ -25,6 +28,10 @@ public class Resolutions {
         this.width = width;
     }
 
+    /**
+     * Chooses the right resolution according to the actual resolution
+     * @return
+     */
     public int[] cycleResolutions() {
         if (this.width == SMALL[0] && this.height == SMALL[1]) {
             this.width = HD[0];
