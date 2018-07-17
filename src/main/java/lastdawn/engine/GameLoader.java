@@ -15,9 +15,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.awt.*;
-import java.io.File;
-
 /**
  * Class responsible for initializing the game
  */
@@ -31,19 +28,25 @@ public class GameLoader extends StateBasedGame {
     /**
      * Game Container - responsible for running the game
      */
-    private static AppGameContainer appgc;
+    private AppGameContainer appgc;
 
     /**
      * User Settings - resolution and fullscreen
      */
-    private static UserSettings userSettings;
+    private UserSettings userSettings;
 
-    public GameLoader(String name) {
-        super(name);
-        this.addState(new MenuState());
+    public GameLoader() {
+        super(NAME);
+        try {
+            appgc = new AppGameContainer(this);
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+        userSettings = new UserSettings();
+        userSettings.readUserSettings();
+        this.addState(new MenuState(appgc, userSettings));
         this.addState(new InGame());
         this.addState(new LoadState());
-        this.addState(new OptionsState());
         this.addState(new NewState());
     }
 
@@ -58,75 +61,9 @@ public class GameLoader extends StateBasedGame {
         this.enterState(States.MENU);
     }
 
-    /**
-     * Sets the window to fullscreen in the game container
-     */
-    public static void setFullscreen() {
-        try {
-            appgc.setFullscreen(true);
-        } catch (SlickException e) {
-            return;
-        }
-    }
-
-    /**
-     * Sets the window to window in the game container
-     */
-    public static void setWindowed() {
-        try {
-            appgc.setFullscreen(false);
-        } catch (SlickException e) {
-            return;
-        }
-    }
-
-    /**
-     * Sets a new resolution
-     *
-     * @param width
-     * @param height
-     * @param fullscreen
-     */
-    public static void changeResolution(int width, int height, boolean fullscreen) {
-        try {
-            appgc.setDisplayMode(width, height, fullscreen);
-        } catch (SlickException e) {
-            return;
-        }
-    }
-
-    /**
-     * Saves the current user settings to a .txt file
-     *
-     * @param fullscreen
-     * @param resolution
-     */
-    public static void saveUserSettings(boolean fullscreen, int[] resolution) {
-        userSettings = new UserSettings(fullscreen, resolution);
-        userSettings.saveUserSettings();
-    }
-
-    /**
-     * Returns the user settings.
-     *
-     * @return
-     */
-    public static UserSettings getUserSettings() {
-        return userSettings;
-    }
-
-    /**
-     * Runs the game - reads the user settings, sets the display size and starts it.
-     */
     public void run() {
         try {
-
-            userSettings = new UserSettings();
-            userSettings.readUserSettings();
-
-            appgc = new AppGameContainer(new GameLoader(NAME));
             appgc.setDisplayMode(userSettings.getResolution()[0], userSettings.getResolution()[1], userSettings.isFullscreen());
-
             appgc.setVSync(true);
             appgc.start();
         } catch (SlickException ex) {

@@ -21,7 +21,6 @@ public class Run {
         System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
         System.setProperty("net.java.games.input.librarypath", new File("natives").getAbsolutePath());
 
-
-        new GameLoader("Last Dawn").run();
+        new GameLoader().run();
     }
 }
