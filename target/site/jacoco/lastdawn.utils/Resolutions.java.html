@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Resolutions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lastdawn</a> &gt; <a href="index.source.html" class="el_package">lastdawn.utils</a> &gt; <span class="el_source">Resolutions.java</span></div><h1>Resolutions.java</h1><pre class="source lang-java linenums">/*
+ *  Last Dawn (c) by Toasty Studios is licensed under
+ *  * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
+ *  * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ *
+ */
+
+package lastdawn.utils;
+
+/**
+ * Contains all the game available resolutions and cycles through them
+ */
+public class Resolutions {
+
+    private int height;
+    private int width;
+
+
+<span class="nc" id="L20">    private static final int[] SMALL = {800, 600};</span>
+<span class="nc" id="L21">    private static final int[] HD = {1280, 720};</span>
+<span class="nc" id="L22">    private static final int[] MEDIUM = {1440, 900};</span>
+<span class="nc" id="L23">    private static final int[] MEDIUM_HD = {1600, 900};</span>
+<span class="nc" id="L24">    private static final int[] FULL_HD = {1920, 1080};</span>
+
+<span class="nc" id="L26">    public Resolutions(int height, int width) {</span>
+<span class="nc" id="L27">        this.height = height;</span>
+<span class="nc" id="L28">        this.width = width;</span>
+<span class="nc" id="L29">    }</span>
+
+    /**
+     * Chooses the right resolution according to the actual resolution
+     * @return
+     */
+    public int[] cycleResolutions() {
+<span class="nc bnc" id="L36" title="All 4 branches missed.">        if (this.width == SMALL[0] &amp;&amp; this.height == SMALL[1]) {</span>
+<span class="nc" id="L37">            this.width = HD[0];</span>
+<span class="nc" id="L38">            this.height = HD[1];</span>
+<span class="nc" id="L39">            return HD;</span>
+<span class="nc bnc" id="L40" title="All 4 branches missed.">        } else if (this.width == HD[0] &amp;&amp; this.height == HD[1]) {</span>
+<span class="nc" id="L41">            this.width = MEDIUM[0];</span>
+<span class="nc" id="L42">            this.height = MEDIUM[1];</span>
+<span class="nc" id="L43">            return MEDIUM;</span>
+<span class="nc bnc" id="L44" title="All 4 branches missed.">        } else if (this.width == MEDIUM[0] &amp;&amp; this.height == MEDIUM[1]) {</span>
+<span class="nc" id="L45">            this.width = MEDIUM_HD[0];</span>
+<span class="nc" id="L46">            this.height = MEDIUM_HD[1];</span>
+<span class="nc" id="L47">            return MEDIUM_HD;</span>
+<span class="nc bnc" id="L48" title="All 4 branches missed.">        } else if (this.width == MEDIUM_HD[0] &amp;&amp; this.height == MEDIUM_HD[1]) {</span>
+<span class="nc" id="L49">            this.width = FULL_HD[0];</span>
+<span class="nc" id="L50">            this.height = FULL_HD[1];</span>
+<span class="nc" id="L51">            return FULL_HD;</span>
+<span class="nc bnc" id="L52" title="All 4 branches missed.">        } else if (this.width == FULL_HD[0] &amp;&amp; this.height == FULL_HD[1]) {</span>
+<span class="nc" id="L53">            this.width = SMALL[0];</span>
+<span class="nc" id="L54">            this.height = SMALL[1];</span>
+<span class="nc" id="L55">            return SMALL;</span>
+        }
+<span class="nc" id="L57">        return null;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

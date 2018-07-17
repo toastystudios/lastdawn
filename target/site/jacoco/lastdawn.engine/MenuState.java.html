@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MenuState.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lastdawn</a> &gt; <a href="index.source.html" class="el_package">lastdawn.engine</a> &gt; <span class="el_source">MenuState.java</span></div><h1>MenuState.java</h1><pre class="source lang-java linenums">/*
+ *  Last Dawn (c) by Toasty Studios is licensed under
+ *  * Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. (CC BY-NC-ND 4.0)
+ *  * For more information, visit the link: http://creativecommons.org/licenses/by-nc-nd/4.0/
+ *
+ *
+ */
+
+package lastdawn.engine;
+
+import lastdawn.states.States;
+import lastdawn.utils.FontLoader;
+import lastdawn.utils.Resolutions;
+import lastdawn.utils.UserSettings;
+import lastdawn.view.framework.Button;
+import org.lwjgl.input.Mouse;
+import org.newdawn.slick.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+
+
+/**
+ * The game menu - responsible for calling the new game, load game and options state.
+ */
+public class MenuState extends BasicGameState {
+
+    private static final int BUTTON_WIDTH = 250;
+    private static final int BUTTON_HEIGHT = 50;
+    private static final int SPACING = 75;
+    private static final int RETURN = 3;
+    private static final int FULLSCREEN = 1;
+    private static final int CHANGE_RESOLUTION = 2;
+
+    private UnicodeFont headerFont;
+    private UnicodeFont subTextFont;
+    private Music menuMusic;
+    private Sound menuSoundFX;
+    private String mouse;
+    private int baseX;
+    private int baseY;
+    private int state;
+    private Button volume;
+    private Button fullscreen;
+    private Button changeRes;
+    private Button returnToMenu;
+    private Button newGame;
+    private Button loadGame;
+    private Button options;
+    private Button exitGame;
+    private Resolutions resolutions;
+    private AppGameContainer appgc;
+    private UserSettings settings;
+
+<span class="nc" id="L57">    public MenuState(AppGameContainer appgc, UserSettings settings) {</span>
+<span class="nc" id="L58">        this.appgc = appgc;</span>
+<span class="nc" id="L59">        this.settings = settings;</span>
+<span class="nc" id="L60">    }</span>
+
+    public int getID() {
+<span class="nc" id="L63">        return States.MENU;</span>
+    }
+
+    /**
+     * Only runs once - initializes the variables we need to initialize only once
+     *
+     * @param gameContainer
+     * @param stateBasedGame
+     * @throws SlickException
+     */
+    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+<span class="nc" id="L74">        headerFont = FontLoader.getFont(120, &quot;OldLondon.ttf&quot;);</span>
+<span class="nc" id="L75">        subTextFont = FontLoader.getFont(30, &quot;OldLondon.ttf&quot;);</span>
+<span class="nc" id="L76">        menuMusic = new Music(&quot;/assets/sound/menu.wav&quot;);</span>
+<span class="nc" id="L77">        menuSoundFX = new Sound(&quot;/assets/sound/hover.wav&quot;);</span>
+<span class="nc" id="L78">        state = States.MENU;</span>
+<span class="nc" id="L79">        mouse = &quot;No input yet!&quot;;</span>
+<span class="nc" id="L80">        resolutions = new Resolutions(gameContainer.getHeight(), gameContainer.getWidth());</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (!menuMusic.playing())</span>
+<span class="nc" id="L82">            menuMusic.loop();</span>
+<span class="nc" id="L83">        initRenderOptions(gameContainer);</span>
+<span class="nc" id="L84">        initRenderMenu(gameContainer);</span>
+<span class="nc" id="L85">    }</span>
+
+    /**
+     * Runs 60 times per second, draws what we see on the screen
+     *
+     * @param gameContainer
+     * @param stateBasedGame
+     * @param graphics
+     * @throws SlickException
+     */
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+
+<span class="nc" id="L97">        Image img = new Image(&quot;/assets/bg/mainmenu.jpg&quot;, false, Image.FILTER_NEAREST);</span>
+<span class="nc" id="L98">        graphics.drawImage(img, 0, -400);</span>
+<span class="nc" id="L99">        headerFont.drawString(gameContainer.getWidth() / 2 - 235, baseY-250, &quot;Last Dawn&quot;, Color.decode(&quot;0x916628&quot;));</span>
+<span class="nc" id="L100">        subTextFont.drawString(gameContainer.getWidth() / 2 - 245, baseY-130, &quot;The journey of a thousand steps begins with one&quot;, Color.lightGray);</span>
+
+        //DEBUG
+<span class="nc" id="L103">        graphics.drawString(mouse, 10, 30);</span>
+<span class="nc" id="L104">        graphics.drawString(gameContainer.getWidth() + &quot;*&quot; + gameContainer.getHeight(), 10, 50);</span>
+
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (state == States.MENU) {</span>
+<span class="nc" id="L107">            renderMenu(gameContainer, graphics);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        } else if (state == States.OPTIONS) {</span>
+<span class="nc" id="L109">            renderOptions(gameContainer, graphics);</span>
+        }
+
+
+<span class="nc" id="L113">    }</span>
+
+
+    /**
+     * Runs an update when the conditions are verified - same logic as render, mostly.
+     *
+     * @param gameContainer
+     * @param stateBasedGame
+     * @param i
+     * @throws SlickException
+     */
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+<span class="nc" id="L125">        int xpos = Mouse.getX();</span>
+<span class="nc" id="L126">        int ypos = Mouse.getY();</span>
+<span class="nc" id="L127">        mouse = &quot;X: &quot; + xpos + &quot; Y: &quot; + ypos;</span>
+
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        if (state == States.OPTIONS) updateOptions(gameContainer, stateBasedGame);</span>
+<span class="nc" id="L130">        else updateMenu(gameContainer, stateBasedGame);</span>
+<span class="nc" id="L131">    }</span>
+
+    /**
+     * ========================================
+     * ========== MAIN MENU METHODS ===========
+     * ========================================
+     */
+
+    private void initRenderMenu(GameContainer gameContainer) {
+<span class="nc" id="L140">        baseX = gameContainer.getWidth() / 2 - BUTTON_WIDTH / 2;</span>
+<span class="nc" id="L141">        baseY = gameContainer.getHeight() / 2;</span>
+<span class="nc" id="L142">        newGame = new Button(gameContainer, baseX, baseY, BUTTON_WIDTH, BUTTON_HEIGHT, baseX + 70, baseY + 10, &quot;New Game&quot;, subTextFont);</span>
+<span class="nc" id="L143">        loadGame = new Button(gameContainer, baseX, baseY + (FULLSCREEN * SPACING), BUTTON_WIDTH, BUTTON_HEIGHT, baseX + 70, baseY + (FULLSCREEN * SPACING) + 10, &quot;Load Game&quot;, subTextFont);</span>
+<span class="nc" id="L144">        options = new Button(gameContainer, baseX, baseY + (CHANGE_RESOLUTION * SPACING), BUTTON_WIDTH, BUTTON_HEIGHT, baseX + 80, baseY + (CHANGE_RESOLUTION * SPACING) + 10, &quot;Options&quot;, subTextFont);</span>
+<span class="nc" id="L145">        exitGame = new Button(gameContainer, baseX, baseY + (RETURN * SPACING), BUTTON_WIDTH, BUTTON_HEIGHT, baseX + 70, baseY + (RETURN * SPACING) + 10, &quot;Exit Game&quot;, subTextFont);</span>
+<span class="nc" id="L146">    }</span>
+
+    private void renderMenu(GameContainer gameContainer, Graphics graphics) throws SlickException {
+<span class="nc" id="L149">        newGame.render(gameContainer, graphics);</span>
+<span class="nc" id="L150">        loadGame.render(gameContainer, graphics);</span>
+<span class="nc" id="L151">        options.render(gameContainer, graphics);</span>
+<span class="nc" id="L152">        exitGame.render(gameContainer, graphics);</span>
+<span class="nc" id="L153">    }</span>
+
+    private void updateMenu(GameContainer gameContainer, StateBasedGame stateBasedGame) {
+<span class="nc" id="L156">        newGame.update(gameContainer);</span>
+<span class="nc" id="L157">        exitGame.update(gameContainer);</span>
+<span class="nc" id="L158">        loadGame.update(gameContainer);</span>
+<span class="nc" id="L159">        options.update(gameContainer);</span>
+<span class="nc" id="L160">        menuInput(gameContainer, stateBasedGame);</span>
+<span class="nc" id="L161">    }</span>
+
+    private void menuInput(GameContainer gameContainer, StateBasedGame stateBasedGame) {
+<span class="nc bnc" id="L164" title="All 2 branches missed.">        if (exitGame.isPressed()) {</span>
+<span class="nc" id="L165">            menuSoundFX.play();</span>
+<span class="nc" id="L166">            gameContainer.sleep(150);</span>
+<span class="nc" id="L167">            gameContainer.exit();</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        } else if (newGame.isPressed()) {</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        } else if (loadGame.isPressed()) {</span>
+
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        } else if (options.isPressed()) {</span>
+<span class="nc" id="L172">            menuSoundFX.play();</span>
+<span class="nc" id="L173">            state = States.OPTIONS;</span>
+        }
+<span class="nc" id="L175">    }</span>
+
+    /**
+     * ========================================
+     * ========== MAIN MENU METHODS ===========
+     * ========================================
+     */
+
+
+    /**
+     * ========================================
+     * =========== OPTIONS METHODS ============
+     * ========================================
+     */
+
+    private void initRenderOptions(GameContainer gameContainer) {
+<span class="nc" id="L191">        baseX = gameContainer.getWidth() / 2 - BUTTON_WIDTH / 2;</span>
+<span class="nc" id="L192">        baseY = gameContainer.getHeight() / 2;</span>
+<span class="nc" id="L193">        volume = new Button(gameContainer, baseX, baseY, BUTTON_WIDTH, BUTTON_HEIGHT, baseX + 40, baseY + 10, &quot;Volume On/Off&quot;, subTextFont);</span>
+<span class="nc" id="L194">        fullscreen = new Button(gameContainer, baseX, baseY + (FULLSCREEN * SPACING), BUTTON_WIDTH, BUTTON_HEIGHT, baseX + 10, baseY + (FULLSCREEN * SPACING) + 10, &quot;Fullscreen/Windowed&quot;, subTextFont);</span>
+<span class="nc" id="L195">        changeRes = new Button(gameContainer, baseX, baseY + (CHANGE_RESOLUTION * SPACING), BUTTON_WIDTH, BUTTON_HEIGHT, baseX + 30, baseY + (CHANGE_RESOLUTION * SPACING) + 10, &quot;Change Resolution&quot;, subTextFont);</span>
+<span class="nc" id="L196">        returnToMenu = new Button(gameContainer, baseX, baseY + (RETURN * SPACING), BUTTON_WIDTH, BUTTON_HEIGHT, baseX + 40, baseY + (RETURN * SPACING) + 10, &quot;Return to Menu&quot;, subTextFont);</span>
+<span class="nc" id="L197">    }</span>
+
+    private void renderOptions(GameContainer gameContainer, Graphics graphics) throws SlickException {
+<span class="nc" id="L200">        volume.render(gameContainer, graphics);</span>
+<span class="nc" id="L201">        fullscreen.render(gameContainer, graphics);</span>
+<span class="nc" id="L202">        changeRes.render(gameContainer, graphics);</span>
+<span class="nc" id="L203">        returnToMenu.render(gameContainer, graphics);</span>
+<span class="nc" id="L204">    }</span>
+
+    private void updateOptions(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+<span class="nc" id="L207">        volume.update(gameContainer);</span>
+<span class="nc" id="L208">        returnToMenu.update(gameContainer);</span>
+<span class="nc" id="L209">        fullscreen.update(gameContainer);</span>
+<span class="nc" id="L210">        changeRes.update(gameContainer);</span>
+<span class="nc" id="L211">        optionsInput(gameContainer, stateBasedGame);</span>
+<span class="nc" id="L212">    }</span>
+
+    private void optionsInput(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        if (returnToMenu.isPressed()) {</span>
+
+<span class="nc" id="L217">            menuSoundFX.play();</span>
+<span class="nc" id="L218">            int res[] = {gameContainer.getWidth(), gameContainer.getHeight()};</span>
+<span class="nc" id="L219">            settings.saveUserSettings();</span>
+<span class="nc" id="L220">            state = States.MENU;</span>
+
+<span class="nc bnc" id="L222" title="All 2 branches missed.">        } else if (volume.isPressed()) {</span>
+
+<span class="nc" id="L224">            menuSoundFX.play();</span>
+<span class="nc bnc" id="L225" title="All 4 branches missed.">            if (gameContainer.isMusicOn() || gameContainer.isSoundOn()) {</span>
+<span class="nc" id="L226">                gameContainer.setMusicOn(false);</span>
+<span class="nc" id="L227">                gameContainer.setSoundOn(false);</span>
+            } else {
+<span class="nc" id="L229">                gameContainer.setMusicOn(true);</span>
+<span class="nc" id="L230">                gameContainer.setSoundOn(true);</span>
+            }
+
+<span class="nc bnc" id="L233" title="All 2 branches missed.">        } else if (fullscreen.isPressed()) {</span>
+<span class="nc" id="L234">            menuSoundFX.play();</span>
+
+<span class="nc bnc" id="L236" title="All 2 branches missed.">            if (gameContainer.isFullscreen()) {</span>
+<span class="nc" id="L237">                appgc.setFullscreen(false);</span>
+<span class="nc" id="L238">                settings.setFullscreen(gameContainer.isFullscreen());</span>
+            } else {
+<span class="nc" id="L240">                appgc.setFullscreen(true);</span>
+<span class="nc" id="L241">                settings.setFullscreen(gameContainer.isFullscreen());</span>
+            }
+
+<span class="nc bnc" id="L244" title="All 2 branches missed.">        } else if (changeRes.isPressed()) {</span>
+<span class="nc" id="L245">            menuSoundFX.play();</span>
+<span class="nc" id="L246">            int newRes[] = resolutions.cycleResolutions();</span>
+<span class="nc" id="L247">            appgc.setDisplayMode(newRes[0], newRes[1], gameContainer.isFullscreen());</span>
+<span class="nc" id="L248">            settings.setFullscreen(gameContainer.isFullscreen());</span>
+<span class="nc" id="L249">            settings.setResolution(newRes);</span>
+<span class="nc" id="L250">            initRenderOptions(gameContainer);</span>
+<span class="nc" id="L251">            initRenderMenu(gameContainer);</span>
+
+        }
+<span class="nc" id="L254">    }</span>
+
+    /**
+     * ========================================
+     * =========== OPTIONS METHODS ============
+     * ========================================
+     */
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

@@ -1,0 +1,12 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+lastdawn,lastdawn.view.framework,Button,231,0,6,0,53,0,15,0,12,0
+lastdawn,lastdawn.states,States,3,0,0,0,1,0,1,0,1,0
+lastdawn,lastdawn.engine,LoadState,8,0,0,0,5,0,5,0,5,0
+lastdawn,lastdawn.engine,InGame,8,0,0,0,5,0,5,0,5,0
+lastdawn,lastdawn.engine,NewState,8,0,0,0,5,0,5,0,5,0
+lastdawn,lastdawn.engine,MenuState,659,0,30,0,108,0,28,0,13,0
+lastdawn,lastdawn.engine,Run,28,0,0,0,6,0,2,0,2,0
+lastdawn,lastdawn.engine,GameLoader,101,0,0,0,24,0,3,0,3,0
+lastdawn,lastdawn.utils,Resolutions,187,0,20,0,30,0,13,0,3,0
+lastdawn,lastdawn.utils,UserSettings,174,0,6,0,42,0,11,0,8,0
+lastdawn,lastdawn.utils,FontLoader,58,0,0,0,16,0,2,0,2,0
