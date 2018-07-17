@@ -34,6 +34,7 @@ public class GameLoader extends StateBasedGame {
      * User Settings - resolution and fullscreen
      */
     private UserSettings userSettings;
+    private final int MAX_FPS=60;
 
     public GameLoader() {
         super(NAME);
@@ -65,6 +66,7 @@ public class GameLoader extends StateBasedGame {
         try {
             appgc.setDisplayMode(userSettings.getResolution()[0], userSettings.getResolution()[1], userSettings.isFullscreen());
             appgc.setVSync(true);
+            appgc.setTargetFrameRate(MAX_FPS);
             appgc.start();
         } catch (SlickException ex) {
             System.out.println("The thing went skrrraaa.." + ex.getMessage());

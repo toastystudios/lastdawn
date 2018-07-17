@@ -9,6 +9,7 @@
 package lastdawn.utils;
 
 import java.io.*;
+import static java.lang.System.in;
 
 /**
  * Saves the user settings in a txt file and reads from it
@@ -31,11 +32,10 @@ public class UserSettings {
      * @return
      */
     public boolean readUserSettings() {
-
+                
         File f = new File("usersettings.txt");
         if(f.exists() && !f.isDirectory()) {
-            try {
-                BufferedReader in = new BufferedReader(new FileReader("usersettings.txt"));
+            try (BufferedReader in = new BufferedReader(new FileReader("usersettings.txt"))){
 
                 String[] line = in.readLine().split(";");
 
@@ -47,11 +47,16 @@ public class UserSettings {
                 this.resolution[0] = Integer.parseInt(resAux[0]);
                 this.resolution[1] = Integer.parseInt(resAux[1]);
 
-                in.close();
                 return true;
 
             } catch (IOException e) {
                 return false;
+            } finally {
+                try{
+                    in.close();
+                } catch (IOException e){
+                    return false;
+                }
             }
         } else {
             this.resolution[0] = 1280;

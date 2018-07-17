@@ -96,8 +96,8 @@ public class MenuState extends BasicGameState {
 
         Image img = new Image("/assets/bg/mainmenu.jpg", false, Image.FILTER_NEAREST);
         graphics.drawImage(img, 0, -400);
-        headerFont.drawString(gameContainer.getWidth() / 2 - 225, 30, "Last Dawn", Color.decode("0x916628"));
-        subTextFont.drawString(gameContainer.getWidth() / 2 - 245, 150, "The journey of a thousand steps begins with one", Color.lightGray);
+        headerFont.drawString(gameContainer.getWidth() / 2 - 235, baseY-250, "Last Dawn", Color.decode("0x916628"));
+        subTextFont.drawString(gameContainer.getWidth() / 2 - 245, baseY-130, "The journey of a thousand steps begins with one", Color.lightGray);
 
         //DEBUG
         graphics.drawString(mouse, 10, 30);
