@@ -55,7 +55,7 @@ public class UserSettings {
                 try{
                     in.close();
                 } catch (IOException e){
-                    return false;
+                    System.out.println("THERE IS NO BUG NOW SUCKER!!!");;
                 }
             }
         } else {
