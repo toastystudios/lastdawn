@@ -1,24 +1,19 @@
 package toastystudios.lastdawn;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameLoader extends Game {
 
 	private LoadingScreen loadingScreen;
-	private PreferencesScreen preferencesScreen;
+	private OptionScreen optionScreen;
 	private MenuScreen menuScreen;
-	private MainScreen mainScreen;
-	private EndScreen endScreen;
+	private NewGameScreen newGameScreen;
+	private LoadGameScreen loadGameScreen;
 
 	public final static int MENU = 0;
-	public final static int PREFERENCES = 1;
-	public final static int APPLICATION = 2;
-	public final static int ENDGAME = 3;
+	public final static int OPTIONS = 1;
+	public final static int NEWGAME = 2;
+	public final static int LOADGAME = 3;
 
 	@Override
 	public void create () {
@@ -32,17 +27,17 @@ public class GameLoader extends Game {
 				if(menuScreen == null) menuScreen = new MenuScreen(this);
 				this.setScreen(menuScreen);
 				break;
-			case PREFERENCES:
-				if(preferencesScreen == null) preferencesScreen = new PreferencesScreen();
-				this.setScreen(preferencesScreen);
+			case OPTIONS:
+				if(optionScreen == null) optionScreen = new OptionScreen();
+				this.setScreen(optionScreen);
 				break;
-			case APPLICATION:
-				if(mainScreen == null) mainScreen = new MainScreen();
-				this.setScreen(mainScreen);
+			case NEWGAME:
+				if(newGameScreen == null) newGameScreen = new NewGameScreen();
+				this.setScreen(newGameScreen);
 				break;
-			case ENDGAME:
-				if(endScreen == null) endScreen = new EndScreen();
-				this.setScreen(endScreen);
+			case LOADGAME:
+				if(loadGameScreen == null) loadGameScreen = new LoadGameScreen();
+				this.setScreen(loadGameScreen);
 				break;
 		}
 	}

@@ -2,7 +2,7 @@ package toastystudios.lastdawn;
 
 import com.badlogic.gdx.Screen;
 
-public class EndScreen implements Screen {
+public class LoadGameScreen implements Screen {
     @Override
     public void show() {
 
