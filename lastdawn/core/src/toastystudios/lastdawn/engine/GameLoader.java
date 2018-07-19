@@ -9,7 +9,7 @@ public class GameLoader extends Game {
 	private OptionScreen optionScreen;
 	private MenuScreen menuScreen;
 	private NewGameScreen newGameScreen;
-	private GameScreen gameScreen;
+	private LoadGameScreen loadGameScreen;
 	private AppSettings settings;
 
 	public final static int MENU = 0;
@@ -43,8 +43,8 @@ public class GameLoader extends Game {
 				this.setScreen(newGameScreen);
 				break;
 			case LOADGAME:
-				if(gameScreen == null) gameScreen = new GameScreen();
-				this.setScreen(gameScreen);
+				if(loadGameScreen == null) loadGameScreen = new LoadGameScreen(this);
+				this.setScreen(loadGameScreen);
 				break;
 		}
 	}
