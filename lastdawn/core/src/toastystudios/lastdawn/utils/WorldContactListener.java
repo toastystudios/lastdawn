@@ -18,6 +18,7 @@ public class WorldContactListener implements ContactListener {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
         System.out.println(fa.getBody().getType()+" has hit "+ fb.getBody().getType());
+        parent.playSound(0);
 
         if(fa.getBody().getUserData() == "SEA"){
             parent.isSwimming = true;

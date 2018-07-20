@@ -51,10 +51,10 @@ public class MenuScreen implements Screen {
         table.setPosition(0, -100);
 
 
-        buttonFont = FontLoader.loadFont("assets/fonts/JosefinSans.ttf", 25, Color.WHITE, Color.BLACK, 0.0f);
+        buttonFont = FontLoader.loadFont(FontLoader.JOSEFIN_SANS, 25, Color.WHITE, Color.BLACK, 0.0f);
         headerFont = FontLoader.loadFont(FontLoader.OLD_LONDON, 120, Color.valueOf("916628"), Color.BLACK, 1.1f);
         subTextFont = FontLoader.loadFont(FontLoader.OLD_LONDON, 30, Color.LIGHT_GRAY, Color.BLACK, 0.0f);
-        baseFont = FontLoader.loadFont("assets/fonts/JosefinSans.ttf", 10, Color.WHITE, Color.BLACK, 0.0f);
+        baseFont = FontLoader.loadFont(FontLoader.JOSEFIN_SANS, 10, Color.WHITE, Color.BLACK, 0.0f);
 
         backgroundImage = new Texture(Gdx.files.local("assets/bg/mainmenu.jpg"));
         skin = SkinUtils.loadCustomButtonFont(buttonFont, "uiskin.atlas", SkinUtils.DEFAULT);

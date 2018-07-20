@@ -1,37 +1,57 @@
 package toastystudios.lastdawn.model;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import toastystudios.lastdawn.Controller.KeyboardController;
+import toastystudios.lastdawn.Controller.WorldAssetManager;
 import toastystudios.lastdawn.utils.BodyFactory;
 import toastystudios.lastdawn.utils.WorldContactListener;
 
 public class WorldController {
+
+    private static final int HOVER_SOUND = 0;
+    private static final int PING_SOUND = 1;
+    private Sound ping;
+    private Sound hover;
+
     public World world;
     private Body bodyd;
     private Body bodys;
     private Body bodyk;
-    private Body player;
+    public Body player;
     private KeyboardController controller;
     private OrthographicCamera camera;
 
+    private WorldAssetManager assMan;
+
     public boolean isSwimming = false;
 
-    public WorldController(KeyboardController cont, OrthographicCamera cam){
+    public WorldController(KeyboardController cont, OrthographicCamera cam, WorldAssetManager assetManager){
         controller = cont;
         camera = cam;
         world = new World(new Vector2(0,-10f), true);
         world.setContactListener(new WorldContactListener(this));
-
+        this.assMan = assetManager;
         BodyFactory bodyFactory = BodyFactory.getBodyFactory(world);
 
-        player = bodyFactory.makeBoxPolyBody(1,1,2,2,BodyFactory.RUBBER,BodyDef.BodyType.DynamicBody,false);
+        player = bodyFactory.makeBoxPolyBody(1,1,2,4,BodyFactory.RUBBER,BodyDef.BodyType.DynamicBody,false);
 //        Body water = bodyFactory.makeBoxPolyBody(1,-8,40,10,BodyFactory.RUBBER,BodyDef.BodyType.StaticBody,false);
 //        water.setUserData("SEA");
 //        bodyFactory.makeAllFixturesSensors(water);
         createFloor();
+
+        // tells our asset manger that we want to load the images set in loadImages method
+        assMan.queueAddSounds();
+        // tells the asset manager to load the images and wait until finsihed loading.
+        assMan.manager.finishLoading();
+        // loads the 2 sounds we use
+        ping = assMan.manager.get("assets/sound/ping.wav", Sound.class);
+        hover = assMan.manager.get("assets/sound/hover.wav", Sound.class);
+
     }
 
     private void createFloor() {
@@ -124,6 +144,17 @@ public class WorldController {
         return false;
     }
 
+    public void playSound(int sound){
+        switch(sound){
+            case HOVER_SOUND:
+                hover.play();
+                break;
+            case PING_SOUND:
+                ping.play();
+                break;
+        }
+    }
+
     // our game logic here
     public void logicStep(float delta){
 
@@ -132,7 +163,7 @@ public class WorldController {
         }else if(controller.right){
             player.applyForceToCenter(10, 0,true);
         }else if(controller.up){
-            player.applyForceToCenter(0, 10,true);
+            player.applyForceToCenter(0, 100,true);
         }else if(controller.down){
             player.applyForceToCenter(0, -10,true);
         }
