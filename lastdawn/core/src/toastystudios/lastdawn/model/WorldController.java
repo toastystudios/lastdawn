@@ -49,8 +49,8 @@ public class WorldController {
         // tells the asset manager to load the images and wait until finsihed loading.
         assMan.manager.finishLoading();
         // loads the 2 sounds we use
-        ping = assMan.manager.get("assets/sound/ping.wav", Sound.class);
-        hover = assMan.manager.get("assets/sound/hover.wav", Sound.class);
+        ping = assMan.manager.get(WorldAssetManager.ping, Sound.class);
+        hover = assMan.manager.get(WorldAssetManager.hover, Sound.class);
 
     }
 

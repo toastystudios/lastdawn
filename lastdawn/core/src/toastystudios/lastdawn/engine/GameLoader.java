@@ -31,7 +31,10 @@ public class GameLoader extends Game {
         settings = new AppSettings();
         setScreen(loadingScreen);
 
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.local("assets/sound/menu.wav"));
+        assMan.queueMenuBackgroundMusic();
+        assMan.manager.finishLoading();
+        backgroundMusic = assMan.manager.get(WorldAssetManager.menuMusic);
+
         backgroundMusic.setVolume(settings.getMusicVolume());
         backgroundMusic.setLooping(true);
         backgroundMusic.play();
@@ -88,5 +91,10 @@ public class GameLoader extends Game {
         resolutions.add("1600x900");
         resolutions.add("1920x1080");
         return resolutions;
+    }
+
+    public void dispose(){
+        backgroundMusic.dispose();
+        assMan.manager.dispose();
     }
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.*;
 import toastystudios.lastdawn.Controller.KeyboardController;
+import toastystudios.lastdawn.Controller.WorldAssetManager;
 import toastystudios.lastdawn.engine.GameLoader;
 import toastystudios.lastdawn.model.WorldController;
 
@@ -32,7 +33,7 @@ public class LoadGameScreen implements Screen {
         parent.assMan.queueAddImages();
         //obriga a terminar as imagens
         parent.assMan.manager.finishLoading();
-        playerTex = parent.assMan.manager.get("assets/ingame/player_19.png");
+        playerTex = parent.assMan.manager.get(WorldAssetManager.playerImage);
         //1 spriteBatch para tudo?!
         sb = new SpriteBatch();
         sb.setProjectionMatrix(cam.combined);
