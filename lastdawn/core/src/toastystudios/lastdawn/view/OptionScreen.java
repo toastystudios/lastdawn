@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import toastystudios.lastdawn.Controller.WorldAssetManager;
 import toastystudios.lastdawn.engine.GameLoader;
+import toastystudios.lastdawn.view.framework.Assets;
 import toastystudios.lastdawn.view.framework.FontLoader;
 import toastystudios.lastdawn.view.framework.SkinUtils;
 
@@ -168,7 +169,7 @@ public class OptionScreen implements Screen {
                     selectBox.setTouchable(Touchable.disabled);
                 }
                 else if (!parent.getSettings().isFullscreen()) {
-                    Gdx.graphics.setWindowedMode((int) parent.getSettings().getResolution()[0], (int) parent.getSettings().getResolution()[1]);
+                    Gdx.graphics.setWindowedMode(parent.getSettings().getResolution()[0], parent.getSettings().getResolution()[1]);
                     selectBox.setTouchable(Touchable.enabled);
                 }
 
@@ -237,9 +238,9 @@ public class OptionScreen implements Screen {
         table.add(returnToMenu).width(150).height(50);
         table.add();
 
-        parent.assMan.queueAddBackground();
+        parent.assMan.queueMenuBackgroundImage();
         parent.assMan.manager.finishLoading();
-        backgroundImage = parent.assMan.manager.get(WorldAssetManager.menuBackgroundImage);
+        backgroundImage = parent.assMan.manager.get(WorldAssetManager.backgroundMenuImage);
     }
 
     @Override

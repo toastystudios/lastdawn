@@ -6,16 +6,21 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import toastystudios.lastdawn.Controller.KeyboardController;
 import toastystudios.lastdawn.Controller.WorldAssetManager;
 import toastystudios.lastdawn.engine.GameLoader;
 import toastystudios.lastdawn.model.WorldController;
+import toastystudios.lastdawn.view.framework.Assets;
 
 public class LoadGameScreen implements Screen {
 
+
+    private TextureAtlas atlas;
     private SpriteBatch sb;
-    private Texture playerTex;
+    private TextureAtlas.AtlasRegion playerTex;
     private WorldController model;
     private OrthographicCamera cam;
     private Box2DDebugRenderer debugRenderer;
@@ -29,14 +34,12 @@ public class LoadGameScreen implements Screen {
         model = new WorldController(controller,cam, parent.assMan);
         debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
 
-        //carrega as imagens
-        parent.assMan.queueAddImages();
-        //obriga a terminar as imagens
-        parent.assMan.manager.finishLoading();
-        playerTex = parent.assMan.manager.get(WorldAssetManager.playerImage);
         //1 spriteBatch para tudo?!
         sb = new SpriteBatch();
         sb.setProjectionMatrix(cam.combined);
+
+        atlas = parent.assMan.manager.get(WorldAssetManager.gameImages); // new
+        playerTex = atlas.findRegion(Assets.player); // updated
     }
 
     @Override
