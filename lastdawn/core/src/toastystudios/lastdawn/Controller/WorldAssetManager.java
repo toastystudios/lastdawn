@@ -52,6 +52,10 @@ public class WorldAssetManager {
     public void queueAddParticleEffects(){
     }
 
+    public void queueAddMusic() {
+
+    }
+
     public void queueAddSounds(){
         manager.load(new AssetDescriptor(hover,Sound.class));
         manager.load(new AssetDescriptor(ping,Sound.class));
