@@ -16,22 +16,25 @@ import java.util.Comparator;
 
 public class RenderingSystem extends SortedIteratingSystem {
 
+    private static final int VIRTUAL_WIDTH = 1920;
+    private static final int VIRTUAL_HEIGHT = 1080;
+
     static final float PPM = 32.0f;
-    static final float FRUSTUM_WIDTH = Gdx.graphics.getWidth()/PPM;//37.5f;
-    static final float FRUSTUM_HEIGHT = Gdx.graphics.getHeight()/PPM;//.0f;
+    static final float FRUSTUM_WIDTH = VIRTUAL_WIDTH/PPM;//37.5f;
+    static final float FRUSTUM_HEIGHT = VIRTUAL_HEIGHT /PPM;//.0f;
 
     public static final float PIXELS_TO_METRES = 1.0f / PPM;
 
     private static Vector2 meterDimensions = new Vector2();
     private static Vector2 pixelDimensions = new Vector2();
     public static Vector2 getScreenSizeInMeters(){
-        meterDimensions.set(Gdx.graphics.getWidth()*PIXELS_TO_METRES,
-                            Gdx.graphics.getHeight()*PIXELS_TO_METRES);
+        meterDimensions.set(VIRTUAL_WIDTH*PIXELS_TO_METRES,
+                VIRTUAL_HEIGHT*PIXELS_TO_METRES);
         return meterDimensions;
     }
 
     public static Vector2 getScreenSizeInPixesl(){
-        pixelDimensions.set(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        pixelDimensions.set(VIRTUAL_WIDTH, VIRTUAL_HEIGHT );
         return pixelDimensions;
     }
 
