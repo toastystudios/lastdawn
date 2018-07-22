@@ -15,12 +15,10 @@ public class WorldAssetManager {
 
     public final AssetManager manager = new AssetManager();
 
-    public final static String assetsPrefix = "assets/";
+    public final static String gameImages = "assets/images/ingame.atlas";
+    public final static String loadingImages = "assets/images/loading.atlas";
 
-    public final static String gameImages = assetsPrefix + "images/ingame.atlas";
-    public final static String loadingImages = assetsPrefix +"images/loading.atlas";
-
-    public final static String backgroundMenuImage = assetsPrefix + "images/mainmenu.png";
+    public final static String backgroundMenuImage = "assets/images/mainmenu.png";
 
     //Sound
     public static final String hover = "assets/sound/ingame/hover.wav";

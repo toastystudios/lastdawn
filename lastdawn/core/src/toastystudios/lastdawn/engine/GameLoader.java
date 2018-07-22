@@ -13,7 +13,7 @@ public class GameLoader extends Game {
     private OptionScreen optionScreen;
     private MenuScreen menuScreen;
     private NewGameScreen newGameScreen;
-    private LoadGameScreen loadGameScreen;
+    private GameScreen gameScreen;
     private AppSettings settings;
 
     public WorldAssetManager assMan = new WorldAssetManager();
@@ -66,8 +66,8 @@ public class GameLoader extends Game {
                 this.setScreen(newGameScreen);
                 break;
             case LOADGAME:
-                if (loadGameScreen == null) loadGameScreen = new LoadGameScreen(this);
-                this.setScreen(loadGameScreen);
+                if (gameScreen == null) gameScreen = new GameScreen(this);
+                this.setScreen(gameScreen);
                 break;
         }
     }

@@ -70,34 +70,29 @@ public class LoadingScreen implements Screen {
                     subTextFont.draw(stage.getBatch(), "Loading images..", 0, stage.getHeight() / 2, stage.getWidth(), Align.center, false);
                     stage.getBatch().end();
                     parent.assMan.queueAddImages();
-                    parent.assMan.manager.finishLoading();
                 case FONT:
                     stage.getBatch().begin();
                     subTextFont.draw(stage.getBatch(), "Loading fonts..", 0, stage.getHeight() / 2, stage.getWidth(), Align.center, false);
                     stage.getBatch().end();
                     parent.assMan.queueAddFonts(); // first load done, now start fonts
-                    parent.assMan.manager.finishLoading();
                     break;
                 case PARTY:
                     stage.getBatch().begin();
                     subTextFont.draw(stage.getBatch(), "Loading particles..", 0, stage.getHeight() / 2, stage.getWidth(), Align.center, false);
                     stage.getBatch().end();
                     parent.assMan.queueAddParticleEffects(); // fonts are done now do party effects
-                    parent.assMan.manager.finishLoading();
                     break;
                 case SOUND:
                     stage.getBatch().begin();
                     subTextFont.draw(stage.getBatch(), "Loading sound..", 0, stage.getHeight() / 2, stage.getWidth(), Align.center, false);
                     stage.getBatch().end();
                     parent.assMan.queueAddSounds();
-                    parent.assMan.manager.finishLoading();
                     break;
                 case MUSIC:
                     stage.getBatch().begin();
                     subTextFont.draw(stage.getBatch(), "Loading music..", 0, stage.getHeight() / 2, stage.getWidth(), Align.center, false);
                     stage.getBatch().end();
                     parent.assMan.queueAddMusic();
-                    parent.assMan.manager.finishLoading();
                     break;
             }
 
