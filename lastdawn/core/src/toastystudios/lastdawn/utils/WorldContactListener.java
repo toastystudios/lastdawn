@@ -34,6 +34,7 @@ public class WorldContactListener implements ContactListener {
             CollisionComponent col = ent.getComponent(CollisionComponent.class);
             CollisionComponent colb = colEnt.getComponent(CollisionComponent.class);
 
+
             if(col != null){
                 col.collisionEntity = colEnt;
             }else if(colb != null){

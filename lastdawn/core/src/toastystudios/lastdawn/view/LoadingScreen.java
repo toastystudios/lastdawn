@@ -22,7 +22,7 @@ public class LoadingScreen implements Screen {
     public final int MUSIC = 4;        // loading music
 
     private int currentLoadingStage = -1;
-    public float countDown = 1f;
+    public float countDown = 0f;
     private Stage stage;
     private GameLoader parent; // a field to store our orchestrator
     private BitmapFont headerFont;
@@ -105,7 +105,7 @@ public class LoadingScreen implements Screen {
                 stage.getBatch().end();
 
                 if (countDown < 0) { // countdown is complete
-                    parent.changeScreen(parent.MENU);  /// go to menu screen
+                    parent.changeScreen(parent.LOADGAME);  /// go to menu screen
                 }
             }
         }

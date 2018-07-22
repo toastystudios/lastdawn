@@ -6,14 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import toastystudios.lastdawn.Controller.KeyboardController;
 import toastystudios.lastdawn.Controller.WorldAssetManager;
 import toastystudios.lastdawn.engine.GameLoader;
@@ -21,6 +17,7 @@ import toastystudios.lastdawn.engine.components.*;
 import toastystudios.lastdawn.engine.systems.*;
 import toastystudios.lastdawn.utils.BodyFactory;
 import toastystudios.lastdawn.utils.WorldContactListener;
+import toastystudios.lastdawn.view.framework.Assets;
 
 public class GameScreen implements Screen {
 
@@ -32,13 +29,12 @@ public class GameScreen implements Screen {
     private World world;
     private BodyFactory bodyFactory;
     private TextureAtlas atlas;
-    private Viewport viewport;
 
 
     public GameScreen(GameLoader gameLoader) {
         parent = gameLoader;
         controller = new KeyboardController();
-        world = new World(new Vector2(0, -10f), true);
+        world = new World(new Vector2(0, -70f), true);
         world.setContactListener(new WorldContactListener());
         bodyFactory = BodyFactory.getBodyFactory(world);
 
@@ -62,52 +58,45 @@ public class GameScreen implements Screen {
         engine.addSystem(new PlayerControlSystem(controller));
 
         createPlayer();
-        createPlatform(2, 2);
-        createPlatform(2, 7);
-        createPlatform(7, 2);
-        createPlatform(7, 7);
 
-        createFloor();
 
-    }
+        //64 pixels (tile width) * 30 = 1920 PIXELS WIDTH
+        for (int i = 0; i < 30; i++) {
+            createTile(1f + (float) (2 * i), 1f, Assets.brickWall);
+        }
 
-    private void createPlatform(float x, float y) {
-        Entity entity = engine.createEntity();
-        B2dBodyComponent b2dbody = engine.createComponent(B2dBodyComponent.class);
-        b2dbody.body = bodyFactory.makeBoxPolyBody(x, y, 3, 0.2f, BodyFactory.STONE, BodyDef.BodyType.StaticBody);
-        TextureComponent texture = engine.createComponent(TextureComponent.class);
-        texture.region = atlas.findRegion("player");
-        TypeComponent type = engine.createComponent(TypeComponent.class);
-        type.type = TypeComponent.SCENERY;
-        b2dbody.body.setUserData(entity);
+        //64 pixels (tile height) * 17 = 1088 PIXELS HEIGHT - close enough to 1080
 
-        entity.add(b2dbody);
-        entity.add(texture);
-        entity.add(type);
 
-        engine.addEntity(entity);
+        for (int i = 0; i < 30; i++) {
+            createTile(5 + (i*2), 3 + (i*2), Assets.brickWall);
+        }
 
     }
 
-    private void createFloor() {
+    private void createTile(float x, float y, String textureName) {
         Entity entity = engine.createEntity();
+
         B2dBodyComponent b2dbody = engine.createComponent(B2dBodyComponent.class);
-        b2dbody.body = bodyFactory.makeBoxPolyBody(0, 0, 100, 0.2f, BodyFactory.STONE, BodyDef.BodyType.StaticBody);
+        b2dbody.body = bodyFactory.makeBoxPolyBody(x, y, 2f, 2f, BodyFactory.STONE, BodyDef.BodyType.StaticBody);
+        b2dbody.body.setUserData(entity);
+
         TextureComponent texture = engine.createComponent(TextureComponent.class);
-        texture.region = atlas.findRegion("player");
+        texture.region = atlas.findRegion(textureName);
+
         TypeComponent type = engine.createComponent(TypeComponent.class);
         type.type = TypeComponent.SCENERY;
 
+        TransformComponent trans = engine.createComponent(TransformComponent.class);
+        trans.position.set(x, y, 0);
 
-        b2dbody.body.setUserData(entity);
-
+        entity.add(trans);
         entity.add(b2dbody);
         entity.add(texture);
         entity.add(type);
 
         engine.addEntity(entity);
     }
-
 
     private void createPlayer() {
 
@@ -120,10 +109,10 @@ public class GameScreen implements Screen {
         TypeComponent type = engine.createComponent(TypeComponent.class);
         StateComponent stateCom = engine.createComponent(StateComponent.class);
 
-        b2dbody.body = bodyFactory.makeCirclePolyBody(10, 10, 1, BodyFactory.STONE, BodyDef.BodyType.DynamicBody, true);
-        // set object position (x,y,z) z used to define draw order 0 first drawn
+//        b2dbody.body = bodyFactory.makeBoxPolyBody(10, 10, 2, 3.5F, BodyFactory.PLAYER, BodyDef.BodyType.DynamicBody, true);// set object position (x,y,z) z used to define draw order 0 first drawn
+        b2dbody.body = bodyFactory.makeCirclePolyBody(10, 10, 1, BodyFactory.STONE, BodyDef.BodyType.DynamicBody, true);// set object position (x,y,z) z used to define draw order 0 first drawn
         position.position.set(10, 10, 0);
-        texture.region = atlas.findRegion("player");
+        texture.region = atlas.findRegion(Assets.player);
         type.type = TypeComponent.PLAYER;
         stateCom.set(StateComponent.STATE_NORMAL);
         b2dbody.body.setUserData(entity);
@@ -149,7 +138,6 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         engine.update(delta);
 
     }

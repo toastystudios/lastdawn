@@ -10,6 +10,7 @@ public class BodyFactory {
     public static final int WOOD = 1;
     public static final int RUBBER = 2;
     public static final int STONE = 3;
+    public static final int PLAYER = 4;
     private static final double DEGTORAD = 0.0174533f;
 
     private World world;
@@ -51,6 +52,10 @@ public class BodyFactory {
                 fixtureDef.friction = 0.5f;
                 fixtureDef.restitution = 0f;
                 break;
+            case PLAYER:
+                fixtureDef.density = 1f;
+                fixtureDef.friction = 0f;
+                fixtureDef.restitution = 1f;
             default:
                 fixtureDef.density = 7f;
                 fixtureDef.friction = 0.5f;

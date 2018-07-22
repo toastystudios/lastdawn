@@ -33,7 +33,6 @@ public class CollisionSystem  extends IteratingSystem {
 			if(type != null){
 				switch(type.type){
 				case TypeComponent.ENEMY:
-					//do player hit enemy thing
 					System.out.println("player hit enemy");
 					break;
 				case TypeComponent.SCENERY:

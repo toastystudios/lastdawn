@@ -33,6 +33,9 @@ public class KeyboardController implements InputProcessor {
             case Input.Keys.S: 	// if keycode is the same as Keys.LEFT a.k.a 20
                 down = true;	// do this
                 break;	// we have reacted to a keypress so stop checking for more
+            case Input.Keys.SPACE:
+                up = true;
+                break;
         }
         return keyProcessed;	// no keys pressed that we care about so return false
     }

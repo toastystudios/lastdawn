@@ -15,9 +15,7 @@ public class WorldAssetManager {
 
     public final AssetManager manager = new AssetManager();
 
-    public final static String gameImages = "assets/images/ingame.atlas";
-    public final static String loadingImages = "assets/images/loading.atlas";
-
+    public final static String gameImages = "assets/images/ingame.pack";
     public final static String backgroundMenuImage = "assets/images/mainmenu.png";
 
     //Sound
@@ -37,11 +35,6 @@ public class WorldAssetManager {
 
     public void queueMenuBackgroundImage() {
         manager.load(backgroundMenuImage, Texture.class);
-    }
-
-    // a small set of images used by the loading screen
-    public void queueAddLoadingImages(){
-        manager.load(loadingImages, TextureAtlas.class);
     }
 
     public void queueAddFonts(){

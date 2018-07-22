@@ -1,5 +1,5 @@
 
-ingame.png
+InGame.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -15,5 +15,12 @@ player
   xy: 603, 245
   size: 256, 256
   orig: 256, 256
+  offset: 0, 0
+  index: -1
+wall
+  rotate: false
+  xy: 603, 179
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
