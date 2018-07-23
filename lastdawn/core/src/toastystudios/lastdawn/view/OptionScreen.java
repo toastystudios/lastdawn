@@ -1,26 +1,21 @@
 package toastystudios.lastdawn.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import toastystudios.lastdawn.Controller.WorldAssetManager;
 import toastystudios.lastdawn.engine.GameLoader;
-import toastystudios.lastdawn.view.framework.Assets;
 import toastystudios.lastdawn.view.framework.FontLoader;
-import toastystudios.lastdawn.view.framework.SkinUtils;
 
 
 public class OptionScreen implements Screen {
@@ -237,9 +232,6 @@ public class OptionScreen implements Screen {
         table.add();
         table.add(returnToMenu).width(150).height(50);
         table.add();
-
-        parent.assMan.queueMenuBackgroundImage();
-        parent.assMan.manager.finishLoading();
         backgroundImage = parent.assMan.manager.get(WorldAssetManager.backgroundMenuImage);
     }
 

@@ -16,10 +16,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import toastystudios.lastdawn.Controller.WorldAssetManager;
 import toastystudios.lastdawn.engine.GameLoader;
-import toastystudios.lastdawn.view.framework.Assets;
 import toastystudios.lastdawn.view.framework.ButtonUtils;
 import toastystudios.lastdawn.view.framework.FontLoader;
-import toastystudios.lastdawn.view.framework.SkinUtils;
 
 public class MenuScreen implements Screen {
 
@@ -57,8 +55,6 @@ public class MenuScreen implements Screen {
         subTextFont = FontLoader.loadFont(FontLoader.OLD_LONDON, 30, Color.LIGHT_GRAY, Color.BLACK, 0.0f);
         baseFont = FontLoader.loadFont(FontLoader.JOSEFIN_SANS, 10, Color.WHITE, Color.BLACK, 0.0f);
 
-        parent.assMan.queueMenuBackgroundImage();
-        parent.assMan.manager.finishLoading();
         backgroundImage = parent.assMan.manager.get(WorldAssetManager.backgroundMenuImage);
 
         skin = parent.assMan.queueAddSkinWithCustomFont(buttonFont);

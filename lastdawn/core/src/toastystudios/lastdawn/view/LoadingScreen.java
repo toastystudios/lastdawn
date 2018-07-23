@@ -40,7 +40,7 @@ public class LoadingScreen implements Screen {
     public void show() {
         headerFont = FontLoader.loadFont(FontLoader.OLD_LONDON, 120, Color.valueOf("916628"), Color.BLACK, 1.1f);
         subTextFont = FontLoader.loadFont(FontLoader.OLD_LONDON, 30, Color.LIGHT_GRAY, Color.BLACK, 0.0f);
-        parent.assMan.queueMenuBackgroundImage();
+        parent.assMan.queueAddImages();
         parent.assMan.manager.finishLoading();
         backgroundImage = parent.assMan.manager.get(WorldAssetManager.backgroundMenuImage);
     }
@@ -69,12 +69,11 @@ public class LoadingScreen implements Screen {
                     stage.getBatch().begin();
                     subTextFont.draw(stage.getBatch(), "Loading images..", 0, stage.getHeight() / 2, stage.getWidth(), Align.center, false);
                     stage.getBatch().end();
-                    parent.assMan.queueAddImages();
                 case FONT:
                     stage.getBatch().begin();
-                    subTextFont.draw(stage.getBatch(), "Loading fonts..", 0, stage.getHeight() / 2, stage.getWidth(), Align.center, false);
+                    subTextFont.draw(stage.getBatch(), "Loading maps..", 0, stage.getHeight() / 2, stage.getWidth(), Align.center, false);
                     stage.getBatch().end();
-                    parent.assMan.queueAddFonts(); // first load done, now start fonts
+                    parent.assMan.queueAddTiledMaps();
                     break;
                 case PARTY:
                     stage.getBatch().begin();
