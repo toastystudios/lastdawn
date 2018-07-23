@@ -27,9 +27,7 @@ public class WorldAssetManager {
 
     //Images
     public final static String backgroundMenuImage = "assets/images/mainmenu.png";
-<<<<<<< HEAD
     public final static String newGameBackgroundMenuImage = "assets/images/newgame.png";
-=======
     public final static String playerRunningUp = "assets/images/player-anim/running-up.png";
     public final static String playerRunningDown = "assets/images/player-anim/running-down.png";
     public final static String playerRunningLeft = "assets/images/player-anim/running-left.png";
@@ -37,7 +35,6 @@ public class WorldAssetManager {
 
     //Maps
     public final static String level_1 = "assets/level/level1.tmx";
->>>>>>> 7c8f35622482529ce4d0cf37f669c19169944c64
 
     //Sound
     public static final String hover = "assets/sound/ingame/hover.wav";
@@ -57,17 +54,13 @@ public class WorldAssetManager {
         manager.load(playerRunningRight, Texture.class);
     }
 
-<<<<<<< HEAD
     public void queueNewGameBackgroundImage() {
         manager.load(newGameBackgroundMenuImage, Texture.class);
     }
 
-    public void queueAddFonts(){
-=======
     public void queueAddTiledMaps() {
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         manager.load(level_1, TiledMap.class);
->>>>>>> 7c8f35622482529ce4d0cf37f669c19169944c64
     }
 
     public void queueAddParticleEffects(){
