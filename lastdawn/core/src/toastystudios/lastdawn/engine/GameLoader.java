@@ -66,7 +66,7 @@ public class GameLoader extends Game {
                 this.setScreen(newGameScreen);
                 break;
             case LOADGAME:
-                if (gameScreen == null) gameScreen = new GameScreen(this);
+                if (gameScreen == null) gameScreen = new GameScreen();
                 this.setScreen(gameScreen);
                 break;
         }
