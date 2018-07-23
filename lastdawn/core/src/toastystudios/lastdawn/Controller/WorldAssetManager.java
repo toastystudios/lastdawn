@@ -17,6 +17,7 @@ public class WorldAssetManager {
 
     public final static String gameImages = "assets/images/ingame.pack";
     public final static String backgroundMenuImage = "assets/images/mainmenu.png";
+    public final static String newGameBackgroundMenuImage = "assets/images/newgame.png";
 
     //Sound
     public static final String hover = "assets/sound/ingame/hover.wav";
@@ -35,6 +36,10 @@ public class WorldAssetManager {
 
     public void queueMenuBackgroundImage() {
         manager.load(backgroundMenuImage, Texture.class);
+    }
+
+    public void queueNewGameBackgroundImage() {
+        manager.load(newGameBackgroundMenuImage, Texture.class);
     }
 
     public void queueAddFonts(){

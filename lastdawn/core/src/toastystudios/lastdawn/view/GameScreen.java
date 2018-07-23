@@ -46,7 +46,7 @@ public class GameScreen implements Screen {
 
         // create an orthographic camera, shows us 30x30 units of the world
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 15, 15);
+        camera.setToOrtho(false, 20, 15);
         camera.update();
     }
 
