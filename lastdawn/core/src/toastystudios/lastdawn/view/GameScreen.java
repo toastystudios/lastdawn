@@ -26,6 +26,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void show () {
+
+        Gdx.input.setInputProcessor(null);
+        
         // load the koala frame
         playerTexture = new TextureRegion(new Texture("player.png"));
 
