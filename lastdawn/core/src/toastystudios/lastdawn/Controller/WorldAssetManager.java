@@ -20,6 +20,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import toastystudios.lastdawn.view.framework.SkinUtils;
 
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class WorldAssetManager {
 
     public final com.badlogic.gdx.assets.AssetManager manager = new com.badlogic.gdx.assets.AssetManager();
@@ -90,4 +95,27 @@ public class WorldAssetManager {
         return SkinUtils.loadCustomButtonFont(font, skinAtlas, skin);
     }
 
+    public String readFile(String fileName) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            try {
+                StringBuilder sb = new StringBuilder();
+                String line = br.readLine();
+
+                while (line != null) {
+                    sb.append(line);
+                    sb.append("\n");
+                    line = br.readLine();
+                }
+                return sb.toString();
+            } catch (IOException e) {
+                System.out.println("Error reading file!");
+            } finally {
+                br.close();
+            }
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }
