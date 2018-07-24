@@ -27,6 +27,7 @@ public class WorldAssetManager {
 
     //Images
     public final static String backgroundMenuImage = "assets/images/mainmenu.png";
+    public final static String newGameBackgroundMenuImage = "assets/images/newgame.png";
     public final static String playerRunningUp = "assets/images/player-anim/running-up.png";
     public final static String playerRunningDown = "assets/images/player-anim/running-down.png";
     public final static String playerRunningLeft = "assets/images/player-anim/running-left.png";
@@ -51,6 +52,10 @@ public class WorldAssetManager {
         manager.load(playerRunningDown, Texture.class);
         manager.load(playerRunningLeft, Texture.class);
         manager.load(playerRunningRight, Texture.class);
+    }
+
+    public void queueNewGameBackgroundImage() {
+        manager.load(newGameBackgroundMenuImage, Texture.class);
     }
 
     public void queueAddTiledMaps() {
