@@ -22,8 +22,8 @@ public abstract class Stage {
 
     protected float playerWidth;
     protected float playerHeight;
-    protected float playerX;
-    protected float playerY;
+    protected float playerX = 10;
+    protected float playerY = 10;
 
     protected Texture walk_up_texture;
     protected Texture walk_down_texture;
@@ -46,10 +46,16 @@ public abstract class Stage {
     protected Turned facing;
 
     protected boolean moving;
+
     protected boolean runningUp;
     protected boolean runningDown;
     protected boolean runningLeft;
     protected boolean runningRight;
+
+    protected boolean collidingUp;
+    protected boolean collidingDown;
+    protected boolean collidingLeft;
+    protected boolean collidingRight;
 
 
     protected float stateTime;
@@ -135,27 +141,27 @@ public abstract class Stage {
 
         stateTime += deltaTime;
 
-        if (controller.up) {
+        if (controller.up && !collidingUp) {
             playerY += 0.1f;
             facing = Turned.UP;
             runningUp = true;
             moving = true;
         }
-        if (controller.down) {
+        if (controller.down && !collidingDown) {
             playerY -= 0.1f;
             facing = Turned.DOWN;
             runningDown = true;
             moving = true;
         }
 
-        if (controller.left) {
+        if (controller.left && !collidingLeft) {
             playerX -= 0.1f;
             facing = Turned.LEFT;
             runningLeft = true;
             moving = true;
         }
 
-        if (controller.right) {
+        if (controller.right && !collidingRight) {
             playerX += 0.1f;
             facing = Turned.RIGHT;
             runningRight = true;
