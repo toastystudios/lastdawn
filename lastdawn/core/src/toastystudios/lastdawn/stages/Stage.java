@@ -8,22 +8,25 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import toastystudios.lastdawn.Controller.KeyboardController;
 import toastystudios.lastdawn.Controller.WorldAssetManager;
 import toastystudios.lastdawn.engine.GameLoader;
 
 public abstract class Stage {
 
-
     protected static final float SCALE = 32f;
+    protected static float DAMPING = 0.7f;
+
     protected GameLoader parent;
     protected OrthogonalTiledMapRenderer renderer;
     protected OrthographicCamera camera;
 
     protected float playerWidth;
     protected float playerHeight;
-    protected float playerX = 10;
-    protected float playerY = 10;
+    protected Vector2 position = new Vector2(10, 10);
+    protected Vector2 velocity = new Vector2();
 
     protected Texture walk_up_texture;
     protected Texture walk_down_texture;
@@ -35,6 +38,7 @@ public abstract class Stage {
     protected Animation<TextureRegion> walk_right;
     protected Animation<TextureRegion> walk_left;
 
+    protected TextureRegion frame;
     protected TextureRegion[] walk_up_regions;
     protected TextureRegion[] walk_down_regions;
     protected TextureRegion[] walk_left_regions;
@@ -47,19 +51,9 @@ public abstract class Stage {
 
     protected boolean moving;
 
-    protected boolean runningUp;
-    protected boolean runningDown;
-    protected boolean runningLeft;
-    protected boolean runningRight;
-
-    protected boolean collidingUp;
-    protected boolean collidingDown;
-    protected boolean collidingLeft;
-    protected boolean collidingRight;
-
-
+    protected float MAX_VELOCITY = 5f;
     protected float stateTime;
-
+    protected float deltaTime;
 
     private KeyboardController controller;
 
@@ -109,7 +103,7 @@ public abstract class Stage {
 
     public void render() {
         // get the delta time
-        float deltaTime = Gdx.graphics.getDeltaTime();
+        deltaTime = Gdx.graphics.getDeltaTime();
 
         // clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -119,8 +113,8 @@ public abstract class Stage {
         updatePlayer(deltaTime);
 
         // let the camera follow the koala, x-axis only
-        camera.position.x = playerX;
-        camera.position.y = playerY;
+        camera.position.x = position.x;
+        camera.position.y = position.y;
         camera.update();
 
         // set the TiledMapRenderer view based on what the
@@ -141,66 +135,50 @@ public abstract class Stage {
 
         stateTime += deltaTime;
 
-        if (controller.up && !collidingUp) {
-            playerY += 0.1f;
+        if (controller.up) {
+            velocity.y = MAX_VELOCITY;
             facing = Turned.UP;
-            runningUp = true;
-            moving = true;
         }
-        if (controller.down && !collidingDown) {
-            playerY -= 0.1f;
+        if (controller.down) {
+            velocity.y = -MAX_VELOCITY;
             facing = Turned.DOWN;
-            runningDown = true;
-            moving = true;
         }
 
-        if (controller.left && !collidingLeft) {
-            playerX -= 0.1f;
+        if (controller.left) {
+            velocity.x = -MAX_VELOCITY;
             facing = Turned.LEFT;
-            runningLeft = true;
-            moving = true;
         }
 
-        if (controller.right && !collidingRight) {
-            playerX += 0.1f;
+        if (controller.right) {
+            velocity.x = MAX_VELOCITY;
             facing = Turned.RIGHT;
-            runningRight = true;
-            moving = true;
         }
 
-        if (!controller.up){
-            runningUp = false;
-            moving = false;
-        }
+        velocity.x = MathUtils.clamp(velocity.x, -MAX_VELOCITY, MAX_VELOCITY);
+        velocity.y = MathUtils.clamp(velocity.y, -MAX_VELOCITY, MAX_VELOCITY);
 
-        if (!controller.down) {
-            runningDown = false;
-            moving = false;
-        }
+        if (Math.abs(velocity.x) < 1) velocity.x = 0;
+        if (Math.abs(velocity.y) < 1) velocity.y = 0;
 
-        if (!controller.left) {
-            runningLeft = false;
-            moving = false;
-        }
+        if (velocity.x == 0 && velocity.y == 0) moving = false;
+        else moving = true;
 
-        if (!controller.right){
-            runningRight = false;
+        velocity.scl(deltaTime);
+
+        if (!controller.up && !controller.down && !controller.left && !controller.right)
             moving = false;
-        }
 
     }
 
-    protected void renderPlayer() {
+    protected void renderPlayer(){        frame = walk_down.getKeyFrames()[0];
 
-        TextureRegion frame = walk_down.getKeyFrames()[0];
-
-        if (runningUp) {
+        if (moving && facing == Turned.UP) {
             frame = walk_up.getKeyFrame(stateTime);
-        } else if (runningLeft) {
+        } else if (moving && facing == Turned.LEFT) {
             frame = walk_left.getKeyFrame(stateTime);
-        } else if (runningRight) {
+        } else if (moving && facing == Turned.RIGHT) {
             frame = walk_right.getKeyFrame(stateTime);
-        } else if (runningDown) {
+        } else if (moving && facing == Turned.DOWN) {
             frame = walk_down.getKeyFrame(stateTime);
         } else if (facing == Turned.UP && !moving){
             frame = walk_up.getKeyFrames()[0];
@@ -215,11 +193,8 @@ public abstract class Stage {
         // draw the player
         Batch batch = renderer.getBatch();
         batch.begin();
-        batch.draw(frame, playerX, playerY, playerWidth, playerHeight);
+        batch.draw(frame, position.x, position.y, playerWidth, playerHeight);
         batch.end();
+
     }
-
-
-
-
 }

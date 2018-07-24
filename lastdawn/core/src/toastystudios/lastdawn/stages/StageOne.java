@@ -1,8 +1,10 @@
 package toastystudios.lastdawn.stages;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -13,16 +15,12 @@ public class StageOne extends Stage {
 
     protected TiledMap map;
     protected Array<Rectangle> tiles = new Array<Rectangle>();
-
     protected Pool<Rectangle> rectPool = new Pool<Rectangle>() {
         @Override
         protected Rectangle newObject() {
             return new Rectangle();
         }
     };
-
-    protected float oldX;
-    protected float oldY;
 
     public StageOne(GameLoader parent) {
         super(parent);
@@ -46,75 +44,56 @@ public class StageOne extends Stage {
     }
 
     private void checkCollision() {
-
-        // perform collision detection & response, on each axis, separately
-        // if the koala is moving right, check the tiles to the right of it's
-        // right bounding box edge, otherwise check the ones to the left
-        Rectangle playerRect = rectPool.obtain();
-        playerRect.set(playerX, playerY, playerWidth, playerHeight);
-        int auxX = (int) playerX, auxY = (int) playerY;
+        Rectangle player = rectPool.obtain();
+        player.set(position.x, position.y, playerWidth, playerHeight/5);
         int startX, startY, endX, endY;
 
-        if (runningLeft) {
-            startX = auxX;
-            endX = auxX--;
-        } else if (runningRight) {
-            startX = auxX;
-            endX = auxX++;
-        } else {
-            startX = auxX;
-            endX = auxX;
-        }
 
-        if (runningUp) {
-            startY = auxY;
-            endY = auxY++;
-        } else if (runningDown) {
-            startY = auxY;
-            endY = auxY--;
-        } else {
-            startY = auxY;
-            endY = auxY;
-        }
+        //Check X collision
+        if (velocity.x > 0) startX = endX = (int) (position.x + playerWidth + velocity.x);
+        else startX = endX = (int) (position.x + velocity.x);
+
+
+        startY = (int) position.y;
+        endY = (int) (position.y + playerHeight);
 
         getTiles(startX, startY, endX, endY, tiles, "CollisionLayer");
+        player.x += velocity.x;
+
         for (Rectangle tile : tiles) {
-
-            int tileXLeft = (int) tile.x;
-            int tileXRight = (int) tile.x;
-            int tileYUp = (int) tile.y;
-            int tileYDown = (int) tile.y;
-
-
-            tileXLeft--;
-            if (tileXLeft == auxX) {
-            System.out.println(tileXLeft + " - " + auxX);
-                System.out.println("colliding left");
-                collidingLeft = true;
+            if (player.overlaps(tile)) {
+                velocity.x = 0;
+                break;
             }
-            tileXRight++;
-            if (tileXRight == auxX) {
-                System.out.println(tileXRight + " - " + auxX);
-                System.out.println("colliding right");
-                collidingRight = true;
-            }
-            tileYDown--;
-            if (tileYDown == auxY) {
-                System.out.println(tileYDown + " - " + auxY);
-                System.out.println("colliding down");
-                collidingDown = true;
-            }
-            tileYUp++;
-            if (tileYUp == auxY) {
-                System.out.println(tileYUp + " - " + auxY);
-                System.out.println("colliding up");
-                collidingUp = true;
-            }
-
-            break;
         }
-        rectPool.free(playerRect);
 
+        player.x = position.x;
+
+        //Check Y collision
+        if (velocity.y > 0) startY = endY = (int) (position.y + playerHeight + velocity.y);
+        else startY = endY = (int) (position.y + velocity.y);
+
+        startX = (int) position.x;
+        endX = (int) (position.x + playerWidth);
+
+        getTiles(startX, startY, endX, endY, tiles, "CollisionLayer");
+        player.x += velocity.x;
+
+        for (Rectangle tile : tiles) {
+            if (player.overlaps(tile)) {
+                velocity.y = 0;
+                break;
+            }
+        }
+
+        player.y = position.y;
+
+        rectPool.free(player);
+
+        position.add(velocity);
+        velocity.scl(1 / deltaTime);
+        velocity.x *= DAMPING;
+        velocity.y *= DAMPING;
     }
 
     private void getTiles(int startX, int startY, int endX, int endY, Array<Rectangle> tiles, String layerName) {
