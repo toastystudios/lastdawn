@@ -242,9 +242,9 @@ public class NewGameScreen implements Screen {
             nextButton.setText("Finish");
         }
         if(flag==0){
-            //TODO: garantir que nome é inserido & class é escolhida
+            //TODO: garantir que nome é inserido && class é escolhida
             String name = nameInserted.getText();
-
+            parent.gameManager.createNewGame(name,chosenClass);
             parent.stopMusic();
             this.dispose();
             parent.changeScreen(GameLoader.LOADGAME);

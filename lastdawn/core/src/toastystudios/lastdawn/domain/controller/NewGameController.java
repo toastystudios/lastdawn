@@ -7,8 +7,7 @@ package toastystudios.lastdawn.domain.controller;
 import java.io.IOException;
 import java.util.List;
 import toastystudios.lastdawn.domain.model.enums.ClassTypes;
-import toastystudios.lastdawn.domain.model.game.FileManager;
-import toastystudios.lastdawn.domain.model.game.Game;
+import toastystudios.lastdawn.domain.model.game.GameManager;
 import toastystudios.lastdawn.domain.model.game.GameSlot;
 import toastystudios.lastdawn.domain.model.player.Knight;
 import toastystudios.lastdawn.domain.model.player.Paladin;
@@ -26,65 +25,50 @@ public class NewGameController {
     private PlayerChar player;
     
     private GameSlot slot;
-    private String saveGameName;
-    
-    private String classIntro;
-    
-    public NewGameController(){
-    }
-    
+
     /**
-     * Get in-game introduction
-     * 
-     * @return String with game introduction
+     * Constructor that has the responsibility of generating a new game, with
+     * all the back-end requirements not related to libgdx
+     *
+     * @param name the name of the new player
+     * @param classType the class type of the new player
      */
-    public String getGameIntro(){
-        return Game.getGameIntro();
+    public NewGameController(String name,ClassTypes classType){
+            createChar(name,classType);
     }
-    
-    /**
-     * Get the list of available classes in game
-     * 
-     * @return list of classes in game
-     */
-    public List<Enum> getClasses(){
-        listClass = ClassTypes.getListClass();
-        return listClass;
-    }
-    
+
     /**
      * Creates the new character
      * 
      * @param name the input name of the character
-     * @param playerClass  the input class picked for the character
+     * @param classType  the input class picked for the character
      */
-    public void createChar(String name,String playerClass) throws IOException{
+    public void createChar(String name,ClassTypes classType){
        //If option picked was Knight
-       if(playerClass==ClassTypes.KNIGHT.toString()){
-           player=new Knight(name);
-       }
-       //If option picked was Paladin
-       if(playerClass==ClassTypes.PALADIN.toString()){
-           player=new Paladin(name);
-       }
-       //If option picked was Paladin
-       if(playerClass==ClassTypes.RANGER.toString()){
-           player=new Ranger(name);
-       }
-       //If option picked was Paladin
-       if(playerClass==ClassTypes.SCIENTIST.toString()){
-           player=new Scientist(name);
-       }  
-       
-       //Create save game slot and the file to store the session
-       slot = Game.createGameSlot(player);
-       FileManager.saveGame(slot, saveGameName);      
+      switch(classType){
+          case KNIGHT:
+              player = new Knight(name);
+              System.out.println("Knight created with name "+name);
+              break;
+          case RANGER:
+              player = new Ranger(name);
+              System.out.println("Ranger created with name "+name);
+              break;
+          case PALADIN:
+              player = new Paladin(name);
+              System.out.println("Paladin created with name "+name);
+              break;
+          case SCIENTIST:
+              player = new Scientist(name);
+              System.out.println("Scientist created with name "+name);
+              break;
+              default:
+                  //TODO: error handling (maybe throw exception para ser mais facil?)
+                  System.out.println("No player was created");
+      }
     }
-    
-    public String getClassIntro(PlayerChar player){
-        return Game.getClassIntro(player);
+
+    public PlayerChar getPlayer(){
+        return this.player;
     }
-    
-    //...input start...
-    
 }

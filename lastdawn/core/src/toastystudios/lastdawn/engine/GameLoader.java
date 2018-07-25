@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.Array;
 import toastystudios.lastdawn.Controller.WorldAssetManager;
+import toastystudios.lastdawn.domain.model.game.GameManager;
 import toastystudios.lastdawn.view.*;
 
 public class GameLoader extends Game {
@@ -15,6 +16,8 @@ public class GameLoader extends Game {
     private NewGameScreen newGameScreen;
     private GameScreen gameScreen;
     private AppSettings settings;
+
+    public GameManager gameManager = GameManager.getGameManager();
 
     public WorldAssetManager assMan = new WorldAssetManager();
 
