@@ -1,6 +1,7 @@
 package toastystudios.lastdawn.Controller;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
@@ -40,6 +41,7 @@ public class WorldAssetManager {
 
     //Maps
     public final static String level_1 = "assets/level/level1.tmx";
+    public final static String level_2 = "assets/level/level2.tmx";
 
     //Sound
     public static final String hover = "assets/sound/ingame/hover.wav";
@@ -65,7 +67,10 @@ public class WorldAssetManager {
 
     public void queueAddTiledMaps() {
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-        manager.load(level_1, TiledMap.class);
+        TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
+        params.generateMipMaps = true;
+        manager.load(level_1, TiledMap.class, params);
+        manager.load(level_2, TiledMap.class, params);
     }
 
     public void queueAddParticleEffects(){

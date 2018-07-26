@@ -24,14 +24,6 @@ public class WorldController {
         camera = cam;
         world = new World(new Vector2(0,-10f), true);
         world.setContactListener(new WorldContactListener(this));
-
-        BodyFactory bodyFactory = BodyFactory.getBodyFactory(world);
-
-        player = bodyFactory.makeBoxPolyBody(1,1,2,2,BodyFactory.RUBBER,BodyDef.BodyType.DynamicBody,false);
-        //Body water = bodyFactory.makeBoxPolyBody(1,-8,40,10,BodyFactory.RUBBER,BodyDef.BodyType.StaticBody,false);
-        //water.setUserData("SEA");
-        //bodyFactory.makeAllFixturesSensors(water);
-        createFloor();
     }
 
     private void createFloor() {

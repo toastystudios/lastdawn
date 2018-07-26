@@ -1,31 +1,23 @@
 package toastystudios.lastdawn.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import toastystudios.lastdawn.engine.GameLoader;
+import toastystudios.lastdawn.stages.Stage;
 import toastystudios.lastdawn.stages.StageOne;
-
-import static com.sun.webkit.graphics.GraphicsDecoder.SCALE;
 
 public class GameScreen implements Screen {
 
     private GameLoader parent;
-    private StageOne stage;
+    private Stage stage;
 
     public GameScreen(GameLoader parent) {
         this.parent = parent;
-        stage = new StageOne(parent);
+        stage = new Stage(parent);
     }
 
     @Override
-    public void show () {
-        stage.show();
+    public void show (){
+        stage.create();
     }
 
     @Override
@@ -35,7 +27,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.resize(width, height);
     }
 
     @Override
@@ -55,6 +47,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

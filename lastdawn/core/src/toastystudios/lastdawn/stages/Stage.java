@@ -1,32 +1,51 @@
 package toastystudios.lastdawn.stages;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.objects.TextureMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import toastystudios.lastdawn.Controller.KeyboardController;
 import toastystudios.lastdawn.Controller.WorldAssetManager;
 import toastystudios.lastdawn.engine.GameLoader;
+import toastystudios.lastdawn.engine.OrthoTiledRenderWithSprites;
+import toastystudios.lastdawn.utils.BodyFactory;
+import toastystudios.lastdawn.utils.Constants;
+import toastystudios.lastdawn.utils.TiledObjectUtil;
 
-public abstract class Stage {
+public class Stage extends ApplicationAdapter {
 
-    protected static final float SCALE = 32f;
-    protected static float DAMPING = 0.7f;
+    protected final GameLoader parent;
 
-    protected GameLoader parent;
-    protected OrthogonalTiledMapRenderer renderer;
+    protected boolean DEBUG = false;
+    protected final float SCALE = 2.0f;
+
+    protected Box2DDebugRenderer b2dr;
+    protected KeyboardController input;
     protected OrthographicCamera camera;
+    protected SpriteBatch batch;
+    protected World world;
+    protected Viewport viewport;
 
-    protected float playerWidth;
-    protected float playerHeight;
-    protected Vector2 position = new Vector2(10, 10);
-    protected Vector2 velocity = new Vector2();
+    protected OrthogonalTiledMapRenderer tmr;
+    protected TiledMap map;
+    protected Body player;
+    protected TextureMapObject tmo;
+    protected MapLayer objectLayer;
 
     protected Texture walk_up_texture;
     protected Texture walk_down_texture;
@@ -47,86 +66,99 @@ public abstract class Stage {
     protected enum Turned {
         UP, DOWN, LEFT, RIGHT;
     }
+
     protected Turned facing;
-
-    protected boolean moving;
-
-    protected float MAX_VELOCITY = 5f;
     protected float stateTime;
     protected float deltaTime;
+    protected boolean moving;
 
-    private KeyboardController controller;
 
-    public Stage(GameLoader parent) {
-        this.parent = parent;
-        this.controller = new KeyboardController();
+    public Stage(GameLoader gameLoader) {
+        this.parent = gameLoader;
     }
 
-    public void show() {
+    @Override
+    public void create() {
 
-        Gdx.input.setInputProcessor(controller);
+        deltaTime = Gdx.graphics.getDeltaTime();
 
+        input = new KeyboardController();
+        Gdx.input.setInputProcessor(input);
+
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
+
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, w / SCALE, h / SCALE);
+        viewport = new ScreenViewport(camera);
+        world = new World(new Vector2(0, 0), false);
+        b2dr = new Box2DDebugRenderer(true, true, true, true, true, true);
+        batch = new SpriteBatch();
+
+        loadWalkAnimations();
+
+        player = BodyFactory.getBodyFactory(world).createBox(10, 10, 16, 16, false);
+
+        map = new TmxMapLoader().load("assets/level/level1.tmx");
+        tmr = new OrthoTiledRenderWithSprites(map);
+        TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("collision").getObjects());
+
+        objectLayer = map.getLayers().get("npcs");
+        tmo = new TextureMapObject(walk_up_regions[0]);
+        objectLayer.getObjects().add(tmo);
+    }
+
+    private void loadWalkAnimations() {
         //walk animations
         walk_up_texture = parent.assMan.manager.get(WorldAssetManager.playerRunningUp);
         walk_up_regions = TextureRegion.split(walk_up_texture, 32, 32)[0];
-        walk_up = new Animation<TextureRegion>(0.15f, walk_up_regions[0], walk_up_regions[1], walk_up_regions[2], walk_up_regions[3], walk_up_regions[4]);
+        walk_up = new Animation<>(0.15f, walk_up_regions[0], walk_up_regions[1], walk_up_regions[2], walk_up_regions[3], walk_up_regions[4]);
         walk_up.setPlayMode(Animation.PlayMode.LOOP);
 
         walk_down_texture = parent.assMan.manager.get(WorldAssetManager.playerRunningDown);
         walk_down_regions = TextureRegion.split(walk_down_texture, 32, 32)[0];
-        walk_down = new Animation<TextureRegion>(0.15f, walk_down_regions[0], walk_down_regions[1], walk_down_regions[2], walk_down_regions[3], walk_down_regions[4]);
+        walk_down = new Animation<>(0.15f, walk_down_regions[0], walk_down_regions[1], walk_down_regions[2], walk_down_regions[3], walk_down_regions[4]);
         walk_down.setPlayMode(Animation.PlayMode.LOOP);
 
         walk_left_texture = parent.assMan.manager.get(WorldAssetManager.playerRunningLeft);
         walk_left_regions = TextureRegion.split(walk_left_texture, 32, 32)[0];
-        walk_left = new Animation<TextureRegion>(0.15f, walk_left_regions[0], walk_left_regions[1], walk_left_regions[2], walk_left_regions[3], walk_left_regions[4]);
+        walk_left = new Animation<>(0.15f, walk_left_regions[0], walk_left_regions[1], walk_left_regions[2], walk_left_regions[3], walk_left_regions[4]);
         walk_left.setPlayMode(Animation.PlayMode.LOOP);
 
         walk_right_texture = parent.assMan.manager.get(WorldAssetManager.playerRunningRight);
         walk_right_regions = TextureRegion.split(walk_right_texture, 32, 32)[0];
-        walk_right = new Animation<TextureRegion>(0.15f, walk_right_regions[0], walk_right_regions[1], walk_right_regions[2], walk_right_regions[3], walk_right_regions[4]);
+        walk_right = new Animation<>(0.15f, walk_right_regions[0], walk_right_regions[1], walk_right_regions[2], walk_right_regions[3], walk_right_regions[4]);
         walk_right.setPlayMode(Animation.PlayMode.LOOP);
-
-
-        // figure out the width and height of the player for collision
-        // detection and rendering by converting a player frames pixel
-        // size into world units (1 unit == 16 pixels)
-        playerWidth = 1 / SCALE * walk_up_regions[0].getRegionWidth();
-        playerHeight = 1 / SCALE * walk_up_regions[0].getRegionHeight();
-
-        // create an orthographic camera, shows us 25x20 units of the world
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 20, 15);
-        camera.update();
     }
 
-
+    @Override
     public void render() {
-        // get the delta time
-        deltaTime = Gdx.graphics.getDeltaTime();
-
-        // clear the screen
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        update(Gdx.graphics.getDeltaTime());
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        // update the koala (process input, collision detection, position update)
-        updatePlayer(deltaTime);
-
-        // let the camera follow the koala, x-axis only
-        camera.position.x = position.x;
-        camera.position.y = position.y;
+        b2dr.render(world, camera.combined.scl(Constants.PPM));
         camera.update();
-
-        // set the TiledMapRenderer view based on what the
-        // camera sees, and render the map
-        renderer.setView(camera);
-        renderer.render();
-
-        // render the koala
         renderPlayer();
+        tmr.setView(camera);
+        tmr.render();
     }
 
-    protected void updatePlayer (float deltaTime) {
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height);
+        camera.setToOrtho(false, width / SCALE, height / SCALE);
+    }
+
+    public void update(float delta) {
+        world.step(1 / 60f, 6, 2);
+        cameraUpdate();
+        inputUpdate();
+        tmr.setView(camera);
+        batch.setTransformMatrix(camera.view);
+        batch.setProjectionMatrix(camera.projection);
+    }
+
+    private void inputUpdate() {
 
         if (deltaTime == 0) return;
 
@@ -135,42 +167,50 @@ public abstract class Stage {
 
         stateTime += deltaTime;
 
-        if (controller.up) {
-            velocity.y = MAX_VELOCITY;
+        int horizontalForce = 0;
+        int verticalForce = 0;
+
+        if (input.up) {
+            horizontalForce += 1;
             facing = Turned.UP;
+            moving = true;
         }
-        if (controller.down) {
-            velocity.y = -MAX_VELOCITY;
+
+        if (input.down) {
+            horizontalForce -= 1;
             facing = Turned.DOWN;
+            moving = true;
         }
 
-        if (controller.left) {
-            velocity.x = -MAX_VELOCITY;
+        if (input.left) {
+            verticalForce -= 1;
             facing = Turned.LEFT;
+            moving = true;
         }
 
-        if (controller.right) {
-            velocity.x = MAX_VELOCITY;
+        if (input.right) {
+            verticalForce += 1;
             facing = Turned.RIGHT;
+            moving = true;
         }
 
-        velocity.x = MathUtils.clamp(velocity.x, -MAX_VELOCITY, MAX_VELOCITY);
-        velocity.y = MathUtils.clamp(velocity.y, -MAX_VELOCITY, MAX_VELOCITY);
+        player.setLinearVelocity(horizontalForce * 5, player.getLinearVelocity().y);
+        player.setLinearVelocity(verticalForce * 5, player.getLinearVelocity().x);
 
-        if (Math.abs(velocity.x) < 1) velocity.x = 0;
-        if (Math.abs(velocity.y) < 1) velocity.y = 0;
-
-        if (velocity.x == 0 && velocity.y == 0) moving = false;
-        else moving = true;
-
-        velocity.scl(deltaTime);
-
-        if (!controller.up && !controller.down && !controller.left && !controller.right)
-            moving = false;
-
+        if (!input.up && !input.down && !input.left && !input.right) moving = false;
     }
 
-    protected void renderPlayer(){        frame = walk_down.getKeyFrames()[0];
+    private void cameraUpdate() {
+        Vector3 position = camera.position;
+        position.x = player.getPosition().x * Constants.PPM;
+        position.y = player.getPosition().y * Constants.PPM;
+        camera.position.set(position);
+        camera.update();
+    }
+
+    protected void renderPlayer() {
+
+        frame = walk_down.getKeyFrames()[0];
 
         if (moving && facing == Turned.UP) {
             frame = walk_up.getKeyFrame(stateTime);
@@ -180,7 +220,7 @@ public abstract class Stage {
             frame = walk_right.getKeyFrame(stateTime);
         } else if (moving && facing == Turned.DOWN) {
             frame = walk_down.getKeyFrame(stateTime);
-        } else if (facing == Turned.UP && !moving){
+        } else if (facing == Turned.UP && !moving) {
             frame = walk_up.getKeyFrames()[0];
         } else if (facing == Turned.DOWN && !moving) {
             frame = walk_down.getKeyFrames()[0];
@@ -190,11 +230,18 @@ public abstract class Stage {
             frame = walk_left.getKeyFrames()[0];
         }
 
-        // draw the player
-        Batch batch = renderer.getBatch();
-        batch.begin();
-        batch.draw(frame, position.x, position.y, playerWidth, playerHeight);
-        batch.end();
+        tmo.setTextureRegion(frame);
+        tmo.setX(player.getPosition().x * Constants.PPM - (frame.getRegionWidth() / 2));
+        tmo.setY(player.getPosition().y * Constants.PPM - (frame.getRegionHeight() / 3));
+    }
 
+
+    @Override
+    public void dispose() {
+        world.dispose();
+        b2dr.dispose();
+        batch.dispose();
+        tmr.dispose();
+        map.dispose();
     }
 }
