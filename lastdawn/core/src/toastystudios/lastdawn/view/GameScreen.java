@@ -2,32 +2,32 @@ package toastystudios.lastdawn.view;
 
 import com.badlogic.gdx.Screen;
 import toastystudios.lastdawn.engine.GameLoader;
-import toastystudios.lastdawn.stages.Stage;
-import toastystudios.lastdawn.stages.StageOne;
+import toastystudios.lastdawn.areas.Area;
+import toastystudios.lastdawn.areas.AreaOne;
 
 public class GameScreen implements Screen {
 
     private GameLoader parent;
-    private Stage stage;
+    private Area area;
 
     public GameScreen(GameLoader parent) {
         this.parent = parent;
-        stage = new Stage(parent);
+        area = new AreaOne(parent);
     }
 
     @Override
     public void show (){
-        stage.create();
+        area.create();
     }
 
     @Override
     public void render(float delta) {
-        stage.render();
+        area.render();
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.resize(width, height);
+        area.resize(width, height);
     }
 
     @Override
@@ -47,6 +47,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        area.dispose();
     }
 }

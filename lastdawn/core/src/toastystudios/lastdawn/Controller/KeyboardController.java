@@ -26,12 +26,15 @@ public class KeyboardController implements InputProcessor {
                 break;	// we have reacted to a keypress so stop checking for more
             case Input.Keys.D: 	// if keycode is the same as Keys.LEFT a.k.a 22
                 right = true;	// do this
+                keyProcessed = true;
                 break;	// we have reacted to a keypress so stop checking for more
             case Input.Keys.W: 		// if keycode is the same as Keys.LEFT a.k.a 19
                 up = true;		// do this
+                keyProcessed = true;
                 break;  // we have reacted to a keypress so stop checking for more
             case Input.Keys.S: 	// if keycode is the same as Keys.LEFT a.k.a 20
                 down = true;	// do this
+                keyProcessed = true;
                 break;	// we have reacted to a keypress so stop checking for more
         }
         return keyProcessed;	// no keys pressed that we care about so return false
@@ -57,6 +60,7 @@ public class KeyboardController implements InputProcessor {
             case Input.Keys.S: 	// if keycode is the same as Keys.LEFT a.k.a 20
                 down = false;	// do this
                 keyProcessed = true;	// we have reacted to a keypress
+                break;
         }
         return keyProcessed;	//  return our peyProcessed flag
     }
