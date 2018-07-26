@@ -23,7 +23,7 @@ public class WorldController {
         controller = cont;
         camera = cam;
         world = new World(new Vector2(0,-10f), true);
-        world.setContactListener(new WorldContactListener(this));
+        world.setContactListener(new WorldContactListener());
     }
 
     private void createFloor() {

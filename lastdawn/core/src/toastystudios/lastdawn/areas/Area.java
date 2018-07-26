@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import toastystudios.lastdawn.Controller.KeyboardController;
 import toastystudios.lastdawn.Controller.WorldAssetManager;
 import toastystudios.lastdawn.engine.GameLoader;
+import toastystudios.lastdawn.engine.WorldContactListener;
 import toastystudios.lastdawn.utils.BodyFactory;
 import toastystudios.lastdawn.utils.Constants;
 
@@ -40,34 +41,11 @@ public class Area extends ApplicationAdapter {
 
     protected OrthogonalTiledMapRenderer tmr;
     protected TiledMap map;
-    protected Body player;
-    protected TextureMapObject tmo;
+    protected RenderCharacter player;
     protected MapLayer objectLayer;
 
-    protected Texture walk_up_texture;
-    protected Texture walk_down_texture;
-    protected Texture walk_left_texture;
-    protected Texture walk_right_texture;
-
-    protected Animation<TextureRegion> walk_up;
-    protected Animation<TextureRegion> walk_down;
-    protected Animation<TextureRegion> walk_right;
-    protected Animation<TextureRegion> walk_left;
-
-    protected TextureRegion frame;
-    protected TextureRegion[] walk_up_regions;
-    protected TextureRegion[] walk_down_regions;
-    protected TextureRegion[] walk_left_regions;
-    protected TextureRegion[] walk_right_regions;
-
-    protected enum Turned {
-        UP, DOWN, LEFT, RIGHT;
-    }
-
-    protected Turned facing;
     protected float stateTime;
     protected float deltaTime;
-    protected boolean moving;
     protected boolean isPaused;
 
 
@@ -90,49 +68,21 @@ public class Area extends ApplicationAdapter {
         camera.setToOrtho(false, w / SCALE, h / SCALE);
         viewport = new ScreenViewport(camera);
         world = new World(new Vector2(0, 0), false);
+        world.setContactListener(new WorldContactListener());
         b2dr = new Box2DDebugRenderer(true, true, true, true, true, true);
         batch = new SpriteBatch();
 
-        loadWalkAnimations();
-
-        player = BodyFactory.getBodyFactory(world).createBox(10, 10, 16, 16, false);
+        String[] animationsPath = {WorldAssetManager.playerRunningUp, WorldAssetManager.playerRunningDown, WorldAssetManager.playerRunningLeft, WorldAssetManager.playerRunningRight};
+        player = new RenderCharacter(parent, world, 10, 10, 16, 16, animationsPath, BodyDef.BodyType.DynamicBody);
     }
 
-    private void loadWalkAnimations() {
-        //walk animations
-        walk_up_texture = parent.assMan.manager.get(WorldAssetManager.playerRunningUp);
-        walk_up_regions = TextureRegion.split(walk_up_texture, 32, 32)[0];
-        walk_up = new Animation<>(0.15f, walk_up_regions[0], walk_up_regions[1], walk_up_regions[2], walk_up_regions[3], walk_up_regions[4]);
-        walk_up.setPlayMode(Animation.PlayMode.LOOP);
-
-        walk_down_texture = parent.assMan.manager.get(WorldAssetManager.playerRunningDown);
-        walk_down_regions = TextureRegion.split(walk_down_texture, 32, 32)[0];
-        walk_down = new Animation<>(0.15f, walk_down_regions[0], walk_down_regions[1], walk_down_regions[2], walk_down_regions[3], walk_down_regions[4]);
-        walk_down.setPlayMode(Animation.PlayMode.LOOP);
-
-        walk_left_texture = parent.assMan.manager.get(WorldAssetManager.playerRunningLeft);
-        walk_left_regions = TextureRegion.split(walk_left_texture, 32, 32)[0];
-        walk_left = new Animation<>(0.15f, walk_left_regions[0], walk_left_regions[1], walk_left_regions[2], walk_left_regions[3], walk_left_regions[4]);
-        walk_left.setPlayMode(Animation.PlayMode.LOOP);
-
-        walk_right_texture = parent.assMan.manager.get(WorldAssetManager.playerRunningRight);
-        walk_right_regions = TextureRegion.split(walk_right_texture, 32, 32)[0];
-        walk_right = new Animation<>(0.15f, walk_right_regions[0], walk_right_regions[1], walk_right_regions[2], walk_right_regions[3], walk_right_regions[4]);
-        walk_right.setPlayMode(Animation.PlayMode.LOOP);
-    }
 
     @Override
     public void render() {
         update(deltaTime);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-            camera.update();
-            renderPlayer();
-            tmr.setView(camera);
-            tmr.render();
-            b2dr.render(world, camera.combined.scl(Constants.PPM));
-
+        camera.update();
     }
 
     @Override
@@ -173,33 +123,32 @@ public class Area extends ApplicationAdapter {
         int verticalForce = 0;
 
         if (input.up) {
-            horizontalForce += 1;
-            facing = Turned.UP;
-            moving = true;
+            verticalForce += 1;
+            player.setTurnedUp();
+            player.setMoving();
         }
 
         if (input.down) {
-            horizontalForce -= 1;
-            facing = Turned.DOWN;
-            moving = true;
+           verticalForce -= 1;
+            player.setTurnedDown();
+            player.setMoving();
         }
 
         if (input.left) {
-            verticalForce -= 1;
-            facing = Turned.LEFT;
-            moving = true;
+            horizontalForce -= 1;
+            player.setTurnedLeft();
+            player.setMoving();
         }
 
         if (input.right) {
-            verticalForce += 1;
-            facing = Turned.RIGHT;
-            moving = true;
+            horizontalForce += 1;
+            player.setTurnedRight();
+            player.setMoving();
         }
 
-        player.setLinearVelocity(horizontalForce * 5, player.getLinearVelocity().y);
-        player.setLinearVelocity(verticalForce * 5, player.getLinearVelocity().x);
+        player.applyLinearForce(horizontalForce, verticalForce);
 
-        if (!input.up && !input.down && !input.left && !input.right) moving = false;
+        if (!input.up && !input.down && !input.left && !input.right) player.setStanding();
     }
 
     private void cameraUpdate() {
@@ -208,33 +157,6 @@ public class Area extends ApplicationAdapter {
         position.y = player.getPosition().y * Constants.PPM;
         camera.position.set(position);
         camera.update();
-    }
-
-    protected void renderPlayer() {
-
-        frame = walk_down.getKeyFrames()[0];
-
-        if (moving && facing == Turned.UP) {
-            frame = walk_up.getKeyFrame(stateTime);
-        } else if (moving && facing == Turned.LEFT) {
-            frame = walk_left.getKeyFrame(stateTime);
-        } else if (moving && facing == Turned.RIGHT) {
-            frame = walk_right.getKeyFrame(stateTime);
-        } else if (moving && facing == Turned.DOWN) {
-            frame = walk_down.getKeyFrame(stateTime);
-        } else if (facing == Turned.UP && !moving) {
-            frame = walk_up.getKeyFrames()[0];
-        } else if (facing == Turned.DOWN && !moving) {
-            frame = walk_down.getKeyFrames()[0];
-        } else if (facing == Turned.RIGHT && !moving) {
-            frame = walk_right.getKeyFrames()[0];
-        } else if (facing == Turned.LEFT && !moving) {
-            frame = walk_left.getKeyFrames()[0];
-        }
-
-        tmo.setTextureRegion(frame);
-        tmo.setX(player.getPosition().x * Constants.PPM - (frame.getRegionWidth() / 2));
-        tmo.setY(player.getPosition().y * Constants.PPM - (frame.getRegionHeight() / 3));
     }
 
 

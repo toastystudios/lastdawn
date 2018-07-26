@@ -19,13 +19,12 @@ public class BodyFactory {
     }
 
 
-    public Body createBox(int x, int y, int width, int height, boolean isStatic) {
+    public Body createBox(int x, int y, int width, int height, BodyDef.BodyType type) {
         Body playerBody;
 
         BodyDef def = new BodyDef();
 
-        if (isStatic) def.type = BodyDef.BodyType.StaticBody;
-        else def.type = BodyDef.BodyType.DynamicBody;
+        def.type = type;
 
         def.position.set(x / Constants.PPM, y / Constants.PPM);
         def.fixedRotation = true;
