@@ -243,12 +243,13 @@ public class NewGameScreen implements Screen {
         }
         if(flag==0){
             //TODO: garantir que nome é inserido && class é escolhida
+            parent.stopMusic();
             String name = nameInserted.getText();
             parent.gameManager.createNewGame(name,chosenClass);
-            parent.stopMusic();
-            this.dispose();
+            table.reset();
             parent.changeScreen(GameLoader.LOADGAME);
         }
+
         stage.getBatch().end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));

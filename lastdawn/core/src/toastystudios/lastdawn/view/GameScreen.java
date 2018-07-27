@@ -1,6 +1,8 @@
 package toastystudios.lastdawn.view;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import toastystudios.lastdawn.engine.GameLoader;
 import toastystudios.lastdawn.areas.Area;
 import toastystudios.lastdawn.areas.AreaOne;
@@ -9,10 +11,12 @@ public class GameScreen implements Screen {
 
     private GameLoader parent;
     private Area area;
+    private Stage stage;
 
     public GameScreen(GameLoader parent) {
         this.parent = parent;
         area = new AreaOne(parent);
+        stage = new Stage(new ScreenViewport());
     }
 
     @Override
